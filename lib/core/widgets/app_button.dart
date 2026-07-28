@@ -1,7 +1,7 @@
-import 'package:coffee_shop/core/extensions/extensions.dart';
-import 'package:coffee_shop/core/utils/app_colors.dart';
-import 'package:coffee_shop/core/widgets/app_text.dart';
-import 'package:coffee_shop/core/widgets/custom_loading_widget.dart';
+import 'package:app_base/core/extensions/extensions.dart';
+import 'package:app_base/core/utils/app_colors.dart';
+import 'package:app_base/core/widgets/app_text.dart';
+import 'package:app_base/core/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

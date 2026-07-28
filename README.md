@@ -1,17 +1,12 @@
-# coffee_shop
+# app_base
 
-A new Flutter project.
+Reusable Flutter base template: Splash, Onboarding, Login, Register, and a Home/More bottom-nav shell,
+wired to a clean core (Dio client, secure token storage, localization, DI, theming).
+
+Home ships empty on purpose — build the screen's UI first, then wire its API per project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Rename the package/app id away from `app_base` for the new project (pubspec `name`, Android `applicationId`, iOS bundle id).
+2. Point `ApiEndpoints.baseUrl` (`lib/core/network/api_endpoints.dart`) at the new backend.
+3. Drop project assets into `assets/images/`, `assets/icons/`; add translation keys to `assets/translations/{en,ar}.json`.

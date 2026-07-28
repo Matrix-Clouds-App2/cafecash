@@ -1,5 +1,5 @@
-name: coffee_shop
-description: "Coffee Shop Application."
+name: app_base
+description: "Reusable Flutter base template."
 publish_to: 'none'
 version: 1.0.0+1
 

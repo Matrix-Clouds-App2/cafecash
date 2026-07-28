@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:coffee_shop/core/extensions/extensions.dart';
-import 'package:coffee_shop/core/utils/app_colors.dart';
-import 'package:coffee_shop/core/utils/locale_keys.dart';
-import 'package:coffee_shop/core/widgets/app_button.dart';
-import 'package:coffee_shop/features/home/presentation/widgets/home_participant_card.dart';
+import 'package:app_base/core/extensions/extensions.dart';
+import 'package:app_base/core/utils/app_colors.dart';
+import 'package:app_base/core/utils/locale_keys.dart';
+import 'package:app_base/core/widgets/app_button.dart';
+import 'package:app_base/features/home/presentation/widgets/home_participant_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

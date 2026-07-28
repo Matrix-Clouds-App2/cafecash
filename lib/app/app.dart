@@ -1,4 +1,4 @@
-import 'package:coffee_shop/app/router/navigation_services.dart';
+import 'package:app_base/app/router/navigation_services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

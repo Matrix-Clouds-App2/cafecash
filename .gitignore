@@ -14,3 +14,5 @@ macos/Flutter/ephemeral/
 local.properties
 android/.gradle/
 android/local.properties
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
