@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:coffee_shop/core/utils/app_images.dart';
-import 'package:coffee_shop/core/utils/locale_keys.dart';
-import 'package:coffee_shop/features/home/presentation/widgets/home_quick_access_item.dart';
+import 'package:app_base/core/utils/app_images.dart';
+import 'package:app_base/core/utils/locale_keys.dart';
+import 'package:app_base/features/home/presentation/widgets/home_quick_access_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

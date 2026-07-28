@@ -1,11 +1,11 @@
  import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:coffee_shop/core/extensions/extensions.dart';
-import 'package:coffee_shop/core/utils/app_colors.dart';
-import 'package:coffee_shop/core/widgets/app_button.dart';
-import 'package:coffee_shop/core/widgets/custom_loading_widget.dart';
-import 'package:coffee_shop/core/widgets/screen_state_layout.dart';
+import 'package:app_base/core/extensions/extensions.dart';
+import 'package:app_base/core/utils/app_colors.dart';
+import 'package:app_base/core/widgets/app_button.dart';
+import 'package:app_base/core/widgets/custom_loading_widget.dart';
+import 'package:app_base/core/widgets/screen_state_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

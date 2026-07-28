@@ -4,8 +4,8 @@ import 'dart:ui' as ui;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:coffee_shop/core/utils/app_colors.dart';
-import 'package:coffee_shop/core/utils/locale_keys.dart';
+import 'package:app_base/core/utils/app_colors.dart';
+import 'package:app_base/core/utils/locale_keys.dart';
 
 import 'countries.dart';
 

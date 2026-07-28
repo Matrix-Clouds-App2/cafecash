@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:coffee_shop/core/extensions/extensions.dart';
-import 'package:coffee_shop/core/utils/locale_keys.dart';
-import 'package:coffee_shop/features/home/presentation/widgets/home_countdown_unit.dart';
-import 'package:coffee_shop/features/home/presentation/widgets/home_section_title.dart';
+import 'package:app_base/core/extensions/extensions.dart';
+import 'package:app_base/core/utils/locale_keys.dart';
+import 'package:app_base/features/home/presentation/widgets/home_countdown_unit.dart';
+import 'package:app_base/features/home/presentation/widgets/home_section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

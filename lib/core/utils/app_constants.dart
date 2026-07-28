@@ -1,4 +1,4 @@
-import 'package:coffee_shop/features/auth/data/models/user_model.dart';
+import 'package:app_base/features/auth/data/models/user_model.dart';
 
 class AppConstants {
   AppConstants._();
