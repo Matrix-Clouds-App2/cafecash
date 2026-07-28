@@ -11,7 +11,9 @@
       "Bash(sed -i '' 's/android:label=\"coffee_shop\"/android:label=\"App Base\"/' android/app/src/main/AndroidManifest.xml)",
       "Bash(mkdir -p android/app/src/main/kotlin/com/example/app_base)",
       "Bash(echo \"exit:$?\")",
-      "Bash(git rm *)"
+      "Bash(git rm *)",
+      "Bash(awk '{print \"LocaleKeys.\"$3}')",
+      "Bash(awk '{print \"LocaleKeys.\"$4}')"
     ]
   }
 }

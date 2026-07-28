@@ -1,29 +1,52 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_storage/get_storage.dart';
 
 class LocalStorage {
-  LocalStorage() : _box = GetStorage();
+  LocalStorage()
+      : _box = GetStorage(),
+        _secureBox = const FlutterSecureStorage();
 
   final GetStorage _box;
+  final FlutterSecureStorage _secureBox;
 
   // ─── Generic typed methods ────────────────────────────────────────────────
   T? read<T>(String key) => _box.read<T>(key);
   Future<void> write<T>(String key, T value) => _box.write(key, value);
   Future<void> remove(String key) => _box.remove(key);
   bool has(String key) => _box.hasData(key);
-  Future<void> clearAll() => _box.erase();
+
+  Future<void> clearAll() async {
+    await _secureBox.delete(key: _tokenKey);
+    await _box.erase();
+  }
 
   // ─── Auth ─────────────────────────────────────────────────────────────────
+  // The token is the one secret worth protecting from a rooted/jailbroken
+  // device or a plain file-system backup, so it lives in the platform
+  // keystore (Keychain on iOS, EncryptedSharedPreferences/Keystore on
+  // Android) instead of GetStorage's plaintext JSON file. `_hasTokenKey`
+  // mirrors "is a token set" in GetStorage so `isLoggedIn` can stay a cheap
+  // synchronous getter for widgets/router that need it at build time.
   static const _tokenKey = 'token';
+  static const _hasTokenKey = 'has_token';
   static const _userKey = 'user';
 
-  String? getToken() => read<String>(_tokenKey);
-  Future<void> setToken(String v) => write(_tokenKey, v);
-  Future<void> removeToken() => remove(_tokenKey);
+  Future<String?> getToken() => _secureBox.read(key: _tokenKey);
+
+  Future<void> setToken(String v) async {
+    await _secureBox.write(key: _tokenKey, value: v);
+    await write(_hasTokenKey, true);
+  }
+
+  Future<void> removeToken() async {
+    await _secureBox.delete(key: _tokenKey);
+    await remove(_hasTokenKey);
+  }
 
   Map<String, dynamic>? getUser() => read<Map<String, dynamic>>(_userKey);
   Future<void> setUser(Map<String, dynamic> user) => write(_userKey, user);
 
-  bool get isLoggedIn => getToken() != null;
+  bool get isLoggedIn => read<bool>(_hasTokenKey) ?? false;
 
   // ─── Onboarding ───────────────────────────────────────────────────────────
   static const _onboardingSeenKey = 'onboarding_seen';
@@ -33,34 +56,7 @@ class LocalStorage {
 
   // ─── Settings ─────────────────────────────────────────────────────────────
   static const _langKey = 'lang';
-  static const _themeKey = 'theme';
 
   String getLang() => read<String>(_langKey) ?? 'ar';
   Future<void> setLang(String lang) => write(_langKey, lang);
-
-  String getTheme() => read<String>(_themeKey) ?? 'system';
-  Future<void> setTheme(String theme) => write(_themeKey, theme);
-
-  // ─── Prayer Notifications ─────────────────────────────────────────────────
-  static const _prayerNotifKey = 'prayer_notifications_enabled';
-
-  bool get prayerNotificationsEnabled => read<bool>(_prayerNotifKey) ?? false;
-  Future<void> setPrayerNotificationsEnabled(bool v) => write(_prayerNotifKey, v);
-
-  // ─── Calendar added sessions ──────────────────────────────────────────────
-  static const _calendarSessionsKey = 'calendar_added_sessions';
-
-  List<int> getCalendarAddedSessions() {
-    final raw = read<List>(_calendarSessionsKey);
-    return raw?.map((e) => e as int).toList() ?? [];
-  }
-
-  Future<void> addCalendarSession(int sessionId) {
-    final list = getCalendarAddedSessions();
-    if (!list.contains(sessionId)) list.add(sessionId);
-    return write(_calendarSessionsKey, list);
-  }
-
-  bool isCalendarSessionAdded(int sessionId) =>
-      getCalendarAddedSessions().contains(sessionId);
 }

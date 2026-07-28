@@ -29,8 +29,7 @@ class AppOverlay {
       _show(message, _BannerType.success, duration);
 
   static void _show(String message, _BannerType type, Duration duration) {
-    final overlay =
-        NavigationService.navigationKey.currentState?.overlay;
+    final overlay = NavigationService.navigationKey.currentState?.overlay;
     if (overlay == null) return;
 
     // Dismiss any currently showing banner immediately.
@@ -121,11 +120,10 @@ class _AppBannerState extends State<_AppBanner>
   @override
   Widget build(BuildContext context) {
     final isError = widget.type == _BannerType.error;
-    final bg = isError
-        ? const Color(0xFFB71C1C)
-        : AppColors.successColor.light;
-    final icon =
-        isError ? Icons.error_outline_rounded : Icons.check_circle_outline_rounded;
+    final bg = isError ? const Color(0xFFB71C1C) : AppColors.successColor.light;
+    final icon = isError
+        ? Icons.error_outline_rounded
+        : Icons.check_circle_outline_rounded;
 
     return Positioned(
       top: 0,
@@ -143,8 +141,8 @@ class _AppBannerState extends State<_AppBanner>
                 bottom: false,
                 child: Container(
                   margin: EdgeInsets.fromLTRB(12.w, 8.h, 12.w, 0),
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 16.w, vertical: 14.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
                   decoration: BoxDecoration(
                     color: bg,
                     borderRadius: BorderRadius.circular(16.r),
@@ -158,8 +156,7 @@ class _AppBannerState extends State<_AppBanner>
                   ),
                   child: Row(
                     children: [
-                      Icon(icon,
-                          color: Colors.white, size: 22.sp),
+                      Icon(icon, color: Colors.white, size: 22.sp),
                       12.width,
                       Expanded(
                         child: Text(
@@ -191,4 +188,3 @@ class _AppBannerState extends State<_AppBanner>
     );
   }
 }
-

@@ -1916,7 +1916,6 @@ const List<Country2> countries = [
     minLength: 8,
     maxLength: 8,
   ),
-
   Country2(
     name: "Brazil",
     nameAr: "البرازيل",

@@ -4,10 +4,14 @@ import 'package:photo_view/photo_view.dart';
 
 import '../../utils/app_images.dart';
 
-
-
 class CustomImage extends StatelessWidget {
-  const CustomImage({super.key, required this.image,  this.radius, this.fit, this.width, this.height});
+  const CustomImage(
+      {super.key,
+      required this.image,
+      this.radius,
+      this.fit,
+      this.width,
+      this.height});
   final String image;
   final double? radius;
   final double? width;
@@ -15,18 +19,19 @@ class CustomImage extends StatelessWidget {
   final BoxFit? fit;
   @override
   Widget build(BuildContext context) {
-    return  SizedBox(
+    return SizedBox(
       height: height,
       width: width,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(radius??0),
+        borderRadius: BorderRadius.circular(radius ?? 0),
         child: Image.network(
           image,
-          fit:fit?? BoxFit.cover,
+          fit: fit ?? BoxFit.cover,
           errorBuilder: (context, error, v) {
             return ClipRRect(
-              borderRadius: BorderRadius.circular(radius??0),
-              child: Image.asset(AppImages.holder,
+              borderRadius: BorderRadius.circular(radius ?? 0),
+              child: Image.asset(
+                AppImages.holder,
                 fit: BoxFit.cover,
               ),
             );
@@ -36,8 +41,18 @@ class CustomImage extends StatelessWidget {
     );
   }
 }
+
 class CustomImageOnlyRadius extends StatelessWidget {
-  const CustomImageOnlyRadius({super.key, required this.image,   this.fit, this.width, this.height, this.topRightRadius, this.bottomRightRadius, this.topLeftRadius, this.bottomLeftRadius});
+  const CustomImageOnlyRadius(
+      {super.key,
+      required this.image,
+      this.fit,
+      this.width,
+      this.height,
+      this.topRightRadius,
+      this.bottomRightRadius,
+      this.topLeftRadius,
+      this.bottomLeftRadius});
   final String image;
   final double? topRightRadius;
   final double? bottomRightRadius;
@@ -48,28 +63,27 @@ class CustomImageOnlyRadius extends StatelessWidget {
   final BoxFit? fit;
   @override
   Widget build(BuildContext context) {
-    return  SizedBox(
+    return SizedBox(
       height: height,
       width: width,
       child: ClipRRect(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(topLeftRadius??0),
-          topRight: Radius.circular(topRightRadius??0),
-          bottomRight: Radius.circular(bottomRightRadius??0),
-          bottomLeft: Radius.circular(bottomLeftRadius??0)
-        ),
+            topLeft: Radius.circular(topLeftRadius ?? 0),
+            topRight: Radius.circular(topRightRadius ?? 0),
+            bottomRight: Radius.circular(bottomRightRadius ?? 0),
+            bottomLeft: Radius.circular(bottomLeftRadius ?? 0)),
         child: Image.network(
           image,
-          fit:fit?? BoxFit.cover,
+          fit: fit ?? BoxFit.cover,
           errorBuilder: (context, error, v) {
             return ClipRRect(
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(topLeftRadius??0),
-                  topRight: Radius.circular(topRightRadius??0),
-                  bottomRight: Radius.circular(bottomRightRadius??0),
-                  bottomLeft: Radius.circular(bottomLeftRadius??0)
-              ),
-              child: Image.asset(AppImages.holder,
+                  topLeft: Radius.circular(topLeftRadius ?? 0),
+                  topRight: Radius.circular(topRightRadius ?? 0),
+                  bottomRight: Radius.circular(bottomRightRadius ?? 0),
+                  bottomLeft: Radius.circular(bottomLeftRadius ?? 0)),
+              child: Image.asset(
+                AppImages.holder,
                 fit: BoxFit.cover,
               ),
             );
@@ -79,6 +93,7 @@ class CustomImageOnlyRadius extends StatelessWidget {
     );
   }
 }
+
 void openBottomSheet(BuildContext context, ImageProvider imageProvider) =>
     showBottomSheet(
       context: context,
@@ -95,7 +110,7 @@ void openBottomSheet(BuildContext context, ImageProvider imageProvider) =>
                 ),
                 imageProvider: imageProvider,
                 heroAttributes:
-                PhotoViewHeroAttributes(tag: imageProvider.toString()),
+                    PhotoViewHeroAttributes(tag: imageProvider.toString()),
               ),
               Positioned(
                 top: 5,

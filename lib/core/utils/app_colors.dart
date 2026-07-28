@@ -9,14 +9,12 @@ class ColorModel {
 
   Color get light => lightColor;
   Color get dark => darkColor;
-
-
 }
+
 extension ColorTheme on ColorModel {
   Color get themeColor {
     final context = NavigationService.navigationKey.currentContext;
-    if (context != null &&
-        Theme.of(context).brightness == Brightness.dark) {
+    if (context != null && Theme.of(context).brightness == Brightness.dark) {
       return darkColor;
     } else {
       return lightColor;

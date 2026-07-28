@@ -25,7 +25,7 @@ class AppEmpty extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     color: Theme.of(context).colorScheme.outline,
-                fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w600,
                   ),
             ),
           ],

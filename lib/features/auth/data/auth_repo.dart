@@ -38,7 +38,8 @@ class AuthRepo {
         ApiEndpoints.login,
         data: data,
       );
-      final user = UserModel.fromJson(response.data['data'] as Map<String, dynamic>);
+      final user =
+          UserModel.fromJson(response.data['data'] as Map<String, dynamic>);
       if (user.token != null) {
         await _storage.setToken(user.token!);
         await _storage.setUser(user.toJson());
@@ -67,7 +68,8 @@ class AuthRepo {
           'country_code': countryCode,
         },
       );
-      final user = UserModel.fromJson(response.data['data']['data'] as Map<String, dynamic>);
+      final user = UserModel.fromJson(
+          response.data['data']['data'] as Map<String, dynamic>);
       if (user.token != null) {
         await _storage.setToken(user.token!);
         await _storage.setUser(user.toJson());
@@ -82,20 +84,6 @@ class AuthRepo {
     try {
       final response = await _dio.get(ApiEndpoints.profile);
       return UserModel.fromJson(response.data['data'] as Map<String, dynamic>);
-    } on DioException catch (e) {
-      throw NetworkException.fromDioException(e);
-    }
-  }
-
-  Future<void> sendFcmToken({
-    required String token,
-    required String language,
-  }) async {
-    try {
-      await _dio.post(
-        ApiEndpoints.fcmToken,
-        data: {'token': token, 'language': language},
-      );
     } on DioException catch (e) {
       throw NetworkException.fromDioException(e);
     }

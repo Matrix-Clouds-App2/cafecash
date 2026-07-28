@@ -23,12 +23,12 @@ extension Navigation on BuildContext {
 }
 
 extension SizeExtension on BuildContext {
-  BuildContext get appContext => NavigationService.navigationKey.currentContext!;
+  BuildContext get appContext =>
+      NavigationService.navigationKey.currentContext!;
   MediaQueryData get mediaQuery => MediaQuery.of(appContext);
   double get appWidth => mediaQuery.size.width;
   double get appHeight => mediaQuery.size.height;
 }
-
 
 /// Extension Size
 extension View on num {
@@ -37,22 +37,25 @@ extension View on num {
   SizedBox get phShrink => const SizedBox.shrink();
 }
 
-
 extension PaddingExtension on num {
+  EdgeInsetsDirectional get paddingAll =>
+      EdgeInsetsDirectional.all(toDouble().h);
 
-  EdgeInsetsDirectional get paddingAll => EdgeInsetsDirectional.all(toDouble().h);
+  EdgeInsetsDirectional get paddingVert =>
+      EdgeInsetsDirectional.symmetric(vertical: toDouble().h);
 
-  EdgeInsetsDirectional get paddingVert => EdgeInsetsDirectional.symmetric(vertical: toDouble().h);
+  EdgeInsetsDirectional get paddingHorizontal =>
+      EdgeInsetsDirectional.symmetric(horizontal: toDouble().w);
 
-  EdgeInsetsDirectional get paddingHorizontal => EdgeInsetsDirectional.symmetric(horizontal: toDouble().w);
+  EdgeInsetsDirectional get paddingStart =>
+      EdgeInsetsDirectional.only(start: toDouble().w);
 
-  EdgeInsetsDirectional get paddingStart => EdgeInsetsDirectional.only(start: toDouble().w);
+  EdgeInsetsDirectional get paddingEnd =>
+      EdgeInsetsDirectional.only(end: toDouble().w);
 
-  EdgeInsetsDirectional get paddingEnd => EdgeInsetsDirectional.only(end: toDouble().w);
+  EdgeInsetsDirectional get paddingTop =>
+      EdgeInsetsDirectional.only(top: toDouble().h);
 
-  EdgeInsetsDirectional get paddingTop => EdgeInsetsDirectional.only(top: toDouble().h);
-
-  EdgeInsetsDirectional get paddingBottom => EdgeInsetsDirectional.only(bottom: toDouble().h);
+  EdgeInsetsDirectional get paddingBottom =>
+      EdgeInsetsDirectional.only(bottom: toDouble().h);
 }
-
-

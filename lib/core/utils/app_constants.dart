@@ -22,8 +22,9 @@ class AppConstants {
   static const double smallPadding = 8.0;
   static const double largePadding = 24.0;
 }
+
 class AppFonts {
-  static const String familyFont ='Cairo';
+  static const String familyFont = 'Cairo';
 }
 
 /// The currently authenticated user. `null` means the user is browsing as a guest.

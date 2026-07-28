@@ -35,22 +35,20 @@ class MyApp extends StatelessWidget {
           designSize: const Size(375, 812),
           useInheritedMediaQuery: true,
           builder: (BuildContext context, Widget? child) {
-          return MaterialApp(
-            title: AppConstants.appName,
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
-            themeMode: ThemeMode.light,
-            initialRoute: Routes.splashScreen,
-            navigatorKey: NavigationService.navigationKey,
-
-            onGenerateRoute: RouteGenerator.generateRoute,
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-          );
-        }
-      ),
+            return MaterialApp(
+              title: AppConstants.appName,
+              debugShowCheckedModeBanner: false,
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              themeMode: ThemeMode.light,
+              initialRoute: Routes.splashScreen,
+              navigatorKey: NavigationService.navigationKey,
+              onGenerateRoute: RouteGenerator.generateRoute,
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+            );
+          }),
     );
   }
 }

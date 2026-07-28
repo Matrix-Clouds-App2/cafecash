@@ -18,7 +18,8 @@ class NetworkException implements Exception {
 
       case DioExceptionType.badResponse:
         final statusCode = e.response?.statusCode;
-        final message = _extractMessage(e.response?.data) ?? _defaultMessage(statusCode);
+        final message =
+            _extractMessage(e.response?.data) ?? _defaultMessage(statusCode);
         return NetworkException(message, statusCode: statusCode);
 
       default:

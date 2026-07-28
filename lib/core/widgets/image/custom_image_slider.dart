@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../utils/app_colors.dart';
 import 'custom_image.dart';
 
-
 /// Home banners: native [PageView] snap-scroll (peek of next/prev card) +
 /// light scale on non-focused slides — closer to stock iOS/Android promos than [CarouselSlider].
 class CustomImageSlider extends StatefulWidget {

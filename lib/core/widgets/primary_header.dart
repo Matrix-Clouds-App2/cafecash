@@ -47,8 +47,7 @@ class PrimaryHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primary = AppColors.primaryColor.themeColor;
-    final resolvedHeight =
-        height ?? MediaQuery.sizeOf(context).height * 0.33;
+    final resolvedHeight = height ?? MediaQuery.sizeOf(context).height * 0.33;
 
     return SizedBox(
       height: resolvedHeight,
@@ -68,8 +67,7 @@ class PrimaryHeader extends StatelessWidget {
               height: circleSize.h,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.accentGold.themeColor
-                    .withValues(alpha: 0.12),
+                color: AppColors.accentGold.themeColor.withValues(alpha: 0.12),
               ),
             ),
           ),
@@ -81,4 +79,3 @@ class PrimaryHeader extends StatelessWidget {
     );
   }
 }
-

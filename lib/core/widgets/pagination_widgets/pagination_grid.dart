@@ -1,10 +1,8 @@
-
 import 'package:app_base/core/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../app_text.dart';
-
 
 class CustomPaginationGridview<T> extends StatefulWidget {
   final Function _onLoadMore;
@@ -25,9 +23,11 @@ class CustomPaginationGridview<T> extends StatefulWidget {
   final double _mainAxisSpacing;
 
   @override
-  State<CustomPaginationGridview<T>> createState() => _CustomPaginationGridviewState<T>();
+  State<CustomPaginationGridview<T>> createState() =>
+      _CustomPaginationGridviewState<T>();
 
-  const CustomPaginationGridview({super.key,
+  const CustomPaginationGridview({
+    super.key,
     required VoidCallback onLoadMore,
     required bool isMoreLoading,
     bool isLoading = false,
@@ -48,7 +48,7 @@ class CustomPaginationGridview<T> extends StatefulWidget {
         _isLoading = isLoading,
         _isMoreLoading = isMoreLoading,
         _slivers = slivers,
-        _itemCount = itemCount??0,
+        _itemCount = itemCount ?? 0,
         _hasMorePages = hasMorePages,
         _builder = builder,
         _onRefresh = onRefresh,
@@ -61,8 +61,9 @@ class CustomPaginationGridview<T> extends StatefulWidget {
         _mainAxisSpacing = mainAxisSpacing;
 }
 
-class _CustomPaginationGridviewState<T> extends State<CustomPaginationGridview<T>> {
-  final ScrollController _scrollController =  ScrollController();
+class _CustomPaginationGridviewState<T>
+    extends State<CustomPaginationGridview<T>> {
+  final ScrollController _scrollController = ScrollController();
 
   bool _canLoadMore = true;
   bool _isLoadingMore = false; // متغير local لمنع الـ requests المتكررة
@@ -88,7 +89,8 @@ class _CustomPaginationGridviewState<T> extends State<CustomPaginationGridview<T
     if (!widget._hasMorePages) return;
 
     // تأكد من أننا وصلنا لنهاية القائمة
-    if (_scrollController.position.pixels < _scrollController.position.maxScrollExtent - 200) return;
+    if (_scrollController.position.pixels <
+        _scrollController.position.maxScrollExtent - 200) return;
 
     // تأكد من عدم وجود loading
     if (widget._isLoading) return;
@@ -134,11 +136,10 @@ class _CustomPaginationGridviewState<T> extends State<CustomPaginationGridview<T
       trackVisibility: true,
       child: CustomScrollView(
         controller: _scrollController,
-         physics: widget._physics ?? const AlwaysScrollableScrollPhysics(),
+        physics: widget._physics ?? const AlwaysScrollableScrollPhysics(),
         slivers: [
-          if (widget._slivers != null)...widget._slivers!,
-
-          if(widget._isLoading)...[
+          if (widget._slivers != null) ...widget._slivers!,
+          if (widget._isLoading) ...[
             SliverAppBar(
               pinned: false,
               snap: false,
@@ -148,10 +149,9 @@ class _CustomPaginationGridviewState<T> extends State<CustomPaginationGridview<T
               leading: const SizedBox(),
               expandedHeight: 100.0,
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              flexibleSpace:  const CustomLoadingWidget(),
+              flexibleSpace: const CustomLoadingWidget(),
             ),
-
-          ]else if(widget._itemCount==0)...[
+          ] else if (widget._itemCount == 0) ...[
             SliverAppBar(
               pinned: false,
               snap: false,
@@ -161,39 +161,40 @@ class _CustomPaginationGridviewState<T> extends State<CustomPaginationGridview<T
               leading: const SizedBox(),
               expandedHeight: 300.0,
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              flexibleSpace:   const SliverFillRemaining(
+              flexibleSpace: const SliverFillRemaining(
                 hasScrollBody: false,
-                child: Center(child: Column(
-                  children: [
-                    AppText('No Data Found')
-                  ],
+                child: Center(
+                    child: Column(
+                  children: [AppText('No Data Found')],
                 )),
               ),
             ),
-          ]else...[
+          ] else ...[
             SliverPadding(
               padding: widget._padding ?? EdgeInsets.zero,
               sliver: SliverGrid(
-                delegate: SliverChildBuilderDelegate(widget._builder, childCount: widget._itemCount),
-                gridDelegate: widget._gridDelegate ?? SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: widget._width.w,
-                  mainAxisSpacing: widget._mainAxisSpacing,
-                  childAspectRatio: 10,
-                  crossAxisSpacing: widget._crossAxisSpacing,
-                  mainAxisExtent: widget._height.h,
-                ),
+                delegate: SliverChildBuilderDelegate(widget._builder,
+                    childCount: widget._itemCount),
+                gridDelegate: widget._gridDelegate ??
+                    SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: widget._width.w,
+                      mainAxisSpacing: widget._mainAxisSpacing,
+                      childAspectRatio: 10,
+                      crossAxisSpacing: widget._crossAxisSpacing,
+                      mainAxisExtent: widget._height.h,
+                    ),
               ),
             ),
           ],
-
-
           SliverToBoxAdapter(
             child: SizedBox(
               height: 40,
               child: Center(
                 child: !widget._isLoading && widget._isMoreLoading
-                    ?  const CustomLoadingWidget(size: 20,)
-                    :  const SizedBox(height: 40.0),
+                    ? const CustomLoadingWidget(
+                        size: 20,
+                      )
+                    : const SizedBox(height: 40.0),
               ),
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:app_base/core/extensions/extensions.dart';
 import 'package:app_base/core/utils/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -57,8 +58,8 @@ class _NavItem {
 }
 
 final _navItems = [
-  const _NavItem(labelKey: LocaleKeys.nav_home,      icon: AppImages.iconsHome),
-  const _NavItem(labelKey: LocaleKeys.nav_more,      icon: AppImages.iconsMore),
+  const _NavItem(labelKey: LocaleKeys.nav_home, icon: AppImages.iconsHome),
+  const _NavItem(labelKey: LocaleKeys.nav_more, icon: AppImages.iconsMore),
 ];
 
 // ── Custom nav bar ────────────────────────────────────────────────────────────
@@ -75,7 +76,8 @@ class _CustomNavBar extends StatelessWidget {
 
     return Container(
       height: 75.h + MediaQuery.of(context).padding.bottom,
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom,top: 5),
+      padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).padding.bottom, top: 5),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -100,7 +102,8 @@ class _CustomNavBar extends StatelessWidget {
                 children: [
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
-                    padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 5.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 14.w, vertical: 5.h),
                     decoration: BoxDecoration(
                       color: isActive
                           ? primary.withValues(alpha: 0.12)
@@ -128,7 +131,6 @@ class _CustomNavBar extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   3.height,
-
                 ],
               ),
             ),
