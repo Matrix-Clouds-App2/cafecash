@@ -42,16 +42,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
     context.read<AuthCubit>().register(
-          name: _nameCtrl.text.trim(),
-          email: _emailCtrl.text.trim(),
-          phone: _phoneCtrl.text.trim(),
-          password: _passwordCtrl.text,
-          countryCode: countryCode??''
-
-        );
+        name: _nameCtrl.text.trim(),
+        email: _emailCtrl.text.trim(),
+        phone: _phoneCtrl.text.trim(),
+        password: _passwordCtrl.text,
+        countryCode: countryCode ?? '');
   }
 
-  String? countryCode='+966';
+  String? countryCode = '+966';
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
@@ -142,7 +140,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             egyptIsInitial: false,
                             isRequired: false,
                             keyboardType: TextInputType.phone,
-                            invalidNumberMessage: LocaleKeys.validation_invalidPhone.tr(),
+                            invalidNumberMessage:
+                                LocaleKeys.validation_invalidPhone.tr(),
                             onCountryChanged: (country) {
                               countryCode = country.dialCode == '20'
                                   ? '+2'

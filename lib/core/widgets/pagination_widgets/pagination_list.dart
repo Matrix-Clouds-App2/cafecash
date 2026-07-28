@@ -18,7 +18,8 @@ class CustomPaginationListView<T> extends StatefulWidget {
   final ScrollPhysics? _physics;
 
   @override
-  _CustomPaginationListViewState createState() => _CustomPaginationListViewState();
+  _CustomPaginationListViewState createState() =>
+      _CustomPaginationListViewState();
 
   const CustomPaginationListView({
     super.key,
@@ -81,7 +82,8 @@ class _CustomPaginationListViewState extends State<CustomPaginationListView> {
     if (position.userScrollDirection != ScrollDirection.reverse) return;
 
     const endReachedOffset = 200.0;
-    final reachedNearEnd = position.pixels >= (position.maxScrollExtent - endReachedOffset);
+    final reachedNearEnd =
+        position.pixels >= (position.maxScrollExtent - endReachedOffset);
     if (reachedNearEnd) {
       _loadMore();
     }
@@ -123,10 +125,9 @@ class _CustomPaginationListViewState extends State<CustomPaginationListView> {
         else if (widget._itemCount == 0)
           const SliverFillRemaining(
             hasScrollBody: false,
-            child: Center(child: Column(
-              children: [
-                AppText('No Data Found')
-              ],
+            child: Center(
+                child: Column(
+              children: [AppText('No Data Found')],
             )),
           )
         // List Items
@@ -134,7 +135,7 @@ class _CustomPaginationListViewState extends State<CustomPaginationListView> {
           SliverList(
             // ✅ استخدام delegate أكثر كفاءة
             delegate: SliverChildBuilderDelegate(
-                  (context, index) {
+              (context, index) {
                 // ✅ إضافة RepaintBoundary لتحسين الأداء
                 return RepaintBoundary(
                   child: widget._builder(context, index),

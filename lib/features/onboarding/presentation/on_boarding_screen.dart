@@ -120,7 +120,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               ),
                             ),
                           16.height,
-                      
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: List.generate(
@@ -191,8 +190,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   onTap: _nextPage,
                   color: _isLast ? accentGold : null,
                   borderColor: _isLast ? accentGold : null,
-                  textColor:
-                      _isLast ? AppColors.primaryColor.themeColor : null,
+                  textColor: _isLast ? AppColors.primaryColor.themeColor : null,
                 ),
               ),
 

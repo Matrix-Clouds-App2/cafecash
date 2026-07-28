@@ -112,8 +112,7 @@ class _TapEffectState extends State<CustomTapEffect>
         animation: animationController!,
         builder: (context, child) {
           return Transform.scale(
-            scale:
-            widget.enableAnimation ? animationController!.value : 1.0,
+            scale: widget.enableAnimation ? animationController!.value : 1.0,
             child: widget.child,
           );
         },

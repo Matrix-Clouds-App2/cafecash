@@ -108,8 +108,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
         prefixIcon: widget.prefixIcon,
         suffixIcon: widget.isPassword
             ? IconButton(
-                icon: Icon(
-                    _obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined),
+                icon: Icon(_obscure
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined),
                 onPressed: () => setState(() => _obscure = !_obscure),
               )
             : widget.suffixIcon,
@@ -120,7 +121,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),
           borderSide: BorderSide(
-            color: widget.focusedBorderColor ?? AppColors.primaryColor.themeColor,
+            color:
+                widget.focusedBorderColor ?? AppColors.primaryColor.themeColor,
             width: 1.2,
           ),
         ),
@@ -131,7 +133,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),
-          borderSide: BorderSide(color: AppColors.errorColor.themeColor, width: 1.2),
+          borderSide:
+              BorderSide(color: AppColors.errorColor.themeColor, width: 1.2),
         ),
         contentPadding: widget.contentPadding ??
             const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
@@ -142,4 +145,3 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
 @Deprecated('Use CustomTextField instead.')
 typedef AppTextField = CustomTextField;
-

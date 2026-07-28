@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -7,6 +8,7 @@ import '../../app/router/routes.dart';
 import '../di/injection.dart';
 import '../storage/local_storage.dart';
 import '../utils/app_overlay.dart';
+import '../utils/locale_keys.dart';
 import 'api_endpoints.dart';
 
 class DioClient {
@@ -28,23 +30,15 @@ class DioClient {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-
-          'x-api-key': 'VNxpn4qO45Ug0FgFreLbDU4615nsLS3l',
         },
       ),
     );
 
-    dio.interceptors.addAll([
-      _AuthInterceptor(storage),
-      _AppLogInterceptor(),
-    ]);
+    dio.interceptors.add(_AuthInterceptor(storage));
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          final lang = getIt<LocalStorage>().getLang();
-
-          options.headers['Accept-Language'] = lang;
-
+          options.headers['Accept-Language'] = getIt<LocalStorage>().getLang();
           return handler.next(options);
         },
       ),
@@ -77,7 +71,8 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) =>
-      _dio.post<T>(path, data: data, queryParameters: queryParameters, options: options);
+      _dio.post<T>(path,
+          data: data, queryParameters: queryParameters, options: options);
 
   // ─── PUT ──────────────────────────────────────────────────────────────────
   Future<Response<T>> put<T>(
@@ -86,7 +81,8 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) =>
-      _dio.put<T>(path, data: data, queryParameters: queryParameters, options: options);
+      _dio.put<T>(path,
+          data: data, queryParameters: queryParameters, options: options);
 
   // ─── PATCH ────────────────────────────────────────────────────────────────
   Future<Response<T>> patch<T>(
@@ -95,7 +91,8 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) =>
-      _dio.patch<T>(path, data: data, queryParameters: queryParameters, options: options);
+      _dio.patch<T>(path,
+          data: data, queryParameters: queryParameters, options: options);
 
   // ─── DELETE ───────────────────────────────────────────────────────────────
   Future<Response<T>> delete<T>(
@@ -104,7 +101,8 @@ class DioClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
   }) =>
-      _dio.delete<T>(path, data: data, queryParameters: queryParameters, options: options);
+      _dio.delete<T>(path,
+          data: data, queryParameters: queryParameters, options: options);
 
   // ─── POST FormData (images / files) ───────────────────────────────────────
   ///
@@ -153,8 +151,9 @@ class _AuthInterceptor extends Interceptor {
   final LocalStorage _storage;
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final token = _storage.getToken();
+  Future<void> onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
+    final token = await _storage.getToken();
     if (token != null && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
     }
@@ -162,42 +161,14 @@ class _AuthInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
+  Future<void> onError(
+      DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
-      _storage.clearAll();
-      AppOverlay.showError('انتهت صلاحية الجلسة، يرجى تسجيل الدخول مجدداً');
+      await _storage.clearAll();
+      AppOverlay.showError(LocaleKeys.error_unauthorized.tr());
       NavigationService.navigationKey.currentState
           ?.pushNamedAndRemoveUntil(Routes.loginScreen, (_) => false);
     }
-    handler.next(err);
-  }
-}
-
-// ─── Log Interceptor ──────────────────────────────────────────────────────────
-
-class _AppLogInterceptor extends Interceptor {
-  @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    // ignore: avoid_print
-    // print('→ [${options.method}] ${options.uri}');
-    // if (options.data != null) {
-    //   // ignore: avoid_print
-    //   print('   body: ${options.data}');
-    // }
-    handler.next(options);
-  }
-
-  @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
-    // ignore: avoid_print
-    print('← [${response.statusCode}] ${response.requestOptions.uri}');
-    handler.next(response);
-  }
-
-  @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
-    // ignore: avoid_print
-    print('✗ [${err.response?.statusCode}] ${err.requestOptions.uri}: ${err.message}');
     handler.next(err);
   }
 }

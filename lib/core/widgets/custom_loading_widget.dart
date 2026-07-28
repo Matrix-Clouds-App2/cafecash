@@ -10,7 +10,8 @@ class CustomLoadingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: LoadingAnimationWidget.fourRotatingDots(
-        size:size?? 25, color: color?? Colors.white,
+        size: size ?? 25,
+        color: color ?? Colors.white,
       ),
     );
   }

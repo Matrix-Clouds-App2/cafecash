@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class AppText extends StatelessWidget {
@@ -12,10 +11,8 @@ class AppText extends StatelessWidget {
   final TextOverflow? overflow;
 
   const AppText(
-      this.text,
-      {
+    this.text, {
     super.key,
-
     this.fontSize,
     this.height,
     this.fontWeight,
@@ -32,7 +29,6 @@ class AppText extends StatelessWidget {
       textAlign: textAlign ?? TextAlign.start,
       maxLines: maxLines,
       overflow: overflow,
-
       style: TextStyle(
         height: height,
         fontFamily: 'Cairo',

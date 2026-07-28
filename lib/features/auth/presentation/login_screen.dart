@@ -66,155 +66,142 @@ class _LoginScreenState extends State<LoginScreen> {
         builder: (context, state) {
           final isLoading = state is AuthLoading;
 
-        return Scaffold(
-          body: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const _HeaderSection(),
-                  Container(
-                    padding: 16.paddingHorizontal,
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFF4F5F3),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
+          return Scaffold(
+            body: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const _HeaderSection(),
+                    Container(
+                      padding: 16.paddingHorizontal,
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                        color: Color(0xFFF4F5F3),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        16.height,
-                        AppText(
-                          LocaleKeys.auth_login.tr(),
-                          fontSize: 24,
-                          color: const Color(0xFF17212B),
-                          fontWeight: FontWeight.w700,
-                        ),
-                        14.height,
-                        _FieldLabel(text: LocaleKeys.auth_email.tr()),
-                        8.height,
-                        CustomTextField(
-                          hint: LocaleKeys.auth_email.tr(),
-                          controller: _emailCtrl,
-                          keyboardType: TextInputType.emailAddress,
-                          validator: (v) {
-                            if (v == null || v.trim().isEmpty) {
-                              return LocaleKeys.validation_required.tr();
-                            }
-                            if (!v.contains('@')) {
-                              return LocaleKeys.validation_invalidEmail.tr();
-                            }
-                            return null;
-                          },
-                        ),
-                        14.height,
-                        _FieldLabel(text: LocaleKeys.auth_password.tr()),
-                        8.height,
-                        CustomTextField(
-                          hint: LocaleKeys.auth_password.tr(),
-                          controller: _passwordCtrl,
-                          isPassword: true,
-                          validator: (v) {
-                            if (v == null || v.isEmpty) {
-                              return LocaleKeys.validation_required.tr();
-                            }
-                            if (v.length < 6) {
-                              return LocaleKeys.validation_shortPassword.tr();
-                            }
-                            return null;
-                          },
-                        ),
-                        12.height,
-                        16.height,
-                        // Center(
-                        //   child: TextButton(
-                        //     onPressed: () {},
-                        //     child: AppText(
-                        //       LocaleKeys.auth_forgotPassword.tr(),
-                        //       fontSize: 14,
-                        //       color: AppColors.accentGold.themeColor,
-                        //       fontWeight: FontWeight.w700,
-                        //     ),
-                        //   ),
-                        // ),
-                        6.height,
-                        CustomButton(
-                          title: LocaleKeys.auth_login.tr(),
-                          onTap: _submit,
-                          loading: isLoading,
-                        ),
-                        18.height,
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Divider(
-                                color: const Color(0xFFD4D9D3),
-                                thickness: 1,
-                                endIndent: 8.w,
-                              ),
-                            ),
-                            AppText(
-                              LocaleKeys.auth_or.tr(),
-                              fontSize: 14,
-                              color: const Color(0xFF9AA19C),
-                              fontWeight: FontWeight.w600,
-                            ),
-                            Expanded(
-                              child: Divider(
-                                color: const Color(0xFFD4D9D3),
-                                thickness: 1,
-                                indent: 8.w,
-                              ),
-                            ),
-                          ],
-                        ),
-                        18.height,
-                        _DashedGuestButton(
-                          label: LocaleKeys.auth_continueAsGuest.tr(),
-                          color: AppColors.primaryColor.themeColor,
-                          onTap: _continueAsGuest,
-                        ),
-                        20.height,
-                        Center(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          16.height,
+                          AppText(
+                            LocaleKeys.auth_login.tr(),
+                            fontSize: 24,
+                            color: const Color(0xFF17212B),
+                            fontWeight: FontWeight.w700,
+                          ),
+                          14.height,
+                          _FieldLabel(text: LocaleKeys.auth_email.tr()),
+                          8.height,
+                          CustomTextField(
+                            hint: LocaleKeys.auth_email.tr(),
+                            controller: _emailCtrl,
+                            keyboardType: TextInputType.emailAddress,
+                            validator: (v) {
+                              if (v == null || v.trim().isEmpty) {
+                                return LocaleKeys.validation_required.tr();
+                              }
+                              if (!v.contains('@')) {
+                                return LocaleKeys.validation_invalidEmail.tr();
+                              }
+                              return null;
+                            },
+                          ),
+                          14.height,
+                          _FieldLabel(text: LocaleKeys.auth_password.tr()),
+                          8.height,
+                          CustomTextField(
+                            hint: LocaleKeys.auth_password.tr(),
+                            controller: _passwordCtrl,
+                            isPassword: true,
+                            validator: (v) {
+                              if (v == null || v.isEmpty) {
+                                return LocaleKeys.validation_required.tr();
+                              }
+                              if (v.length < 6) {
+                                return LocaleKeys.validation_shortPassword.tr();
+                              }
+                              return null;
+                            },
+                          ),
+                          12.height,
+                          22.height,
+                          CustomButton(
+                            title: LocaleKeys.auth_login.tr(),
+                            onTap: _submit,
+                            loading: isLoading,
+                          ),
+                          18.height,
+                          Row(
                             children: [
+                              Expanded(
+                                child: Divider(
+                                  color: const Color(0xFFD4D9D3),
+                                  thickness: 1,
+                                  endIndent: 8.w,
+                                ),
+                              ),
                               AppText(
-                                LocaleKeys.auth_dontHaveAccount.tr(),
+                                LocaleKeys.auth_or.tr(),
                                 fontSize: 14,
                                 color: const Color(0xFF9AA19C),
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                               ),
-                              4.width,
-                              GestureDetector(
-                                onTap: () => Navigator.pushNamed(
-                                    context, Routes.registerScreen),
-                                child: AppText(
-                                  LocaleKeys.auth_register.tr(),
-                                  fontSize: 14,
-                                  color: AppColors.accentGold.themeColor,
-                                  fontWeight: FontWeight.w700,
+                              Expanded(
+                                child: Divider(
+                                  color: const Color(0xFFD4D9D3),
+                                  thickness: 1,
+                                  indent: 8.w,
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                        50.height,
-
-                      ],
+                          18.height,
+                          _DashedGuestButton(
+                            label: LocaleKeys.auth_continueAsGuest.tr(),
+                            color: AppColors.primaryColor.themeColor,
+                            onTap: _continueAsGuest,
+                          ),
+                          20.height,
+                          Center(
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                AppText(
+                                  LocaleKeys.auth_dontHaveAccount.tr(),
+                                  fontSize: 14,
+                                  color: const Color(0xFF9AA19C),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                4.width,
+                                GestureDetector(
+                                  onTap: () => Navigator.pushNamed(
+                                      context, Routes.registerScreen),
+                                  child: AppText(
+                                    LocaleKeys.auth_register.tr(),
+                                    fontSize: 14,
+                                    color: AppColors.accentGold.themeColor,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          50.height,
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
       ),
     );
   }
@@ -332,7 +319,8 @@ class _DashedRRectPainter extends CustomPainter {
       ..strokeWidth = strokeWidth;
 
     final rect = Offset.zero & size;
-    final rRect = RRect.fromRectAndRadius(rect.deflate(strokeWidth / 2), Radius.circular(radius));
+    final rRect = RRect.fromRectAndRadius(
+        rect.deflate(strokeWidth / 2), Radius.circular(radius));
     final path = Path()..addRRect(rRect);
 
     for (final metric in path.computeMetrics()) {

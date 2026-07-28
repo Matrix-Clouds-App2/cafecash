@@ -17,11 +17,12 @@ class CustomScreenStateLayout extends StatelessWidget {
   final WidgetBuilder? _errorBuilder;
   final WidgetBuilder? _loadingBuilder;
   final VoidCallback? _onRetry;
-  final WidgetBuilder _builder ;
-  final WidgetBuilder? _noDataBuilder ;
+  final WidgetBuilder _builder;
+  final WidgetBuilder? _noDataBuilder;
   final Future<void> Function()? _onRefresh;
-  const CustomScreenStateLayout({super.key,
-    required  WidgetBuilder builder,
+  const CustomScreenStateLayout({
+    super.key,
+    required WidgetBuilder builder,
     bool isEmpty = false,
     ErrorModel? error,
     bool isLoading = false,
@@ -30,8 +31,9 @@ class CustomScreenStateLayout extends StatelessWidget {
     WidgetBuilder? noDataBuilder,
     VoidCallback? onRetry,
     Future<void> Function()? onRefresh,
-  })
-      :_isEmpty = isEmpty,_isLoading = isLoading,_error= error,
+  })  : _isEmpty = isEmpty,
+        _isLoading = isLoading,
+        _error = error,
         _errorBuilder = errorBuilder,
         _loadingBuilder = loadingBuilder,
         _onRefresh = onRefresh,
@@ -41,43 +43,58 @@ class CustomScreenStateLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  _buildView(context);
+    return _buildView(context);
   }
 
   Widget _buildView(BuildContext context) {
     if (_isLoading) {
-      return _loadingBuilder!=null? _loadingBuilder(context): Center(child: CustomLoadingWidget(color: AppColors.primaryColor.themeColor,size: 40,));
-    }   else if(_error != null){
-      return _errorBuilder!=null? _errorBuilder(context): CustomErrorView(errorModel: _error, onRetry: _onRetry,);
-    } else if(_isEmpty){
-      return _noDataBuilder!=null? _noDataBuilder(context):
-      CustomNoDataView(onRefresh: _onRefresh,);
-
-    } else{
-      if(_onRefresh!=null){
-        return RefreshIndicator(onRefresh:  _onRefresh ,child: _builder(context));
-      }else{
+      return _loadingBuilder != null
+          ? _loadingBuilder(context)
+          : Center(
+              child: CustomLoadingWidget(
+              color: AppColors.primaryColor.themeColor,
+              size: 40,
+            ));
+    } else if (_error != null) {
+      return _errorBuilder != null
+          ? _errorBuilder(context)
+          : CustomErrorView(
+              errorModel: _error,
+              onRetry: _onRetry,
+            );
+    } else if (_isEmpty) {
+      return _noDataBuilder != null
+          ? _noDataBuilder(context)
+          : CustomNoDataView(
+              onRefresh: _onRefresh,
+            );
+    } else {
+      if (_onRefresh != null) {
+        return RefreshIndicator(
+            onRefresh: _onRefresh, child: _builder(context));
+      } else {
         return _builder(context);
       }
     }
-
   }
 }
+
 class CustomNoDataView extends StatelessWidget {
-  final String?  _title;
+  final String? _title;
   final String? _desc;
   final String? _image;
   final String _imageSvg;
   final double _padding;
   final Future<void> Function()? _onRefresh;
 
-  const CustomNoDataView({super.key,
-    String? title ,
+  const CustomNoDataView({
+    super.key,
+    String? title,
     String? desc,
     String? image,
     double padding = 12,
     Future<void> Function()? onRefresh,
-    String imageSvg=AppImages.noData,
+    String imageSvg = AppImages.noData,
   })  : _title = title,
         _padding = padding,
         _onRefresh = onRefresh,
@@ -86,46 +103,52 @@ class CustomNoDataView extends StatelessWidget {
         _imageSvg = imageSvg;
   @override
   Widget build(BuildContext context) {
-    if(_onRefresh!=null){
-      return RefreshIndicator(onRefresh: _onRefresh, child:
-      SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        padding:  EdgeInsets.all(_padding.r),
-        child: Center(
-            child: Column(
+    if (_onRefresh != null) {
+      return RefreshIndicator(
+          onRefresh: _onRefresh,
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: EdgeInsets.all(_padding.r),
+            child: Center(
+                child: Column(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center, children: [
-
-              (_image != null)? Image.asset(_image) : SvgPicture.asset(_imageSvg, width: 200.w, height: 200.h, fit: BoxFit.fill),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                (_image != null)
+                    ? Image.asset(_image)
+                    : SvgPicture.asset(_imageSvg,
+                        width: 200.w, height: 200.h, fit: BoxFit.fill),
+                12.height,
+                Text(_title ?? tr(LocaleKeys.error_notFound),
+                    textAlign: TextAlign.center),
+                12.height,
+                Text(_desc ?? '', textAlign: TextAlign.center),
+              ],
+            )),
+          ));
+    } else {
+      return Padding(
+        padding: EdgeInsets.all(_padding.r),
+        child: Center(
+            child: FittedBox(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              (_image != null)
+                  ? Image.asset(_image)
+                  : SvgPicture.asset(_imageSvg,
+                      width: 200.w, height: 200.h, fit: BoxFit.fill),
               12.height,
-              Text(_title??tr( LocaleKeys.error_notFound),  textAlign: TextAlign.center),
+              Text(_title ?? tr(LocaleKeys.error_notFound),
+                  textAlign: TextAlign.center),
               12.height,
-              Text(_desc??'', textAlign: TextAlign.center),
+              Text(_desc ?? '', textAlign: TextAlign.center),
             ],
-            )
-        ),
-      ));
-    }else{
-      return
-        Padding(
-          padding:  EdgeInsets.all(_padding.r),
-          child: Center(
-              child: FittedBox(
-                child: Column(mainAxisSize: MainAxisSize.min,mainAxisAlignment: MainAxisAlignment.center, children: [
-                  (_image != null)? Image.asset(_image) : SvgPicture.asset(_imageSvg, width: 200.w, height: 200.h, fit: BoxFit.fill),
-                  12.height,
-
-                  Text(_title??tr( LocaleKeys.error_notFound), textAlign: TextAlign.center),
-                  12.height,
-
-                  Text(_desc??'', textAlign: TextAlign.center),
-                ],
-                ),
-              )
           ),
-        );
+        )),
+      );
     }
-
   }
 }
 
@@ -135,11 +158,12 @@ class CustomErrorView extends StatelessWidget {
   final String? _image;
   final String _imageSvg;
 
-  const CustomErrorView({super.key,
+  const CustomErrorView({
+    super.key,
     ErrorModel? errorModel,
     VoidCallback? onRetry,
     String? image,
-    String imageSvg=AppImages.imagesErrorImage,
+    String imageSvg = AppImages.imagesErrorImage,
   })  : _errorModel = errorModel,
         _onRetry = onRetry,
         _image = image,
@@ -147,11 +171,13 @@ class CustomErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ErrorView(message: _errorModel?.errorMessage??'Error',onRetry: _onRetry,imageSvg: _imageSvg,image: _image,);
-
+    return ErrorView(
+      message: _errorModel?.errorMessage ?? 'Error',
+      onRetry: _onRetry,
+      imageSvg: _imageSvg,
+      image: _image,
+    );
   }
-
-
 }
 
 class ErrorView extends StatelessWidget {
@@ -160,18 +186,16 @@ class ErrorView extends StatelessWidget {
   final String? _image;
   final String _imageSvg;
 
-  const ErrorView({super.key,
+  const ErrorView({
+    super.key,
     String? message,
     VoidCallback? onRetry,
     String? image,
-    String imageSvg=AppImages.imagesErrorImage,
+    String imageSvg = AppImages.imagesErrorImage,
   })  : _message = message,
         _onRetry = onRetry,
         _image = image,
         _imageSvg = imageSvg;
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -180,29 +204,40 @@ class ErrorView extends StatelessWidget {
             padding: const EdgeInsets.all(0.0),
             child: FittedBox(
               fit: BoxFit.scaleDown,
-              child:  Column(
+              child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  (_image != null)? Image.asset(_image) : SvgPicture.asset(_imageSvg, width: 200.w, height: 200.h, fit: BoxFit.fill),
-                  AppText(_message ?? '', fontSize: 16.sp,),
-                  SizedBox(height: 20.h,),
-                  if(_onRetry != null)
+                  (_image != null)
+                      ? Image.asset(_image)
+                      : SvgPicture.asset(_imageSvg,
+                          width: 200.w, height: 200.h, fit: BoxFit.fill),
+                  AppText(
+                    _message ?? '',
+                    fontSize: 16.sp,
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  if (_onRetry != null)
                     TextButton(
                       onPressed: _onRetry,
-                      style: TextButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0), side: const BorderSide(color: Colors.grey)),),
+                      style: TextButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: const BorderSide(color: Colors.grey)),
+                      ),
                       child: Text(
                         tr(LocaleKeys.common_retry),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
-
                     ),
                 ],
               ),
-            )
-        ));
+            )));
   }
 }
-class ErrorModel{
+
+class ErrorModel {
   final ErrorEnum code;
   final String errorMessage;
   final String? image;
@@ -218,7 +253,9 @@ class ErrorModel{
     return 'ErrorModel{code: $code, errorMessage: $errorMessage, image: $image}';
   }
 }
-enum ErrorEnum {  /// It occurs when url is opened timeout.
+
+enum ErrorEnum {
+  /// It occurs when url is opened timeout.
   connectTimeout,
 
   /// It occurs when url is sent timeout.
@@ -226,6 +263,7 @@ enum ErrorEnum {  /// It occurs when url is opened timeout.
 
   ///It occurs when receiving timeout.
   receiveTimeout,
+
   /// When the server response, but with a incorrect status, such as 404, 503...
   response,
 
@@ -241,5 +279,4 @@ enum ErrorEnum {  /// It occurs when url is opened timeout.
   verify,
 
   otherError
-
 }

@@ -559,9 +559,8 @@ class _LangOption extends StatelessWidget {
               label,
               fontSize: 15,
               fontWeight: FontWeight.w600,
-              color: isSelected
-                  ? primary
-                  : AppColors.textPrimaryColor.themeColor,
+              color:
+                  isSelected ? primary : AppColors.textPrimaryColor.themeColor,
             ),
             const Spacer(),
             if (isSelected)

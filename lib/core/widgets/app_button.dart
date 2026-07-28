@@ -64,35 +64,49 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     double radius = _customRadius ?? _radius;
     return SizedBox(
-      width: _width?? double.infinity,
+      width: _width ?? double.infinity,
       height: (_height ?? 46).h,
       child: CustomTapEffect(
         isClickable: !_loading,
         onTap: _loading ? null : _onTap,
         child: MaterialButton(
-          color: _isOutlined ? Colors.transparent : (_color ?? AppColors.primaryColor.darkColor),
+          color: _isOutlined
+              ? Colors.transparent
+              : (_color ?? AppColors.primaryColor.darkColor),
           highlightElevation: 0,
           onPressed: _loading ? () {} : _onTap,
-          padding: !_widerPadding ? EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w) : EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+          padding: !_widerPadding
+              ? EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w)
+              : EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
           elevation: 0,
           shape: _isRounded
-              ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius), side: BorderSide(color: _borderColor ?? Theme.of(context).primaryColor, width: 1.5.w))
-              : RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius), side: BorderSide(color: _borderColor ?? Theme.of(context).primaryColor, width: 1.5.w)),
+              ? RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(radius),
+                  side: BorderSide(
+                      color: _borderColor ?? Theme.of(context).primaryColor,
+                      width: 1.5.w))
+              : RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(radius),
+                  side: BorderSide(
+                      color: _borderColor ?? Theme.of(context).primaryColor,
+                      width: 1.5.w)),
           child: _loading
-              ? CustomLoadingWidget(size: (_height ?? 20).h, color: _isOutlined? _borderColor : Colors.white)
+              ? CustomLoadingWidget(
+                  size: (_height ?? 20).h,
+                  color: _isOutlined ? _borderColor : Colors.white)
               : _title != null
-              ? Container(
-            padding: 2.paddingBottom,
-            child:
-            AppText(_title,
-            fontSize:  _fontSize ?? 15,
-              fontWeight: FontWeight.bold,
-             color: _textColor ??(_isOutlined? AppColors.primaryColor.themeColor :
-             Colors.white),
-            )
-
-          )
-              : _child ?? const SizedBox(),
+                  ? Container(
+                      padding: 2.paddingBottom,
+                      child: AppText(
+                        _title,
+                        fontSize: _fontSize ?? 15,
+                        fontWeight: FontWeight.bold,
+                        color: _textColor ??
+                            (_isOutlined
+                                ? AppColors.primaryColor.themeColor
+                                : Colors.white),
+                      ))
+                  : _child ?? const SizedBox(),
         ),
       ),
     );

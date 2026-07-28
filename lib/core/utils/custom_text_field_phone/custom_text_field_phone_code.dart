@@ -154,7 +154,8 @@ class _CustomTextFieldPhoneCodeState extends State<CustomTextFieldPhoneCode> {
       if (byIso.isNotEmpty) return byIso.first;
 
       final normalizedDial = raw.replaceAll('+', '');
-      final byDial = _countryList.where((item) => item.dialCode == normalizedDial);
+      final byDial =
+          _countryList.where((item) => item.dialCode == normalizedDial);
       if (byDial.isNotEmpty) return byDial.first;
     }
 
@@ -190,14 +191,16 @@ class _CustomTextFieldPhoneCodeState extends State<CustomTextFieldPhoneCode> {
     }
 
     if (_selectedCountry.code == 'EG' && !text.startsWith('0')) {
-      return widget.invalidNumberMessage ?? LocaleKeys.validation_invalidPhone.tr();
+      return widget.invalidNumberMessage ??
+          LocaleKeys.validation_invalidPhone.tr();
     }
 
     if (!widget.disableLengthCheck) {
-      final validLength =
-          text.length >= _selectedCountry.minLength && text.length <= _selectedCountry.maxLength;
+      final validLength = text.length >= _selectedCountry.minLength &&
+          text.length <= _selectedCountry.maxLength;
       if (!validLength) {
-        return widget.invalidNumberMessage ?? LocaleKeys.validation_invalidPhone.tr();
+        return widget.invalidNumberMessage ??
+            LocaleKeys.validation_invalidPhone.tr();
       }
     }
 
@@ -256,7 +259,8 @@ class _CustomTextFieldPhoneCodeState extends State<CustomTextFieldPhoneCode> {
         widget.onChange?.call(value);
         widget.onChanged?.call(_buildPhoneNumber(value.trim()));
       },
-      onSaved: (value) => widget.onSaved?.call(_buildPhoneNumber((value ?? '').trim())),
+      onSaved: (value) =>
+          widget.onSaved?.call(_buildPhoneNumber((value ?? '').trim())),
       enabled: widget.enabled,
       readOnly: widget.readOnly,
       autofocus: widget.autofocus,
@@ -277,7 +281,8 @@ class _CustomTextFieldPhoneCodeState extends State<CustomTextFieldPhoneCode> {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(widget.borderRadius),
           borderSide: BorderSide(
-            color: widget.focusedBorderColor ?? AppColors.primaryColor.themeColor,
+            color:
+                widget.focusedBorderColor ?? AppColors.primaryColor.themeColor,
             width: 1.2,
           ),
         ),
@@ -288,7 +293,8 @@ class _CustomTextFieldPhoneCodeState extends State<CustomTextFieldPhoneCode> {
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(widget.borderRadius),
-          borderSide: BorderSide(color: AppColors.errorColor.themeColor, width: 1.2),
+          borderSide:
+              BorderSide(color: AppColors.errorColor.themeColor, width: 1.2),
         ),
         contentPadding: widget.contentPadding ??
             const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
@@ -476,7 +482,8 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(14),
-                      borderSide: BorderSide(color: AppColors.primaryColor.themeColor),
+                      borderSide:
+                          BorderSide(color: AppColors.primaryColor.themeColor),
                     ),
                   ),
                 ),
@@ -486,12 +493,14 @@ class _CountryPickerSheetState extends State<_CountryPickerSheet> {
                   itemCount: _filtered.length,
                   separatorBuilder: (_, __) => Divider(
                     height: 1,
-                    color: AppColors.hintColor.themeColor.withValues(alpha: 0.25),
+                    color:
+                        AppColors.hintColor.themeColor.withValues(alpha: 0.25),
                   ),
                   itemBuilder: (context, index) {
                     final country = _filtered[index];
-                    final isSelected = country.code == widget.selectedCountry.code &&
-                        country.dialCode == widget.selectedCountry.dialCode;
+                    final isSelected =
+                        country.code == widget.selectedCountry.code &&
+                            country.dialCode == widget.selectedCountry.dialCode;
                     final isArabic = context.locale.languageCode == 'ar';
 
                     return ListTile(

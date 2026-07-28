@@ -3,14 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 class ConvertHelper {
-
   static String formatDateTime(
     String date, {
     String? time,
     bool includeDate = true,
     bool includeTime = false,
-  })
-  {
+  }) {
     if (date.isEmpty && (time == null || time.isEmpty)) return '';
 
     final dateTime = _parseDateTime(date, time: time);
