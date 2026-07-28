@@ -4,7 +4,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:app_base/core/extensions/extensions.dart';
 import 'package:app_base/core/utils/app_images.dart';
 import 'package:app_base/core/widgets/app_text.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,15 +36,6 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    if(kDebugMode){
-      _emailCtrl.text = 'yehya@gmail.com';
-      _passwordCtrl.text = '123123123';
-    }
-  }
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
     context.read<AuthCubit>().login(
@@ -64,8 +54,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {
@@ -86,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _HeaderSection(description: 'asdasd'),
+                  const _HeaderSection(),
                   Container(
                     padding: 16.paddingHorizontal,
                     width: double.infinity,
@@ -233,41 +221,19 @@ class _LoginScreenState extends State<LoginScreen> {
 }
 
 class _HeaderSection extends StatelessWidget {
-  const _HeaderSection({this.description});
-
-  final String? description;
+  const _HeaderSection();
 
   @override
   Widget build(BuildContext context) {
     return PrimaryHeader(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 50.w),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Center(
-                child: Image.asset(
-                  AppImages.logo4,
-                  width: 220.w,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 16.h),
-              child: AppText(
-                description?.isNotEmpty == true
-                    ? description!
-                    : 'المنصة الرسمية للوفد السعودي المشارك في المنتدى الحضري WUF 13',
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w700,
-                height: 1.6,
-                textAlign: TextAlign.center,
-                color: Colors.white,
-              ),
-            ),
-          ],
+        child: Center(
+          child: Image.asset(
+            AppImages.logo4,
+            width: 220.w,
+            fit: BoxFit.contain,
+          ),
         ),
       ),
     );

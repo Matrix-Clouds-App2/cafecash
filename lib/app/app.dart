@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../core/di/injection.dart';
 import '../core/storage/local_storage.dart';
-import '../features/home/logic/home_cubit.dart';
+import '../core/utils/app_constants.dart';
 import '../features/auth/logic/auth_cubit.dart';
 import '../features/profile/logic/profile_cubit.dart';
 import 'router/app_router.dart';
@@ -30,18 +30,13 @@ class MyApp extends StatelessWidget {
             return cubit;
           },
         ),
-
-        BlocProvider<HomeCubit>(
-          create: (_) => getIt<HomeCubit>()..loadHome(),
-        ),
-
       ],
       child: ScreenUtilInit(
           designSize: const Size(375, 812),
           useInheritedMediaQuery: true,
           builder: (BuildContext context, Widget? child) {
           return MaterialApp(
-            title: 'WUF 13',
+            title: AppConstants.appName,
             debugShowCheckedModeBanner: false,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,

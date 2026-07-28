@@ -4,7 +4,7 @@ class AppConstants {
   AppConstants._();
 
   // ─── App ──────────────────────────────────────────────────────────────────
-  static const String appName = 'WUF13 App';
+  static const String appName = 'App Base';
 
   // ─── Pagination ───────────────────────────────────────────────────────────
   static const int pageSize = 15;
