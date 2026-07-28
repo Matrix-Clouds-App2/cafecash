@@ -1,20 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:app_base/core/extensions/extensions.dart';
 import 'package:app_base/core/utils/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
-import '../../../core/notifications/notification_service.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/locale_keys.dart';
 import '../../../core/widgets/app_text.dart';
-import '../../../main.dart';
 import '../../home/presentation/home_screen.dart';
 import '../../more/presentation/more_screen.dart';
-import '../../profile/logic/profile_cubit.dart';
 
 class LayoutScreen extends StatefulWidget {
   const LayoutScreen({super.key, this.currentPage = 0});
@@ -25,10 +19,8 @@ class LayoutScreen extends StatefulWidget {
   State<LayoutScreen> createState() => _LayoutScreenState();
 }
 
-class _LayoutScreenState extends State<LayoutScreen>
-    with WidgetsBindingObserver {
+class _LayoutScreenState extends State<LayoutScreen> {
   late int _currentIndex;
-  bool _awaitingPermission = false;
 
   static final _screens = [
     const HomeScreen(),
@@ -39,46 +31,6 @@ class _LayoutScreenState extends State<LayoutScreen>
   void initState() {
     super.initState();
     _currentIndex = widget.currentPage;
-    WidgetsBinding.instance.addObserver(this);
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      if (!mounted) return;
-      context.read<ProfileCubit>().registerFcmToken();
-      _setupPrayerNotifications();
-
-    });
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  Future<void> _setupPrayerNotifications() async {
-
-    if (!mounted) return;
-
-    final exactGranted = await NotificationService.isExactAlarmGranted();
-    final batteryExempt = await NotificationService.isBatteryExempt();
-    if (exactGranted && batteryExempt) {
-      // All permissions ready — schedule immediately.
-      return;
-    }
-
-    // One or more permissions missing — open settings and wait for app to resume.
-    _awaitingPermission = true;
-    if (!exactGranted) await NotificationService.requestExactAlarmIfNeeded();
-    if (!batteryExempt) await NotificationService.requestBatteryOptimizationIfNeeded();
-    // fetchPrayerTimings() will be called from didChangeAppLifecycleState when
-    // the user returns from the settings page.
-  }
-
-  // Fires when the user returns from any settings page.
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed && _awaitingPermission) {
-      _awaitingPermission = false;
-    }
   }
 
   @override

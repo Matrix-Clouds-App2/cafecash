@@ -13,7 +13,6 @@ import '../../../core/utils/locale_keys.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../../core/widgets/primary_header.dart';
-import '../../../main.dart';
 import '../logic/auth_cubit.dart';
 import '../../profile/logic/profile_cubit.dart';
 
@@ -133,9 +132,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               return null;
                             },
                           ),
-                          if(isAfterTwoDaysResult)
-                           ...[ 14.height,
-                            _FieldLabel(text: LocaleKeys.auth_phone.tr()),
+                          14.height,
+                          _FieldLabel(text: LocaleKeys.auth_phone.tr()),
                           8.height,
                           CustomTextFieldPhoneCode(
                             hint: LocaleKeys.auth_phone.tr(),
@@ -145,19 +143,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             isRequired: false,
                             keyboardType: TextInputType.phone,
                             invalidNumberMessage: LocaleKeys.validation_invalidPhone.tr(),
-                            onCountryChanged: (country){
-                              print('asdasdadasasd');
-                              print(country.name);
-                              print(country.dialCode);
-                              if(country.dialCode=='20'){
-                                countryCode='+2';
-                              }else {
-                                countryCode='+${country.dialCode}';
-                              }
-                              print(country.code);
-
+                            onCountryChanged: (country) {
+                              countryCode = country.dialCode == '20'
+                                  ? '+2'
+                                  : '+${country.dialCode}';
                             },
-                          ),],
+                          ),
                           14.height,
                           _FieldLabel(text: LocaleKeys.auth_password.tr()),
                           8.height,
@@ -228,30 +219,12 @@ class _HeaderSection extends StatelessWidget {
     return PrimaryHeader(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 50.w),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Center(
-                child: Image.asset(
-                  AppImages.logo4,
-                  width: 220.w,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 16.h),
-              child: AppText(
-                'المنصة الرسمية للوفد السعودي المشارك في المنتدى الحضري WUF 13',
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w700,
-                height: 1.6,
-                textAlign: TextAlign.center,
-                color: Colors.white,
-              ),
-            ),
-          ],
+        child: Center(
+          child: Image.asset(
+            AppImages.logo4,
+            width: 220.w,
+            fit: BoxFit.contain,
+          ),
         ),
       ),
     );

@@ -10,7 +10,8 @@
       "Bash(sed -i '' -e 's/namespace = \"com.example.coffee_shop\"/namespace = \"com.example.app_base\"/' -e 's/applicationId = \"com.example.coffee_shop\"/applicationId = \"com.example.app_base\"/' android/app/build.gradle.kts)",
       "Bash(sed -i '' 's/android:label=\"coffee_shop\"/android:label=\"App Base\"/' android/app/src/main/AndroidManifest.xml)",
       "Bash(mkdir -p android/app/src/main/kotlin/com/example/app_base)",
-      "Bash(echo \"exit:$?\")"
+      "Bash(echo \"exit:$?\")",
+      "Bash(git rm *)"
     ]
   }
 }
