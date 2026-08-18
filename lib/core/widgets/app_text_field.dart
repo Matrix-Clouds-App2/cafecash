@@ -1,5 +1,6 @@
 import 'package:app_base/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
@@ -26,6 +27,7 @@ class CustomTextField extends StatefulWidget {
     this.textStyle,
     this.hintStyle,
     this.labelStyle,
+    this.inputFormatters,
   });
 
   final String hint;
@@ -50,6 +52,7 @@ class CustomTextField extends StatefulWidget {
   final TextStyle? textStyle;
   final TextStyle? hintStyle;
   final TextStyle? labelStyle;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -77,6 +80,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       keyboardType: widget.keyboardType,
       obscureText: widget.isPassword && _obscure,
       maxLines: widget.isPassword ? 1 : widget.maxLines,
+      inputFormatters: widget.inputFormatters,
       onChanged: widget.onChanged,
       enabled: widget.enabled,
       readOnly: widget.readOnly,

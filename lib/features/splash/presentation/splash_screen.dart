@@ -18,33 +18,43 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   late final GifController _gifController;
-  Timer? _minTimer;
+  Timer? _fallbackTimer;
   bool _navigated = false;
 
   @override
   void initState() {
     super.initState();
-    _gifController = GifController(vsync: this);
-    _minTimer = Timer(const Duration(seconds: 2), _navigate);
+    _gifController = GifController(vsync: this)
+      ..addStatusListener(_onGifStatusChanged);
+    // Safety net فقط لو الـ GIF فشل يتحمّل/يشتغل، عشان الشاشة متفضلش عالقة.
+    _fallbackTimer = Timer(const Duration(seconds: 5), _navigate);
   }
 
   @override
   void dispose() {
-    _minTimer?.cancel();
+    _fallbackTimer?.cancel();
+    _gifController.removeStatusListener(_onGifStatusChanged);
     _gifController.dispose();
     super.dispose();
+  }
+
+  void _onGifStatusChanged(AnimationStatus status) {
+    if (status == AnimationStatus.completed) {
+      _navigate();
+    }
   }
 
   void _navigate() {
     if (_navigated || !mounted) return;
     _navigated = true;
+    _fallbackTimer?.cancel();
     final storage = getIt<LocalStorage>();
     if (storage.isLoggedIn) {
       Navigator.pushNamedAndRemoveUntil(
           context, Routes.layoutScreen, (_) => false);
     } else {
       Navigator.pushNamedAndRemoveUntil(
-          context, Routes.onBoardingScreen, (_) => false);
+          context, Routes.loginScreen, (_) => false);
     }
   }
 
@@ -52,14 +62,17 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SizedBox.expand(
-        child: Gif(
-          controller: _gifController,
-          autostart: Autostart.loop,
-          image: const AssetImage(AppImages.introGif),
-          fit: BoxFit.cover,
-          width: double.infinity,
-          height: double.infinity,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          child: Gif(
+            controller: _gifController,
+            autostart: Autostart.once,
+            image: const AssetImage(AppImages.introGif),
+            fit: BoxFit.contain,
+            width: double.infinity,
+            height: double.infinity,
+          ),
         ),
       ),
     );

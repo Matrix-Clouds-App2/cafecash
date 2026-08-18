@@ -14,62 +14,52 @@ class AuthRepo {
   final DioClient _dio;
   final LocalStorage _storage;
 
-  Future<UserModel> login({
-    String? email,
-    String? phone,
-    String? countryCode,
-    required String password,
+  /// Creates the account. Doesn't log the user in by itself — the phone
+  /// still has to be confirmed via [verifyOtp] (the server sends the first
+  /// OTP as part of registering).
+  Future<void> register({
+    required String name,
+    required String phone,
   }) async {
     try {
-      final data = <String, dynamic>{
-        'password': password,
-      };
-      if (email != null && email.trim().isNotEmpty) {
-        data['email'] = email.trim();
-      }
-      if (phone != null && phone.trim().isNotEmpty) {
-        data['phone'] = phone.trim();
-      }
-      if (countryCode != null && countryCode.trim().isNotEmpty) {
-        data['country_code'] = countryCode.trim();
-      }
-
-      final response = await _dio.post(
-        ApiEndpoints.login,
-        data: data,
+      await _dio.post(
+        ApiEndpoints.register,
+        data: {'name': name, 'phone': phone},
       );
-      final user =
-          UserModel.fromJson(response.data['data'] as Map<String, dynamic>);
-      if (user.token != null) {
-        await _storage.setToken(user.token!);
-        await _storage.setUser(user.toJson());
-      }
-      return user;
     } on DioException catch (e) {
       throw NetworkException.fromDioException(e);
     }
   }
 
-  Future<UserModel> register({
-    required String name,
-    required String email,
+  /// Sends (or re-sends) an OTP to [phone]. This is also how "login" works
+  /// for an already-registered phone — there's no separate password-based
+  /// login endpoint, just phone + OTP.
+  Future<void> resendOtp({required String phone}) async {
+    try {
+      await _dio.post(
+        ApiEndpoints.resendOtp,
+        data: {'phone': phone},
+      );
+    } on DioException catch (e) {
+      throw NetworkException.fromDioException(e);
+    }
+  }
+
+  /// Confirms the OTP — this is the call that actually returns the token.
+  Future<UserModel> verifyOtp({
     required String phone,
-    required String password,
-    required String countryCode,
+    required String otp,
   }) async {
     try {
       final response = await _dio.post(
-        ApiEndpoints.register,
-        data: {
-          'name': name,
-          'email': email,
-          'phone': phone,
-          'password': password,
-          'country_code': countryCode,
-        },
+        ApiEndpoints.verifyOtp,
+        data: {'phone': phone, 'otp': otp},
       );
+      final data = response.data['data'] as Map<String, dynamic>;
       final user = UserModel.fromJson(
-          response.data['data']['data'] as Map<String, dynamic>);
+        data['employee'] as Map<String, dynamic>,
+        token: data['token'] as String?,
+      );
       if (user.token != null) {
         await _storage.setToken(user.token!);
         await _storage.setUser(user.toJson());
@@ -83,19 +73,15 @@ class AuthRepo {
   Future<UserModel> getProfile() async {
     try {
       final response = await _dio.get(ApiEndpoints.profile);
-      return UserModel.fromJson(response.data['data'] as Map<String, dynamic>);
+      final data = response.data['data'] as Map<String, dynamic>;
+      return UserModel.fromJson(data['employee'] as Map<String, dynamic>);
     } on DioException catch (e) {
       throw NetworkException.fromDioException(e);
     }
   }
 
+  /// No dedicated logout endpoint — just drop the local session.
   Future<void> logout() async {
-    try {
-      await _dio.post(ApiEndpoints.logout);
-    } on DioException catch (e) {
-      throw NetworkException.fromDioException(e);
-    } finally {
-      await _storage.clearAll();
-    }
+    await _storage.clearAll();
   }
 }

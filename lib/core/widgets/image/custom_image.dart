@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app_base/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
@@ -12,31 +14,41 @@ class CustomImage extends StatelessWidget {
       this.fit,
       this.width,
       this.height});
+
+  /// A network URL, or a local file path (e.g. images saved by
+  /// `LocalImagePicker`) — detected automatically.
   final String image;
   final double? radius;
   final double? width;
   final double? height;
   final BoxFit? fit;
+
+  bool get _isNetwork =>
+      image.startsWith('http://') || image.startsWith('https://');
+
   @override
   Widget build(BuildContext context) {
+    final holder = ClipRRect(
+      borderRadius: BorderRadius.circular(radius ?? 0),
+      child: Image.asset(AppImages.holder, fit: BoxFit.cover),
+    );
+
     return SizedBox(
       height: height,
       width: width,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(radius ?? 0),
-        child: Image.network(
-          image,
-          fit: fit ?? BoxFit.cover,
-          errorBuilder: (context, error, v) {
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(radius ?? 0),
-              child: Image.asset(
-                AppImages.holder,
-                fit: BoxFit.cover,
+        child: _isNetwork
+            ? Image.network(
+                image,
+                fit: fit ?? BoxFit.cover,
+                errorBuilder: (context, error, v) => holder,
+              )
+            : Image.file(
+                File(image),
+                fit: fit ?? BoxFit.cover,
+                errorBuilder: (context, error, v) => holder,
               ),
-            );
-          },
-        ),
       ),
     );
   }

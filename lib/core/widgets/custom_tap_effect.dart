@@ -4,14 +4,17 @@ class CustomTapEffect extends StatefulWidget {
   const CustomTapEffect({
     super.key,
     this.isClickable = true,
-    this.enableAnimation = true, // 👈 تتحكم في الأنيميشن
+    this.enableAnimation = true,
     required this.onTap,
+    this.onLongPress,
     required this.child,
   });
 
   final bool isClickable;
   final bool enableAnimation;
   final VoidCallback? onTap;
+
+  final VoidCallback? onLongPress;
   final Widget child;
 
   @override
@@ -32,7 +35,6 @@ class _TapEffectState extends State<CustomTapEffect>
       duration: const Duration(milliseconds: 800),
     );
 
-    /// يبدأ ثابت
     animationController!.value = 1.0;
   }
 
@@ -40,7 +42,6 @@ class _TapEffectState extends State<CustomTapEffect>
   void didUpdateWidget(covariant CustomTapEffect oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    /// لو الأنيميشن اتقفل أثناء التشغيل يرجع ثابت فورًا
     if (!widget.enableAnimation) {
       animationController!.value = 1.0;
     }
@@ -108,6 +109,7 @@ class _TapEffectState extends State<CustomTapEffect>
       onTapCancel: () {
         onTapCancel();
       },
+      onLongPress: widget.onLongPress,
       child: AnimatedBuilder(
         animation: animationController!,
         builder: (context, child) {
