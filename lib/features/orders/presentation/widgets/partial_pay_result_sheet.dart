@@ -42,7 +42,7 @@ class _PartialPayResultOptions extends StatelessWidget {
         16.height,
         _ResultTile(
           icon: Icons.table_bar_rounded,
-          color: primary,
+          color: accent,
           label: LocaleKeys.orders_keepOpenOption.tr(),
           onTap: () => Navigator.pop(context, PartialPayResult.keepOpen),
         ),

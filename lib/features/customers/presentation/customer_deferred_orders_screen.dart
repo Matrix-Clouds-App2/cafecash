@@ -8,12 +8,13 @@ import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_constants.dart';
 import '../../../core/utils/app_overlay.dart';
 import '../../../core/utils/locale_keys.dart';
+import '../../../core/widgets/app_confirm_dialog.dart';
 import '../../../core/widgets/app_empty.dart';
 import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/cancel_reason_sheet.dart';
+import '../../../core/widgets/payment_method_sheet.dart';
 import '../../orders/data/models/order_entity.dart';
 import '../../orders/data/orders_repo.dart';
-import '../../orders/presentation/widgets/payment_method_sheet.dart';
 import '../../shift/data/shift_repo.dart';
 import '../../treasury/data/treasury_repo.dart';
 import '../data/models/customer_entity.dart';
@@ -55,13 +56,30 @@ class _CustomerDeferredOrdersScreenState
   Future<void> _collect(OrderEntity order) async {
     if (!_requireActiveShift()) return;
 
+    if (!kWalletPaymentEnabled) {
+      AppConfirmDialog.show(
+        context,
+        icon: Icons.check_circle_outline_rounded,
+        iconColor: AppColors.successColor.themeColor,
+        title: LocaleKeys.orders_confirmPaymentTitle.tr(),
+        message: LocaleKeys.orders_confirmPaymentMessage.tr(),
+        confirmLabel: LocaleKeys.orders_payButton.tr(),
+        confirmColor: AppColors.successColor.themeColor,
+        onConfirm: () {
+          Navigator.pop(context);
+          _completeCollect(order, PaymentMethod.cash);
+        },
+      );
+      return;
+    }
+
     final method = await PaymentMethodSheet.show(context);
     if (method == null) return;
+    _completeCollect(order, method);
+  }
 
+  void _completeCollect(OrderEntity order, PaymentMethod method) {
     final total = _ordersRepo.orderTotal(order.id);
-    final methodLabel = method == PaymentMethod.cash
-        ? LocaleKeys.orders_cash.tr()
-        : LocaleKeys.orders_wallet.tr();
 
     _ordersRepo.payFull(order, method);
     getIt<TreasuryRepo>().add(
@@ -69,10 +87,11 @@ class _CustomerDeferredOrdersScreenState
       subtitle: LocaleKeys.treasury_deferredCollectionSubtitle.tr(namedArgs: {
         'customer': widget.customer.name,
         'order': '${order.id}',
-        'method': methodLabel,
       }),
       amount: total,
       isIncome: true,
+      paymentMethod: method,
+      orderId: order.id,
       createdBy: kUserModel?.name,
     );
     _refresh();

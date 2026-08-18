@@ -5,18 +5,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/extensions/extensions.dart';
 import '../../../core/utils/app_colors.dart';
+import '../../../core/utils/app_constants.dart';
 import '../../../core/utils/app_overlay.dart';
 import '../../../core/utils/locale_keys.dart';
 import '../../../core/widgets/app_button.dart';
+import '../../../core/widgets/app_confirm_dialog.dart';
 import '../../../core/widgets/app_empty.dart';
 import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/custom_loading_widget.dart';
+import '../../../core/widgets/payment_method_sheet.dart';
 import '../../customers/presentation/widgets/customer_picker_sheet.dart';
+import '../data/models/order_entity.dart';
 import '../data/models/order_item_entity.dart';
 import '../logic/order_cubit.dart';
 import 'widgets/partial_pay_item_row.dart';
 import 'widgets/partial_pay_result_sheet.dart';
-import 'widgets/payment_method_sheet.dart';
 
 class PartialPayScreen extends StatefulWidget {
   const PartialPayScreen({super.key, required this.cubit});
@@ -46,9 +49,32 @@ class _PartialPayScreenState extends State<PartialPayScreen> {
       return;
     }
 
+    if (!kWalletPaymentEnabled) {
+      AppConfirmDialog.show(
+        context,
+        icon: Icons.check_circle_outline_rounded,
+        iconColor: AppColors.successColor.themeColor,
+        title: LocaleKeys.orders_confirmPaymentTitle.tr(),
+        message: LocaleKeys.orders_confirmPartialPaymentMessage.tr(),
+        confirmLabel: LocaleKeys.orders_payButton.tr(),
+        confirmColor: AppColors.successColor.themeColor,
+        onConfirm: () {
+          Navigator.pop(context);
+          _completePayment(selections, PaymentMethod.cash);
+        },
+      );
+      return;
+    }
+
     final method = await PaymentMethodSheet.show(context);
     if (method == null) return;
+    await _completePayment(selections, method);
+  }
 
+  Future<void> _completePayment(
+    Map<OrderItemEntity, int> selections,
+    PaymentMethod method,
+  ) async {
     widget.cubit.collectPartialPayment(selections, method);
     setState(_selectedQuantities.clear);
 
@@ -163,6 +189,7 @@ class _PartialPayScreenState extends State<PartialPayScreen> {
                   padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 16.h),
                   child: CustomButton(
                     color: AppColors.successColor.themeColor,
+                    borderColor: Colors.transparent,
                     onTap: () => _pay(selections),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

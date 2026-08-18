@@ -74,9 +74,9 @@
     "receive_cash": "Receive Cash",
     "recent_transactions": "Recent Transactions",
     "no_transactions": "No treasury movements yet",
-    "order_payment_subtitle": "{location} - Invoice #{order} - {method}",
-    "partial_payment_subtitle": "Partial collection - {location} - Order #{order} - {method}",
-    "deferred_collection_subtitle": "Deferred collection - {customer} - Order #{order} - {method}",
+    "order_payment_subtitle": "{location} - Invoice #{order}",
+    "partial_payment_subtitle": "Partial collection - {location} - Order #{order}",
+    "deferred_collection_subtitle": "Deferred collection - {customer} - Order #{order}",
     "includes_opening_balance": "Includes shift custody of {amount} {currency}",
     "receive_info_title": "This receipt is used to record external income.",
     "receive_info_example": "Like a PlayStation session's value, or a customer account adjustment.",
@@ -96,7 +96,11 @@
     "sort_newest": "Newest first",
     "sort_oldest": "Oldest first",
     "sort_amount_high": "Highest amount",
-    "sort_amount_low": "Lowest amount"
+    "sort_amount_low": "Lowest amount",
+    "total_cash": "Total Cash",
+    "total_wallet": "Total Wallet",
+    "payment_method_updated": "Payment method updated",
+    "payment_method_updated_no_link": "Order updated, but its treasury entry predates this feature and couldn't be linked"
   },
   "shift": {
     "title": "Receive Shift",
@@ -240,12 +244,14 @@
     "privacy_section5_body": "You can ask branch management to review or delete your personal data at any time. Deleting your account from the Settings page immediately clears your local session.",
     "subscription_plans": "Subscription Plans",
     "subscription_plans_subtitle": "Subscribe to the plan that fits your branch",
-    "coming_soon_badge": "Coming soon"
+    "coming_soon_badge": "Coming soon",
+    "wallet_payment_title": "Enable Wallet Payment",
+    "wallet_payment_description": "When enabled, you'll choose between cash and wallet whenever a payment is completed. When disabled, payments are cash-only and a confirmation message appears before completing them."
   },
   "drawer": {
     "my_account": "My Account",
     "close_shift": "Close Shift",
-    "shifts": "Shifts",
+    "shifts": "Previous Shifts",
     "customers_management": "Customers Management",
     "matches_screen_settings": "Matches Screen Settings",
     "items_management": "Items Management",
@@ -255,7 +261,9 @@
     "receive_shift": "Receive Shift",
     "handover_shift": "Handover Shift",
     "usage_policy": "Usage Policy",
-    "coming_soon": "This feature is coming soon"
+    "coming_soon": "This feature is coming soon",
+    "contact_us": "Contact Us",
+    "contact_us_error": "Couldn't open Facebook. Please check your internet connection."
   },
   "items": {
     "choose_image": "Choose Photo",
@@ -306,7 +314,11 @@
     "partial_pay_result_title": "Remaining items",
     "partial_pay_result_message": "There are still items on the order — what would you like to do with them?",
     "keep_open_option": "Keep table open",
-    "defer_remainder_option": "Defer remainder to credit"
+    "defer_remainder_option": "Defer remainder to credit",
+    "confirm_payment_title": "Confirm Payment",
+    "confirm_payment_message": "Are you sure you want to mark this order as fully paid?",
+    "confirm_partial_payment_message": "Are you sure you want to collect the selected amount from this order?",
+    "change_payment_method": "Change Payment Method"
   },
   "customers": {
     "add_customer": "Add Customer",
@@ -332,6 +344,13 @@
     "delete_title": "Delete customer?",
     "delete_message": "This action cannot be undone.",
     "phone_exists": "This phone number already belongs to another customer"
+  },
+  "guest": {
+    "lock_title": "Login Required",
+    "lock_message": "This page is only available to registered users. Please sign in to continue and unlock all features.",
+    "dialog_title": "Login Required",
+    "dialog_message": "This feature is only available to registered users. Please sign in to continue.",
+    "dialog_confirm": "Sign In"
   },
   "error": {
     "unauthorized": "Session expired, please login again",

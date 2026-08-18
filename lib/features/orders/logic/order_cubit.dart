@@ -119,9 +119,6 @@ class OrderCubit extends Cubit<OrderState> {
     if (order == null) return;
     try {
       final total = _ordersRepo.orderTotal(order.id);
-      final methodLabel = method == PaymentMethod.cash
-          ? LocaleKeys.orders_cash.tr()
-          : LocaleKeys.orders_wallet.tr();
 
       _ordersRepo.payFull(order, method);
       _syncStatus(occupied: false);
@@ -130,10 +127,12 @@ class OrderCubit extends Cubit<OrderState> {
         subtitle: LocaleKeys.treasury_orderPaymentSubtitle.tr(namedArgs: {
           'location': '$_locationLabel $_locationNumber',
           'order': '${order.id}',
-          'method': methodLabel,
         }),
         amount: total,
         isIncome: true,
+        paymentMethod: method,
+        orderId: order.id,
+        createdBy: kUserModel?.name,
       );
       emit(const OrderClosed());
     } catch (e) {
@@ -150,9 +149,6 @@ class OrderCubit extends Cubit<OrderState> {
     try {
       final amount = selections.entries
           .fold<double>(0, (sum, entry) => sum + entry.key.price * entry.value);
-      final methodLabel = method == PaymentMethod.cash
-          ? LocaleKeys.orders_cash.tr()
-          : LocaleKeys.orders_wallet.tr();
 
       _ordersRepo.collectPartial(order: order, selections: selections);
       _treasuryRepo.add(
@@ -160,10 +156,11 @@ class OrderCubit extends Cubit<OrderState> {
         subtitle: LocaleKeys.treasury_partialPaymentSubtitle.tr(namedArgs: {
           'location': '$_locationLabel $_locationNumber',
           'order': '${order.id}',
-          'method': methodLabel,
         }),
         amount: amount,
         isIncome: true,
+        paymentMethod: method,
+        orderId: order.id,
         createdBy: kUserModel?.name,
       );
 

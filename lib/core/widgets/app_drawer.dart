@@ -11,11 +11,14 @@ import '../../features/profile/logic/profile_cubit.dart';
 import '../../features/shift/logic/shift_cubit.dart';
 import '../extensions/extensions.dart';
 import '../utils/app_colors.dart';
+import '../utils/app_constants.dart';
 import '../utils/app_overlay.dart';
+import '../utils/helper_methods.dart';
 import '../utils/locale_keys.dart';
 import 'app_confirm_dialog.dart';
 import 'app_text.dart';
 import 'custom_tap_effect.dart';
+import 'guest_guard.dart';
 import 'image/custom_image.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -44,7 +47,7 @@ class AppDrawer extends StatelessWidget {
                   _DrawerTile(
                     icon: Icons.person_outline_rounded,
                     label: LocaleKeys.drawer_myAccount.tr(),
-                    onTap: () => _navigate(Routes.moreScreen),
+                    onTap: () => _guardedNavigate(Routes.moreScreen),
                   ),
                   _DrawerTile(
                     icon: Icons.task_alt_rounded,
@@ -54,7 +57,7 @@ class AppDrawer extends StatelessWidget {
                   _DrawerTile(
                     icon: Icons.history_rounded,
                     label: LocaleKeys.drawer_shifts.tr(),
-                    onTap: () => _navigate(Routes.shiftHistoryScreen),
+                    onTap: () => _guardedNavigate(Routes.shiftHistoryScreen),
                   ),
                   const _DrawerDivider(),
                   _DrawerTile(
@@ -70,7 +73,8 @@ class AppDrawer extends StatelessWidget {
                   _DrawerTile(
                     icon: Icons.account_balance_outlined,
                     label: LocaleKeys.drawer_deferredAccounts.tr(),
-                    onTap: () => _navigate(Routes.deferredAccountsScreen),
+                    onTap: () =>
+                        _guardedNavigate(Routes.deferredAccountsScreen),
                   ),
                   _DrawerTile(
                     icon: Icons.cancel_outlined,
@@ -86,7 +90,8 @@ class AppDrawer extends StatelessWidget {
                   _DrawerTile(
                     icon: Icons.swap_horiz_rounded,
                     label: LocaleKeys.drawer_receiveShift.tr(),
-                    onTap: () => _navigate(Routes.shiftStartScreen),
+                    onTap: _comingSoon
+                        // _guardedNavigate(Routes.shiftStartScreen),
                   ),
                   _DrawerTile(
                     icon: Icons.output_rounded,
@@ -94,16 +99,32 @@ class AppDrawer extends StatelessWidget {
                     onTap: _comingSoon,
                   ),
                   const _DrawerDivider(),
-                  // _DrawerTile(
-                  //   icon: Icons.privacy_tip_outlined,
-                  //   label: LocaleKeys.drawer_usagePolicy.tr(),
-                  //   onTap: _comingSoon,
-                  // ),
                   _DrawerTile(
-                    icon: Icons.logout_rounded,
-                    label: LocaleKeys.settings_logout.tr(),
-                    color: AppColors.errorColor.themeColor,
-                    onTap: _confirmLogout,
+                    icon: Icons.facebook_rounded,
+                    label: LocaleKeys.drawer_contactUs.tr(),
+                    color: const Color(0xFF1877F2),
+                    onTap: _openFacebook,
+                  ),
+                  const _DrawerDivider(),
+                  BlocBuilder<ProfileCubit, ProfileState>(
+                    buildWhen: (previous, current) =>
+                        (previous is ProfileSuccess) !=
+                        (current is ProfileSuccess),
+                    builder: (context, state) {
+                      final isGuest = state is! ProfileSuccess;
+                      return _DrawerTile(
+                        icon: isGuest
+                            ? Icons.login_rounded
+                            : Icons.logout_rounded,
+                        label: isGuest
+                            ? LocaleKeys.auth_login.tr()
+                            : LocaleKeys.settings_logout.tr(),
+                        color: isGuest
+                            ? AppColors.primaryColor.themeColor
+                            : AppColors.errorColor.themeColor,
+                        onTap: isGuest ? _goToLogin : _confirmLogout,
+                      );
+                    },
                   ),
                   12.height,
                 ],
@@ -120,9 +141,32 @@ class AppDrawer extends StatelessWidget {
     NavigationService.push(route, arguments: arguments);
   }
 
+  static void _goToLogin() {
+    NavigationService.goBack();
+    NavigationService.push(Routes.loginScreen);
+  }
+
+  static void _guardedNavigate(String route,
+      {Map<String, dynamic>? arguments}) {
+    NavigationService.goBack();
+    if (GuestGuard.ensureLoggedIn()) {
+      NavigationService.push(route, arguments: arguments);
+    }
+  }
+
   static void _comingSoon() {
     NavigationService.goBack();
+    if (!GuestGuard.ensureLoggedIn()) return;
     AppOverlay.showSuccess(LocaleKeys.drawer_comingSoon.tr());
+  }
+
+  static Future<void> _openFacebook() async {
+    NavigationService.goBack();
+    try {
+      await HelperMethods.openLink(AppConstants.facebookUrl);
+    } catch (_) {
+      AppOverlay.showError(LocaleKeys.drawer_contactUsError.tr());
+    }
   }
 
   static void _openCloseShift() {
@@ -131,6 +175,7 @@ class AppDrawer extends StatelessWidget {
     final active = state is ShiftReady ? state.active : null;
 
     NavigationService.goBack();
+    if (!GuestGuard.ensureLoggedIn()) return;
     if (active == null) {
       AppOverlay.showError(LocaleKeys.shift_noActiveShift.tr());
       return;
@@ -145,6 +190,7 @@ class AppDrawer extends StatelessWidget {
     final active = state is ShiftReady ? state.active : null;
 
     NavigationService.goBack();
+    if (!GuestGuard.ensureLoggedIn()) return;
     if (active == null) {
       AppOverlay.showError(LocaleKeys.shift_noActiveShift.tr());
       return;
@@ -155,6 +201,7 @@ class AppDrawer extends StatelessWidget {
 
   static void _confirmLogout() {
     NavigationService.goBack();
+    if (!GuestGuard.ensureLoggedIn()) return;
     final rootContext = NavigationService.navigationKey.currentContext!;
     AppConfirmDialog.show(
       rootContext,
@@ -166,9 +213,12 @@ class AppDrawer extends StatelessWidget {
       confirmColor: AppColors.errorColor.themeColor,
       onConfirm: () {
         NavigationService.goBack();
-        rootContext.read<ProfileCubit>().reset();
-        rootContext.read<AuthCubit>().logout();
         NavigationService.pushNamedAndRemoveUntil(Routes.loginScreen);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          final context = NavigationService.navigationKey.currentContext!;
+          context.read<ProfileCubit>().reset();
+          context.read<AuthCubit>().logout();
+        });
       },
     );
   }
@@ -206,10 +256,10 @@ class _DrawerHeader extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                20.height,
+                3.height,
                 AppText(
                   name,
-                  fontSize: 17,
+                  fontSize: 19,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimaryColor.themeColor,
                   maxLines: 1,
@@ -224,7 +274,7 @@ class _DrawerHeader extends StatelessWidget {
                     },
                     child: AppText(
                       LocaleKeys.profile_loginNow.tr(),
-                      fontSize: 13,
+                      fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: Colors.white.withValues(alpha: 0.85),
                     ),

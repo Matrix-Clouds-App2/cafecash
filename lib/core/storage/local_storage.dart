@@ -60,4 +60,16 @@ class LocalStorage {
   int getMatchesColumns() => read<int>(_matchesColumnsKey) ?? 3;
   Future<void> setMatchesColumns(int columns) =>
       write(_matchesColumnsKey, columns);
+
+  static const _walletPaymentEnabledKey = 'wallet_payment_enabled';
+
+  bool getWalletPaymentEnabled() =>
+      read<bool>(_walletPaymentEnabledKey) ?? true;
+  Future<void> setWalletPaymentEnabled(bool enabled) =>
+      write(_walletPaymentEnabledKey, enabled);
+
+  static const _defaultItemsSeededKey = 'default_items_seeded';
+
+  bool get isDefaultItemsSeeded => read<bool>(_defaultItemsSeededKey) ?? false;
+  Future<void> setDefaultItemsSeeded() => write(_defaultItemsSeededKey, true);
 }

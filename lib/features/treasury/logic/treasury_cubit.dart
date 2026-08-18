@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/utils/app_constants.dart';
 import '../../../core/utils/app_overlay.dart';
 import '../../../core/utils/locale_keys.dart';
+import '../../orders/data/models/order_entity.dart';
+import '../../orders/data/orders_repo.dart';
 import '../../shift/data/models/shift_entity.dart';
 import '../../shift/data/shift_repo.dart';
 import '../data/models/treasury_transaction_entity.dart';
@@ -15,10 +17,12 @@ import '../data/treasury_repo.dart';
 part 'treasury_state.dart';
 
 class TreasuryCubit extends Cubit<TreasuryState> {
-  TreasuryCubit(this._repo, this._shiftRepo) : super(const TreasuryInitial());
+  TreasuryCubit(this._repo, this._shiftRepo, this._ordersRepo)
+      : super(const TreasuryInitial());
 
   final TreasuryRepo _repo;
   final ShiftRepo _shiftRepo;
+  final OrdersRepo _ordersRepo;
   StreamSubscription<List<TreasuryTransactionEntity>>? _subscription;
 
   void fetch() {
@@ -30,11 +34,14 @@ class TreasuryCubit extends Cubit<TreasuryState> {
     _subscription = _repo.watchAll().listen(
       (transactions) {
         final scoped = _scopedToShift(transactions, activeShift);
+        final openingBalance = activeShift?.openingBalance ?? 0;
         emit(TreasurySuccess(
           transactions: scoped,
           totalIncome: _repo.totalIncome(scoped),
           totalExpense: _repo.totalExpense(scoped),
-          openingBalance: activeShift?.openingBalance ?? 0,
+          openingBalance: openingBalance,
+          totalCash: openingBalance + _repo.totalCash(scoped),
+          totalWallet: _repo.totalWallet(scoped),
         ));
       },
       onError: (Object e) => emit(TreasuryError(e.toString())),
@@ -54,6 +61,7 @@ class TreasuryCubit extends Cubit<TreasuryState> {
     required bool isIncome,
     required double amount,
     String? notes,
+    PaymentMethod? paymentMethod,
   }) {
     try {
       final title = isIncome
@@ -71,8 +79,25 @@ class TreasuryCubit extends Cubit<TreasuryState> {
         subtitle: subtitle,
         amount: amount,
         isIncome: isIncome,
+        paymentMethod: paymentMethod,
         createdBy: kUserModel?.name,
       );
+    } catch (e) {
+      AppOverlay.showError(e.toString());
+    }
+  }
+
+  void updatePaymentMethod(
+    TreasuryTransactionEntity transaction,
+    PaymentMethod method,
+  ) {
+    try {
+      _repo.updatePaymentMethod(transaction, method);
+      final orderId = transaction.orderId;
+      if (orderId != null) {
+        final order = _ordersRepo.getById(orderId);
+        if (order != null) _ordersRepo.updatePaymentMethod(order, method);
+      }
     } catch (e) {
       AppOverlay.showError(e.toString());
     }

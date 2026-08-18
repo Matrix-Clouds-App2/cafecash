@@ -16,6 +16,8 @@ class OrdersRepo {
   final LocalBox<OrderEntity> _orderBox;
   final LocalBox<OrderItemEntity> _itemBox;
 
+  OrderEntity? getById(int orderId) => _orderBox.getById(orderId);
+
   OrderEntity? getActiveOrder(int locationId, OrderLocationKind kind) {
     return _firstOrNull(_orderBox.getAll().where((order) =>
         order.tableId == locationId &&
@@ -108,6 +110,11 @@ class OrdersRepo {
       ..statusEnum = OrderStatus.paid
       ..paymentMethodEnum = method
       ..closedAt = DateTime.now();
+    _orderBox.put(order);
+  }
+
+  void updatePaymentMethod(OrderEntity order, PaymentMethod method) {
+    order.paymentMethodEnum = method;
     _orderBox.put(order);
   }
 

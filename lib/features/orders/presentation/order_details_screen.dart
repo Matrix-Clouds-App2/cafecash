@@ -6,17 +6,21 @@ import '../../../app/router/routes.dart';
 import '../../../core/di/injection.dart';
 import '../../../core/extensions/extensions.dart';
 import '../../../core/utils/app_colors.dart';
+import '../../../core/utils/app_constants.dart';
 import '../../../core/utils/locale_keys.dart';
+import '../../../core/widgets/app_confirm_dialog.dart';
 import '../../../core/widgets/app_empty.dart';
 import '../../../core/widgets/cancel_reason_sheet.dart';
 import '../../../core/widgets/custom_loading_widget.dart';
+import '../../../core/widgets/guest_guard.dart';
+import '../../../core/widgets/payment_method_sheet.dart';
 import '../../customers/presentation/widgets/customer_picker_sheet.dart';
+import '../data/models/order_entity.dart';
 import '../data/models/order_location_kind.dart';
 import '../logic/order_cubit.dart';
 import 'widgets/order_action_buttons.dart';
 import 'widgets/order_details_item_row.dart';
 import 'widgets/order_summary_bar.dart';
-import 'widgets/payment_method_sheet.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
   const OrderDetailsScreen({
@@ -122,20 +126,44 @@ class OrderDetailsScreen extends StatelessWidget {
   }
 
   Future<void> _payFull(BuildContext context, OrderCubit cubit) async {
+    if (!GuestGuard.ensureLoggedIn(context)) return;
+
+    if (!kWalletPaymentEnabled) {
+      AppConfirmDialog.show(
+        context,
+        icon: Icons.check_circle_outline_rounded,
+        iconColor: AppColors.successColor.themeColor,
+        title: LocaleKeys.orders_confirmPaymentTitle.tr(),
+        message: LocaleKeys.orders_confirmPaymentMessage.tr(),
+        confirmLabel: LocaleKeys.orders_payFull.tr(),
+        confirmColor: AppColors.successColor.themeColor,
+        onConfirm: () {
+          Navigator.pop(context);
+          cubit.payFull(PaymentMethod.cash);
+        },
+      );
+      return;
+    }
+
     final method = await PaymentMethodSheet.show(context);
     if (method != null) cubit.payFull(method);
   }
 
   void _openPartialPay(BuildContext context, OrderCubit cubit) {
+    if (!GuestGuard.ensureLoggedIn(context)) return;
     context.pushNamed(Routes.partialPayScreen, arguments: {'cubit': cubit});
   }
 
   Future<void> _deferWholeOrder(BuildContext context, OrderCubit cubit) async {
+    if (!GuestGuard.ensureLoggedIn(context)) return;
+
     final customer = await CustomerPickerSheet.show(context);
     if (customer != null) cubit.deferOrder(customer);
   }
 
   Future<void> _confirmCancel(BuildContext context, OrderCubit cubit) async {
+    if (!GuestGuard.ensureLoggedIn(context)) return;
+
     final reason = await CancelReasonSheet.show(
       context,
       title: LocaleKeys.orders_cancelTitle.tr(),

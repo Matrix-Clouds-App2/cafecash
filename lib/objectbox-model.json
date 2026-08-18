@@ -276,7 +276,7 @@
     },
     {
       "id": "7:3988311451431123324",
-      "lastPropertyId": "7:4436389341659763149",
+      "lastPropertyId": "9:7164177762141654880",
       "name": "TreasuryTransactionEntity",
       "properties": [
         {
@@ -314,6 +314,18 @@
           "id": "7:4436389341659763149",
           "name": "createdBy",
           "type": 9
+        },
+        {
+          "id": "8:211750052639309250",
+          "name": "paymentMethod",
+          "type": 6
+        },
+        {
+          "id": "9:7164177762141654880",
+          "name": "orderId",
+          "indexId": "9:125492146520739557",
+          "type": 6,
+          "flags": 8
         }
       ],
       "relations": []
@@ -431,7 +443,7 @@
     }
   ],
   "lastEntityId": "10:3730376913734074424",
-  "lastIndexId": "8:4871079183238634545",
+  "lastIndexId": "9:125492146520739557",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

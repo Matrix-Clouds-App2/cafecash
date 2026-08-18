@@ -1,3 +1,4 @@
+import 'package:app_base/core/utils/app_images.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -68,15 +69,7 @@ class AppConfirmDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              width: 68.r,
-              height: 68.r,
-              decoration: BoxDecoration(
-                color: iconColor.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(icon, color: iconColor, size: 32.sp),
-            ),
+           Image.asset(AppImages.visitor),
             18.height,
             AppText(
               title,

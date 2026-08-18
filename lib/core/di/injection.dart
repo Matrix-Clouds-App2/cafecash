@@ -48,7 +48,7 @@ Future<void> setupDi() async {
   getIt.registerFactory(() => CategoriesCubit(getIt()));
   getIt.registerFactory(() => MenuItemsCubit(getIt()));
   getIt.registerFactory(() => OrderCubit(getIt(), getIt(), getIt()));
-  getIt.registerFactory(() => TreasuryCubit(getIt(), getIt()));
+  getIt.registerFactory(() => TreasuryCubit(getIt(), getIt(), getIt()));
   getIt.registerFactory(() => PaymentsCubit(getIt(), getIt()));
   getIt.registerFactory(() => ShiftCubit(getIt()));
   getIt.registerFactory(() => ShiftSummaryCubit(getIt(), getIt()));

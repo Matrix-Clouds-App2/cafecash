@@ -113,6 +113,12 @@ abstract class LocaleKeys {
   static const String treasury_sortOldest = 'treasury.sort_oldest';
   static const String treasury_sortAmountHigh = 'treasury.sort_amount_high';
   static const String treasury_sortAmountLow = 'treasury.sort_amount_low';
+  static const String treasury_totalCash = 'treasury.total_cash';
+  static const String treasury_totalWallet = 'treasury.total_wallet';
+  static const String treasury_paymentMethodUpdated =
+      'treasury.payment_method_updated';
+  static const String treasury_paymentMethodUpdatedNoLink =
+      'treasury.payment_method_updated_no_link';
 
   // ─── Shift ────────────────────────────────────────────────────────────────
   static const String shift_title = 'shift.title';
@@ -300,6 +306,10 @@ abstract class LocaleKeys {
   static const String settings_subscriptionPlansSubtitle =
       'settings.subscription_plans_subtitle';
   static const String settings_comingSoonBadge = 'settings.coming_soon_badge';
+  static const String settings_walletPaymentTitle =
+      'settings.wallet_payment_title';
+  static const String settings_walletPaymentDescription =
+      'settings.wallet_payment_description';
 
   // ─── Drawer ───────────────────────────────────────────────────────────────
   static const String drawer_myAccount = 'drawer.my_account';
@@ -317,6 +327,8 @@ abstract class LocaleKeys {
   static const String drawer_handoverShift = 'drawer.handover_shift';
   static const String drawer_usagePolicy = 'drawer.usage_policy';
   static const String drawer_comingSoon = 'drawer.coming_soon';
+  static const String drawer_contactUs = 'drawer.contact_us';
+  static const String drawer_contactUsError = 'drawer.contact_us_error';
 
   // ─── Items (categories/menu management) ────────────────────────────────────
   static const String items_chooseImage = 'items.choose_image';
@@ -374,6 +386,14 @@ abstract class LocaleKeys {
   static const String orders_keepOpenOption = 'orders.keep_open_option';
   static const String orders_deferRemainderOption =
       'orders.defer_remainder_option';
+  static const String orders_confirmPaymentTitle =
+      'orders.confirm_payment_title';
+  static const String orders_confirmPaymentMessage =
+      'orders.confirm_payment_message';
+  static const String orders_confirmPartialPaymentMessage =
+      'orders.confirm_partial_payment_message';
+  static const String orders_changePaymentMethod =
+      'orders.change_payment_method';
 
   // ─── Customers ────────────────────────────────────────────────────────────
   static const String customers_addCustomer = 'customers.add_customer';
@@ -403,6 +423,13 @@ abstract class LocaleKeys {
       'customers.deferred_orders_count';
   static const String customers_viewDeferredOrders =
       'customers.view_deferred_orders';
+
+  // ─── Guest ────────────────────────────────────────────────────────────────
+  static const String guest_lockTitle = 'guest.lock_title';
+  static const String guest_lockMessage = 'guest.lock_message';
+  static const String guest_dialogTitle = 'guest.dialog_title';
+  static const String guest_dialogMessage = 'guest.dialog_message';
+  static const String guest_dialogConfirm = 'guest.dialog_confirm';
 
   // ─── Errors ───────────────────────────────────────────────────────────────
   static const String error_unauthorized = 'error.unauthorized';

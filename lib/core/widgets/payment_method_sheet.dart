@@ -1,13 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/extensions/extensions.dart';
-import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/locale_keys.dart';
-import '../../../../core/widgets/app_bottom_sheet.dart';
-import '../../../../core/widgets/custom_tap_effect.dart';
-import '../../../../core/widgets/sheet_option_tile.dart';
-import '../../data/models/order_entity.dart';
+import '../../features/orders/data/models/order_entity.dart';
+import '../extensions/extensions.dart';
+import '../utils/app_colors.dart';
+import '../utils/locale_keys.dart';
+import 'app_bottom_sheet.dart';
+import 'custom_tap_effect.dart';
+import 'sheet_option_tile.dart';
 
 /// Asked right when "دفع بالكامل" is tapped — picking a method here *is*
 /// the confirmation (no separate confirm dialog after it).

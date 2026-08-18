@@ -1,5 +1,7 @@
 import 'package:objectbox/objectbox.dart';
 
+import '../../../orders/data/models/order_entity.dart';
+
 @Entity()
 class TreasuryTransactionEntity {
   TreasuryTransactionEntity({
@@ -8,6 +10,8 @@ class TreasuryTransactionEntity {
     required this.subtitle,
     required this.amount,
     required this.isIncome,
+    this.paymentMethod,
+    this.orderId,
     this.createdAt,
     this.createdBy,
   });
@@ -22,8 +26,19 @@ class TreasuryTransactionEntity {
 
   bool isIncome;
 
+  int? paymentMethod;
+
+  @Index()
+  int? orderId;
+
   @Property(type: PropertyType.date)
   DateTime? createdAt;
 
   String? createdBy;
+
+  @Transient()
+  PaymentMethod? get paymentMethodEnum =>
+      paymentMethod == null ? null : PaymentMethod.values[paymentMethod!];
+
+  set paymentMethodEnum(PaymentMethod? value) => paymentMethod = value?.index;
 }

@@ -7,6 +7,7 @@ import '../../../app/router/routes.dart';
 import '../../../core/di/injection.dart';
 import '../../../core/storage/local_storage.dart';
 import '../../../core/utils/app_images.dart';
+import '../../../core/utils/default_items_seeder.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -44,10 +45,14 @@ class _SplashScreenState extends State<SplashScreen>
     }
   }
 
-  void _navigate() {
+  Future<void> _navigate() async {
     if (_navigated || !mounted) return;
     _navigated = true;
     _fallbackTimer?.cancel();
+
+    await DefaultItemsSeeder.seedIfNeeded();
+    if (!mounted) return;
+
     final storage = getIt<LocalStorage>();
     if (storage.isLoggedIn) {
       Navigator.pushNamedAndRemoveUntil(

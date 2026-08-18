@@ -5,19 +5,45 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/di/injection.dart';
 import '../../../core/extensions/extensions.dart';
 import '../../../core/utils/app_colors.dart';
+import '../../../core/utils/app_constants.dart';
+import '../../../core/utils/app_overlay.dart';
 import '../../../core/utils/convert_helper.dart';
 import '../../../core/utils/locale_keys.dart';
 import '../../../core/widgets/app_text.dart';
+import '../../../core/widgets/custom_tap_effect.dart';
+import '../../../core/widgets/payment_method_sheet.dart';
 import '../../orders/data/models/order_entity.dart';
 import '../../orders/data/models/order_location_kind.dart';
 import '../../orders/data/orders_repo.dart';
+import '../../treasury/data/treasury_repo.dart';
 import 'widgets/info_pill.dart';
 import 'widgets/paid_invoice_item_row.dart';
 
-class PaidOrderDetailsScreen extends StatelessWidget {
+class PaidOrderDetailsScreen extends StatefulWidget {
   const PaidOrderDetailsScreen({super.key, required this.order});
 
   final OrderEntity order;
+
+  @override
+  State<PaidOrderDetailsScreen> createState() => _PaidOrderDetailsScreenState();
+}
+
+class _PaidOrderDetailsScreenState extends State<PaidOrderDetailsScreen> {
+  late OrderEntity order = widget.order;
+
+  Future<void> _changePaymentMethod() async {
+    final method = await PaymentMethodSheet.show(context);
+    if (method == null) return;
+    getIt<OrdersRepo>().updatePaymentMethod(order, method);
+    final updatedCount =
+        getIt<TreasuryRepo>().updatePaymentMethodForOrder(order.id, method);
+    setState(() => order.paymentMethodEnum = method);
+    AppOverlay.showSuccess(
+      updatedCount > 0
+          ? LocaleKeys.treasury_paymentMethodUpdated.tr()
+          : LocaleKeys.treasury_paymentMethodUpdatedNoLink.tr(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,14 +161,29 @@ class PaidOrderDetailsScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      InfoPill(
-                        label: order.paymentMethodEnum == PaymentMethod.cash
-                            ? LocaleKeys.orders_cash.tr()
-                            : LocaleKeys.orders_wallet.tr(),
-                        icon: order.paymentMethodEnum == PaymentMethod.cash
-                            ? Icons.payments_outlined
-                            : Icons.account_balance_wallet_outlined,
-                        color: AppColors.successColor.themeColor,
+                      Row(
+                        children: [
+                          InfoPill(
+                            label: order.paymentMethodEnum == PaymentMethod.cash
+                                ? LocaleKeys.orders_cash.tr()
+                                : LocaleKeys.orders_wallet.tr(),
+                            icon: order.paymentMethodEnum == PaymentMethod.cash
+                                ? Icons.payments_outlined
+                                : Icons.account_balance_wallet_outlined,
+                            color: AppColors.successColor.themeColor,
+                          ),
+                          if (kWalletPaymentEnabled) ...[
+                            6.width,
+                            CustomTapEffect(
+                              onTap: _changePaymentMethod,
+                              child: Icon(
+                                Icons.edit_outlined,
+                                size: 16.sp,
+                                color: AppColors.textSecondaryColor.themeColor,
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
                     ],
                   ),

@@ -22,18 +22,29 @@ final class TreasurySuccess extends TreasuryState {
 
   final double openingBalance;
 
+  final double totalCash;
+  final double totalWallet;
+
   const TreasurySuccess({
     required this.transactions,
     required this.totalIncome,
     required this.totalExpense,
     this.openingBalance = 0,
+    this.totalCash = 0,
+    this.totalWallet = 0,
   });
 
   double get balance => openingBalance + totalIncome - totalExpense;
 
   @override
-  List<Object?> get props =>
-      [transactions, totalIncome, totalExpense, openingBalance];
+  List<Object?> get props => [
+        transactions,
+        totalIncome,
+        totalExpense,
+        openingBalance,
+        totalCash,
+        totalWallet,
+      ];
 }
 
 final class TreasuryError extends TreasuryState {

@@ -15,6 +15,7 @@ import '../../../core/widgets/app_top_bar.dart';
 import '../../../core/widgets/custom_loading_widget.dart';
 import '../../../core/widgets/notification_bell_icon.dart';
 import '../../../core/widgets/search_field.dart';
+import '../../../core/widgets/watermark_background.dart';
 import '../../orders/data/models/order_location_kind.dart';
 import '../../orders/data/orders_repo.dart';
 import '../../orders/presentation/widgets/order_builder_sheet.dart';
@@ -131,248 +132,254 @@ class _HallScreenState extends State<HallScreen>
 
           return Scaffold(
             backgroundColor: AppColors.surfaceColor.themeColor,
-            body: Column(
-              children: [
-                AppTopBar(
-                  title: LocaleKeys.nav_hall.tr(),
-                  onMenuTap: () => Scaffold.of(context).openDrawer(),
-                  titleWidget: _isSearching
-                      ? CustomSearchField(
-                          controller: _searchCtrl,
-                          onChanged: cubit.search,
-                          hintText: LocaleKeys.hall_searchHint.tr(),
-                        )
-                      : null,
-                  actions: [
-                    GestureDetector(
-                      onTap: () => _toggleSearch(cubit),
-                      child: Icon(
-                        _isSearching
-                            ? Icons.close_rounded
-                            : Icons.search_rounded,
-                        size: 22.sp,
-                        color: AppColors.textPrimaryColor.themeColor,
+            body: WatermarkBackground(
+              child: Column(
+                children: [
+                  AppTopBar(
+                    title: LocaleKeys.nav_hall.tr(),
+                    onMenuTap: () => Scaffold.of(context).openDrawer(),
+                    titleWidget: _isSearching
+                        ? CustomSearchField(
+                            controller: _searchCtrl,
+                            onChanged: cubit.search,
+                            hintText: LocaleKeys.hall_searchHint.tr(),
+                          )
+                        : null,
+                    actions: [
+                      GestureDetector(
+                        onTap: () => _toggleSearch(cubit),
+                        child: Icon(
+                          _isSearching
+                              ? Icons.close_rounded
+                              : Icons.search_rounded,
+                          size: 22.sp,
+                          color: AppColors.textPrimaryColor.themeColor,
+                        ),
                       ),
-                    ),
-                    12.width,
-                    GestureDetector(
-                      onTap: _fitToScreen,
-                      child: Icon(
-                        Icons.fit_screen_rounded,
-                        size: 22.sp,
-                        color: AppColors.textPrimaryColor.themeColor,
+                      12.width,
+                      GestureDetector(
+                        onTap: _fitToScreen,
+                        child: Icon(
+                          Icons.fit_screen_rounded,
+                          size: 22.sp,
+                          color: AppColors.textPrimaryColor.themeColor,
+                        ),
                       ),
-                    ),
-                    12.width,
-                    GestureDetector(
-                      onTap: () {
-                        final state = cubit.state;
-                        HallFilterSheet.show(
-                          context,
-                          initialSort: state is HallSuccess
-                              ? state.sort
-                              : HallSortOption.numberAsc,
-                          onApply: cubit.sort,
-                        );
-                      },
-                      child: Icon(
-                        Icons.filter_list_rounded,
-                        size: 22.sp,
-                        color: AppColors.textPrimaryColor.themeColor,
+                      12.width,
+                      GestureDetector(
+                        onTap: () {
+                          final state = cubit.state;
+                          HallFilterSheet.show(
+                            context,
+                            initialSort: state is HallSuccess
+                                ? state.sort
+                                : HallSortOption.numberAsc,
+                            onApply: cubit.sort,
+                          );
+                        },
+                        child: Icon(
+                          Icons.filter_list_rounded,
+                          size: 22.sp,
+                          color: AppColors.textPrimaryColor.themeColor,
+                        ),
                       ),
-                    ),
-                    12.width,
-                    GestureDetector(
-                      onTap: () {
-                        HallSettingsSheet.show(
-                          context,
-                          initialColumns: _columns,
-                          onApply: (value) async {
-                            setState(() {
-                              _columns = value;
-                              _didPositionBoard = false;
-                            });
-                            await getIt<LocalStorage>().setHallColumns(value);
+                      12.width,
+                      GestureDetector(
+                        onTap: () {
+                          HallSettingsSheet.show(
+                            context,
+                            initialColumns: _columns,
+                            onApply: (value) async {
+                              setState(() {
+                                _columns = value;
+                                _didPositionBoard = false;
+                              });
+                              await getIt<LocalStorage>().setHallColumns(value);
+                            },
+                          );
+                        },
+                        child: Icon(
+                          Icons.settings_outlined,
+                          size: 22.sp,
+                          color: AppColors.textPrimaryColor.themeColor,
+                        ),
+                      ),
+                      12.width,
+                      const NotificationBellIcon(),
+                    ],
+                  ),
+                  Expanded(
+                    child: BlocBuilder<HallCubit, HallState>(
+                      builder: (context, state) {
+                        if (state is HallLoading || state is HallInitial) {
+                          return Center(
+                            child: CustomLoadingWidget(
+                              color: AppColors.primaryColor.themeColor,
+                              size: 40,
+                            ),
+                          );
+                        }
+
+                        if (state is HallError) {
+                          return Center(
+                            child: Text(state.message),
+                          );
+                        }
+
+                        final tables = (state as HallSuccess).tables;
+                        final itemCount = tables.length + 1;
+                        final crossSpacing = 12.w;
+                        final gridWidth = _columns * _cardWidth.w +
+                            (_columns - 1) * crossSpacing;
+                        final rows = (itemCount / _columns).ceil();
+                        final cellHeight = _cardWidth.w / _cardAspectRatio;
+                        final gridHeight =
+                            rows * cellHeight + math.max(0, rows - 1) * 12.h;
+
+                        return LayoutBuilder(
+                          builder: (context, constraints) {
+                            _viewportSize = constraints.biggest;
+
+                            final boardWidth = gridWidth + 32.w;
+                            final boardHeight = gridHeight + 32.h;
+                            _fitScale = math
+                                .min(
+                                  (constraints.biggest.width -
+                                          _fitScreenMargin.w * 2) /
+                                      boardWidth,
+                                  (constraints.biggest.height -
+                                          _fitScreenMargin.h * 2) /
+                                      boardHeight,
+                                )
+                                .clamp(_absoluteFloorScale, 1.0);
+
+                            if (!_didPositionBoard) {
+                              _didPositionBoard = true;
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                if (mounted) _positionBoard(1.0);
+                              });
+                            }
+
+                            final fillerHeight = math.max(
+                              0.0,
+                              constraints.biggest.height - gridHeight - 32.h,
+                            );
+
+                            return InteractiveViewer(
+                              transformationController:
+                                  _transformationController,
+                              constrained: false,
+                              onInteractionEnd: (_) => _maybeSnapToFit(),
+                              boundaryMargin: EdgeInsets.all(24.w),
+                              minScale: _fitScale,
+                              maxScale: _maxZoomScale,
+                              child: Padding(
+                                key: _boardKey,
+                                padding: 16.paddingAll,
+                                child: SizedBox(
+                                  width: gridWidth,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      GridView.builder(
+                                        shrinkWrap: true,
+                                        padding: EdgeInsets.zero,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount: itemCount,
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: _columns,
+                                          crossAxisSpacing: crossSpacing,
+                                          mainAxisSpacing: 12.h,
+                                          childAspectRatio: _cardAspectRatio,
+                                        ),
+                                        itemBuilder: (_, i) {
+                                          if (i == tables.length) {
+                                            return AnimatedGridItem(
+                                              key: const ValueKey(
+                                                  'hall_add_table'),
+                                              index: i,
+                                              child: HallAddTableCard(
+                                                  onTap: cubit.addTable),
+                                            );
+                                          }
+                                          final table = tables[i];
+                                          return AnimatedGridItem(
+                                            key: ValueKey(table.id),
+                                            index: i,
+                                            child: HallTableCard(
+                                              table: table,
+                                              onDisable: () =>
+                                                  cubit.toggleStatus(table),
+                                              onReactivate: () =>
+                                                  cubit.toggleStatus(table),
+                                              onDelete: () =>
+                                                  cubit.deleteTable(table),
+                                              canDelete:
+                                                  cubit.isLastTable(table),
+                                              onCancelOrder: (reason) {
+                                                final ordersRepo =
+                                                    getIt<OrdersRepo>();
+                                                final order =
+                                                    ordersRepo.getActiveOrder(
+                                                  table.id,
+                                                  OrderLocationKind.table,
+                                                );
+                                                if (order != null) {
+                                                  ordersRepo.cancel(order,
+                                                      reason: reason);
+                                                }
+                                                getIt<HallRepo>()
+                                                    .syncOrderSummary(
+                                                  tableId: table.id,
+                                                  status:
+                                                      HallTableStatus.available,
+                                                );
+                                              },
+                                              onOpenOrder: () =>
+                                                  OrderBuilderSheet.show(
+                                                context,
+                                                locationId: table.id,
+                                                locationNumber: table.number,
+                                                kind: OrderLocationKind.table,
+                                                locationLabel: LocaleKeys
+                                                    .hall_tableLabel
+                                                    .tr(),
+                                                syncStatus: ({
+                                                  required occupied,
+                                                  drinkCount = 0,
+                                                  price = 0,
+                                                }) =>
+                                                    getIt<HallRepo>()
+                                                        .syncOrderSummary(
+                                                  tableId: table.id,
+                                                  status: occupied
+                                                      ? HallTableStatus.occupied
+                                                      : HallTableStatus
+                                                          .available,
+                                                  drinkCount: drinkCount,
+                                                  price: price,
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      SizedBox(height: fillerHeight),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
                           },
                         );
                       },
-                      child: Icon(
-                        Icons.settings_outlined,
-                        size: 22.sp,
-                        color: AppColors.textPrimaryColor.themeColor,
-                      ),
                     ),
-                    12.width,
-                    const NotificationBellIcon(),
-                  ],
-                ),
-                Expanded(
-                  child: BlocBuilder<HallCubit, HallState>(
-                    builder: (context, state) {
-                      if (state is HallLoading || state is HallInitial) {
-                        return Center(
-                          child: CustomLoadingWidget(
-                            color: AppColors.primaryColor.themeColor,
-                            size: 40,
-                          ),
-                        );
-                      }
-
-                      if (state is HallError) {
-                        return Center(
-                          child: Text(state.message),
-                        );
-                      }
-
-                      final tables = (state as HallSuccess).tables;
-                      final itemCount = tables.length + 1;
-                      final crossSpacing = 12.w;
-                      final gridWidth = _columns * _cardWidth.w +
-                          (_columns - 1) * crossSpacing;
-                      final rows = (itemCount / _columns).ceil();
-                      final cellHeight = _cardWidth.w / _cardAspectRatio;
-                      final gridHeight =
-                          rows * cellHeight + math.max(0, rows - 1) * 12.h;
-
-                      return LayoutBuilder(
-                        builder: (context, constraints) {
-                          _viewportSize = constraints.biggest;
-
-                          final boardWidth = gridWidth + 32.w;
-                          final boardHeight = gridHeight + 32.h;
-                          _fitScale = math
-                              .min(
-                                (constraints.biggest.width -
-                                        _fitScreenMargin.w * 2) /
-                                    boardWidth,
-                                (constraints.biggest.height -
-                                        _fitScreenMargin.h * 2) /
-                                    boardHeight,
-                              )
-                              .clamp(_absoluteFloorScale, 1.0);
-
-                          if (!_didPositionBoard) {
-                            _didPositionBoard = true;
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              if (mounted) _positionBoard(1.0);
-                            });
-                          }
-
-                          final fillerHeight = math.max(
-                            0.0,
-                            constraints.biggest.height - gridHeight - 32.h,
-                          );
-
-                          return InteractiveViewer(
-                            transformationController: _transformationController,
-                            constrained: false,
-                            onInteractionEnd: (_) => _maybeSnapToFit(),
-                            boundaryMargin: EdgeInsets.all(24.w),
-                            minScale: _fitScale,
-                            maxScale: _maxZoomScale,
-                            child: Padding(
-                              key: _boardKey,
-                              padding: 16.paddingAll,
-                              child: SizedBox(
-                                width: gridWidth,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    GridView.builder(
-                                      shrinkWrap: true,
-                                      padding: EdgeInsets.zero,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount: itemCount,
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: _columns,
-                                        crossAxisSpacing: crossSpacing,
-                                        mainAxisSpacing: 12.h,
-                                        childAspectRatio: _cardAspectRatio,
-                                      ),
-                                      itemBuilder: (_, i) {
-                                        if (i == tables.length) {
-                                          return AnimatedGridItem(
-                                            key: const ValueKey(
-                                                'hall_add_table'),
-                                            index: i,
-                                            child: HallAddTableCard(
-                                                onTap: cubit.addTable),
-                                          );
-                                        }
-                                        final table = tables[i];
-                                        return AnimatedGridItem(
-                                          key: ValueKey(table.id),
-                                          index: i,
-                                          child: HallTableCard(
-                                            table: table,
-                                            onDisable: () =>
-                                                cubit.toggleStatus(table),
-                                            onReactivate: () =>
-                                                cubit.toggleStatus(table),
-                                            onDelete: () =>
-                                                cubit.deleteTable(table),
-                                            canDelete: cubit.isLastTable(table),
-                                            onCancelOrder: (reason) {
-                                              final ordersRepo =
-                                                  getIt<OrdersRepo>();
-                                              final order =
-                                                  ordersRepo.getActiveOrder(
-                                                table.id,
-                                                OrderLocationKind.table,
-                                              );
-                                              if (order != null) {
-                                                ordersRepo.cancel(order,
-                                                    reason: reason);
-                                              }
-                                              getIt<HallRepo>()
-                                                  .syncOrderSummary(
-                                                tableId: table.id,
-                                                status:
-                                                    HallTableStatus.available,
-                                              );
-                                            },
-                                            onOpenOrder: () =>
-                                                OrderBuilderSheet.show(
-                                              context,
-                                              locationId: table.id,
-                                              locationNumber: table.number,
-                                              kind: OrderLocationKind.table,
-                                              locationLabel: LocaleKeys
-                                                  .hall_tableLabel
-                                                  .tr(),
-                                              syncStatus: ({
-                                                required occupied,
-                                                drinkCount = 0,
-                                                price = 0,
-                                              }) =>
-                                                  getIt<HallRepo>()
-                                                      .syncOrderSummary(
-                                                tableId: table.id,
-                                                status: occupied
-                                                    ? HallTableStatus.occupied
-                                                    : HallTableStatus.available,
-                                                drinkCount: drinkCount,
-                                                price: price,
-                                              ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                    SizedBox(height: fillerHeight),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },

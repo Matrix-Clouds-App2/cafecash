@@ -5,13 +5,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/di/injection.dart';
 import '../../../core/extensions/extensions.dart';
 import '../../../core/utils/app_colors.dart';
+import '../../../core/utils/app_constants.dart';
 import '../../../core/utils/app_overlay.dart';
 import '../../../core/utils/locale_keys.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/app_text_field.dart';
+import '../../orders/data/models/order_entity.dart';
 import '../logic/treasury_cubit.dart';
 import 'widgets/treasury_entry_info_card.dart';
+import 'widgets/treasury_payment_method_selector.dart';
 
 class TreasuryEntryScreen extends StatefulWidget {
   const TreasuryEntryScreen({super.key, required this.isIncome});
@@ -25,6 +28,7 @@ class TreasuryEntryScreen extends StatefulWidget {
 class _TreasuryEntryScreenState extends State<TreasuryEntryScreen> {
   final _amountCtrl = TextEditingController();
   final _notesCtrl = TextEditingController();
+  PaymentMethod _method = PaymentMethod.cash;
 
   @override
   void dispose() {
@@ -44,6 +48,7 @@ class _TreasuryEntryScreenState extends State<TreasuryEntryScreen> {
       isIncome: widget.isIncome,
       amount: amount,
       notes: _notesCtrl.text,
+      paymentMethod: kWalletPaymentEnabled ? _method : PaymentMethod.cash,
     );
     AppOverlay.showSuccess(LocaleKeys.treasury_receiptSaved.tr());
     Navigator.pop(context);
@@ -93,6 +98,20 @@ class _TreasuryEntryScreenState extends State<TreasuryEntryScreen> {
                           color: AppColors.textSecondaryColor.themeColor,
                           size: 20.sp),
                     ),
+                    if (kWalletPaymentEnabled) ...[
+                      20.height,
+                      AppText(
+                        LocaleKeys.orders_paymentMethodTitle.tr(),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimaryColor.themeColor,
+                      ),
+                      10.height,
+                      TreasuryPaymentMethodSelector(
+                        value: _method,
+                        onChanged: (method) => setState(() => _method = method),
+                      ),
+                    ],
                   ],
                 ),
               ),

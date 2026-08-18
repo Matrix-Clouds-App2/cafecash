@@ -343,7 +343,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(7, 3988311451431123324),
     name: 'TreasuryTransactionEntity',
-    lastPropertyId: const obx_int.IdUid(7, 4436389341659763149),
+    lastPropertyId: const obx_int.IdUid(9, 7164177762141654880),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -387,6 +387,19 @@ final _entities = <obx_int.ModelEntity>[
         name: 'createdBy',
         type: 9,
         flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 211750052639309250),
+        name: 'paymentMethod',
+        type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(9, 7164177762141654880),
+        name: 'orderId',
+        type: 6,
+        flags: 8,
+        indexId: const obx_int.IdUid(9, 125492146520739557),
       ),
     ],
     relations: <obx_int.ModelRelation>[],
@@ -566,7 +579,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
     generatorVersion: obx_int.GeneratorVersion.v2025_12_16,
     entities: _entities,
     lastEntityId: const obx_int.IdUid(10, 3730376913734074424),
-    lastIndexId: const obx_int.IdUid(8, 4871079183238634545),
+    lastIndexId: const obx_int.IdUid(9, 125492146520739557),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [],
@@ -1036,81 +1049,95 @@ obx_int.ModelDefinition getObjectBoxModel() {
     ),
     TreasuryTransactionEntity:
         obx_int.EntityDefinition<TreasuryTransactionEntity>(
-      model: _entities[6],
-      toOneRelations: (TreasuryTransactionEntity object) => [],
-      toManyRelations: (TreasuryTransactionEntity object) => {},
-      getId: (TreasuryTransactionEntity object) => object.id,
-      setId: (TreasuryTransactionEntity object, int id) {
-        object.id = id;
-      },
-      objectToFB: (TreasuryTransactionEntity object, fb.Builder fbb) {
-        final titleOffset = fbb.writeString(object.title);
-        final subtitleOffset = fbb.writeString(object.subtitle);
-        final createdByOffset = object.createdBy == null
-            ? null
-            : fbb.writeString(object.createdBy!);
-        fbb.startTable(8);
-        fbb.addInt64(0, object.id);
-        fbb.addOffset(1, titleOffset);
-        fbb.addOffset(2, subtitleOffset);
-        fbb.addFloat64(3, object.amount);
-        fbb.addBool(4, object.isIncome);
-        fbb.addInt64(5, object.createdAt?.millisecondsSinceEpoch);
-        fbb.addOffset(6, createdByOffset);
-        fbb.finish(fbb.endTable());
-        return object.id;
-      },
-      objectFromFB: (obx.Store store, ByteData fbData) {
-        final buffer = fb.BufferContext(fbData);
-        final rootOffset = buffer.derefObject(0);
-        final createdAtValue = const fb.Int64Reader().vTableGetNullable(
-          buffer,
-          rootOffset,
-          14,
-        );
-        final idParam = const fb.Int64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          4,
-          0,
-        );
-        final titleParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 6, '');
-        final subtitleParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGet(buffer, rootOffset, 8, '');
-        final amountParam = const fb.Float64Reader().vTableGet(
-          buffer,
-          rootOffset,
-          10,
-          0,
-        );
-        final isIncomeParam = const fb.BoolReader().vTableGet(
-          buffer,
-          rootOffset,
-          12,
-          false,
-        );
-        final createdAtParam = createdAtValue == null
-            ? null
-            : DateTime.fromMillisecondsSinceEpoch(createdAtValue);
-        final createdByParam = const fb.StringReader(
-          asciiOptimization: true,
-        ).vTableGetNullable(buffer, rootOffset, 16);
-        final object = TreasuryTransactionEntity(
-          id: idParam,
-          title: titleParam,
-          subtitle: subtitleParam,
-          amount: amountParam,
-          isIncome: isIncomeParam,
-          createdAt: createdAtParam,
-          createdBy: createdByParam,
-        );
+          model: _entities[6],
+          toOneRelations: (TreasuryTransactionEntity object) => [],
+          toManyRelations: (TreasuryTransactionEntity object) => {},
+          getId: (TreasuryTransactionEntity object) => object.id,
+          setId: (TreasuryTransactionEntity object, int id) {
+            object.id = id;
+          },
+          objectToFB: (TreasuryTransactionEntity object, fb.Builder fbb) {
+            final titleOffset = fbb.writeString(object.title);
+            final subtitleOffset = fbb.writeString(object.subtitle);
+            final createdByOffset = object.createdBy == null
+                ? null
+                : fbb.writeString(object.createdBy!);
+            fbb.startTable(10);
+            fbb.addInt64(0, object.id);
+            fbb.addOffset(1, titleOffset);
+            fbb.addOffset(2, subtitleOffset);
+            fbb.addFloat64(3, object.amount);
+            fbb.addBool(4, object.isIncome);
+            fbb.addInt64(5, object.createdAt?.millisecondsSinceEpoch);
+            fbb.addOffset(6, createdByOffset);
+            fbb.addInt64(7, object.paymentMethod);
+            fbb.addInt64(8, object.orderId);
+            fbb.finish(fbb.endTable());
+            return object.id;
+          },
+          objectFromFB: (obx.Store store, ByteData fbData) {
+            final buffer = fb.BufferContext(fbData);
+            final rootOffset = buffer.derefObject(0);
+            final createdAtValue = const fb.Int64Reader().vTableGetNullable(
+              buffer,
+              rootOffset,
+              14,
+            );
+            final idParam = const fb.Int64Reader().vTableGet(
+              buffer,
+              rootOffset,
+              4,
+              0,
+            );
+            final titleParam = const fb.StringReader(
+              asciiOptimization: true,
+            ).vTableGet(buffer, rootOffset, 6, '');
+            final subtitleParam = const fb.StringReader(
+              asciiOptimization: true,
+            ).vTableGet(buffer, rootOffset, 8, '');
+            final amountParam = const fb.Float64Reader().vTableGet(
+              buffer,
+              rootOffset,
+              10,
+              0,
+            );
+            final isIncomeParam = const fb.BoolReader().vTableGet(
+              buffer,
+              rootOffset,
+              12,
+              false,
+            );
+            final paymentMethodParam = const fb.Int64Reader().vTableGetNullable(
+              buffer,
+              rootOffset,
+              18,
+            );
+            final orderIdParam = const fb.Int64Reader().vTableGetNullable(
+              buffer,
+              rootOffset,
+              20,
+            );
+            final createdAtParam = createdAtValue == null
+                ? null
+                : DateTime.fromMillisecondsSinceEpoch(createdAtValue);
+            final createdByParam = const fb.StringReader(
+              asciiOptimization: true,
+            ).vTableGetNullable(buffer, rootOffset, 16);
+            final object = TreasuryTransactionEntity(
+              id: idParam,
+              title: titleParam,
+              subtitle: subtitleParam,
+              amount: amountParam,
+              isIncome: isIncomeParam,
+              paymentMethod: paymentMethodParam,
+              orderId: orderIdParam,
+              createdAt: createdAtParam,
+              createdBy: createdByParam,
+            );
 
-        return object;
-      },
-    ),
+            return object;
+          },
+        ),
     MatchSeatEntity: obx_int.EntityDefinition<MatchSeatEntity>(
       model: _entities[7],
       toOneRelations: (MatchSeatEntity object) => [],
@@ -1569,6 +1596,17 @@ class TreasuryTransactionEntity_ {
   /// See [TreasuryTransactionEntity.createdBy].
   static final createdBy = obx.QueryStringProperty<TreasuryTransactionEntity>(
     _entities[6].properties[6],
+  );
+
+  /// See [TreasuryTransactionEntity.paymentMethod].
+  static final paymentMethod =
+      obx.QueryIntegerProperty<TreasuryTransactionEntity>(
+        _entities[6].properties[7],
+      );
+
+  /// See [TreasuryTransactionEntity.orderId].
+  static final orderId = obx.QueryIntegerProperty<TreasuryTransactionEntity>(
+    _entities[6].properties[8],
   );
 }
 

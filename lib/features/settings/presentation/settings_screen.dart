@@ -2,9 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../app/router/navigation_services.dart';
 import '../../../app/router/routes.dart';
+import '../../../core/di/injection.dart';
 import '../../../core/extensions/extensions.dart';
+import '../../../core/storage/local_storage.dart';
 import '../../../core/utils/app_colors.dart';
+import '../../../core/utils/app_constants.dart';
 import '../../../core/utils/locale_keys.dart';
 import '../../../core/utils/app_overlay.dart';
 import '../../../core/widgets/app_confirm_dialog.dart';
@@ -13,10 +17,29 @@ import '../../profile/logic/profile_cubit.dart';
 import 'widgets/language_sheet.dart';
 import 'widgets/settings_tile.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  void _toggleWalletPayment() {
+    final enabled = !kWalletPaymentEnabled;
+    setState(() => kWalletPaymentEnabled = enabled);
+    getIt<LocalStorage>().setWalletPaymentEnabled(enabled);
+  }
+
   List<SettingsItem> _items(BuildContext context, {required bool isGuest}) => [
+        SettingsItem(
+          icon: Icons.account_balance_wallet_outlined,
+          label: LocaleKeys.settings_walletPaymentTitle.tr(),
+          subLabel: LocaleKeys.settings_walletPaymentDescription.tr(),
+          color: AppColors.primaryColor.themeColor,
+          toggleValue: kWalletPaymentEnabled,
+          onTap: _toggleWalletPayment,
+        ),
         SettingsItem(
           icon: Icons.language_rounded,
           label: LocaleKeys.settings_changeLanguage.tr(),
@@ -82,11 +105,13 @@ class SettingsScreen extends StatelessWidget {
       confirmLabel: LocaleKeys.settings_logout.tr(),
       confirmColor: AppColors.warningColor.themeColor,
       onConfirm: () {
-        Navigator.pop(context);
-        context.read<ProfileCubit>().reset();
-        context.read<AuthCubit>().logout();
-        Navigator.pushNamedAndRemoveUntil(
-            context, Routes.loginScreen, (_) => false);
+        NavigationService.goBack();
+        NavigationService.pushNamedAndRemoveUntil(Routes.loginScreen);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          final rootContext = NavigationService.navigationKey.currentContext!;
+          rootContext.read<ProfileCubit>().reset();
+          rootContext.read<AuthCubit>().logout();
+        });
       },
     );
   }
@@ -101,11 +126,13 @@ class SettingsScreen extends StatelessWidget {
       confirmLabel: LocaleKeys.settings_deleteAccountConfirm.tr(),
       confirmColor: AppColors.errorColor.themeColor,
       onConfirm: () {
-        Navigator.pop(context);
-        context.read<ProfileCubit>().reset();
-        context.read<AuthCubit>().logout();
-        Navigator.pushNamedAndRemoveUntil(
-            context, Routes.loginScreen, (_) => false);
+        NavigationService.goBack();
+        NavigationService.pushNamedAndRemoveUntil(Routes.loginScreen);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          final rootContext = NavigationService.navigationKey.currentContext!;
+          rootContext.read<ProfileCubit>().reset();
+          rootContext.read<AuthCubit>().logout();
+        });
       },
     );
   }

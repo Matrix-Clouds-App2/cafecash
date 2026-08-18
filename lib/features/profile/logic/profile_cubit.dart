@@ -14,16 +14,24 @@ class ProfileCubit extends Cubit<ProfileState> {
   final AuthRepo _repo;
 
   Future<void> getProfile() async {
-    emit(const ProfileLoading());
+    final cached = _repo.getCachedProfile();
+    if (cached != null) {
+      kUserModel = cached;
+      emit(ProfileSuccess(cached));
+    } else {
+      emit(const ProfileLoading());
+    }
+
     try {
       final user = await _repo.getProfile();
       kUserModel = user;
       emit(ProfileSuccess(user));
     } catch (e) {
-      // Any profile fetch failure should drop cached user in app-wide guest checks.
-      kUserModel = null;
-      final msg = e is NetworkException ? e.message : e.toString();
-      emit(ProfileError(msg));
+      if (cached == null) {
+        kUserModel = null;
+        final msg = e is NetworkException ? e.message : e.toString();
+        emit(ProfileError(msg));
+      }
     }
   }
 

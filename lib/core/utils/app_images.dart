@@ -35,6 +35,7 @@ class AppImages {
   static const String register = '${_base}register.png';
   static const String otp = '${_base}otp.png';
   static const String person = '${_base}person.png';
+  static const String visitor = '${_base}visitor.png';
 
   static const String onboarding1 = '${_base}on1.png';
   static const String onboarding2 = '${_base}on1.png';

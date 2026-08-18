@@ -8,11 +8,7 @@ import '../../../../core/utils/locale_keys.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/custom_tap_effect.dart';
 
-/// The 2x2 payment/action grid at the bottom of the order-details screen.
-/// Only [onPayFull]/[onCancel] are wired up for now — [onPartialPay] and
-/// [onDefer] need features that don't exist yet (partial-payment tracking,
-/// deferred/credit accounts), so their buttons surface a "coming soon" tap
-/// for now (see [OrderDetailsScreen]).
+
 class OrderActionButtons extends StatelessWidget {
   const OrderActionButtons({
     super.key,

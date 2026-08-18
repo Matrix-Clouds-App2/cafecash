@@ -7,20 +7,25 @@ import '../../../core/di/injection.dart';
 import '../../../core/extensions/extensions.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_constants.dart';
+import '../../../core/utils/app_overlay.dart';
 import '../../../core/utils/locale_keys.dart';
 import '../../../core/widgets/app_empty.dart';
 import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/custom_loading_widget.dart';
 import '../../../core/widgets/search_field.dart';
+import '../../orders/data/models/order_entity.dart';
 import '../data/models/treasury_transaction_entity.dart';
 import '../logic/treasury_cubit.dart';
 import 'widgets/treasury_transaction_tile.dart';
 import 'widgets/treasury_transactions_filter_sheet.dart';
 
 class TreasuryTransactionsScreen extends StatefulWidget {
-  const TreasuryTransactionsScreen({super.key, required this.isIncome});
+  const TreasuryTransactionsScreen(
+      {super.key, this.isIncome, this.paymentMethod})
+      : assert(isIncome != null || paymentMethod != null);
 
-  final bool isIncome;
+  final bool? isIncome;
+  final PaymentMethod? paymentMethod;
 
   @override
   State<TreasuryTransactionsScreen> createState() =>
@@ -48,10 +53,17 @@ class _TreasuryTransactionsScreenState
     }
   }
 
+  bool _matchesPaymentMethod(TreasuryTransactionEntity t) {
+    final effective = t.paymentMethodEnum ?? PaymentMethod.cash;
+    return effective == widget.paymentMethod;
+  }
+
   List<TreasuryTransactionEntity> _filtered(
       List<TreasuryTransactionEntity> all) {
     final query = _query.trim().toLowerCase();
-    var transactions = all.where((t) => t.isIncome == widget.isIncome);
+    var transactions = widget.paymentMethod != null
+        ? all.where(_matchesPaymentMethod)
+        : all.where((t) => t.isIncome == widget.isIncome);
     if (query.isNotEmpty) {
       transactions = transactions.where((t) =>
           t.title.toLowerCase().contains(query) ||
@@ -79,12 +91,21 @@ class _TreasuryTransactionsScreenState
   @override
   Widget build(BuildContext context) {
     final primary = AppColors.primaryColor.themeColor;
-    final color = widget.isIncome
-        ? AppColors.successColor.themeColor
-        : AppColors.errorColor.themeColor;
-    final title = widget.isIncome
-        ? LocaleKeys.treasury_totalIncome.tr()
-        : LocaleKeys.treasury_totalExpense.tr();
+    final isWallet = widget.paymentMethod == PaymentMethod.wallet;
+    final color = widget.paymentMethod != null
+        ? (isWallet
+            ? AppColors.secondaryColor.themeColor
+            : AppColors.primaryColor.themeColor)
+        : (widget.isIncome!
+            ? AppColors.successColor.themeColor
+            : AppColors.errorColor.themeColor);
+    final title = widget.paymentMethod != null
+        ? (isWallet
+            ? LocaleKeys.treasury_totalWallet.tr()
+            : LocaleKeys.treasury_totalCash.tr())
+        : (widget.isIncome!
+            ? LocaleKeys.treasury_totalIncome.tr()
+            : LocaleKeys.treasury_totalExpense.tr());
 
     return BlocProvider(
       create: (_) => getIt<TreasuryCubit>()..fetch(),
@@ -130,8 +151,14 @@ class _TreasuryTransactionsScreenState
 
             final s = state as TreasurySuccess;
             final transactions = _filtered(s.transactions);
-            final total =
-                transactions.fold<double>(0, (sum, t) => sum + t.amount);
+            final transactionsTotal = widget.paymentMethod != null
+                ? transactions.fold<double>(
+                    0, (sum, t) => sum + (t.isIncome ? t.amount : -t.amount))
+                : transactions.fold<double>(0, (sum, t) => sum + t.amount);
+            final openingBalance = widget.paymentMethod == PaymentMethod.cash
+                ? s.openingBalance
+                : 0.0;
+            final total = openingBalance + transactionsTotal;
 
             return Column(
               children: [
@@ -177,6 +204,14 @@ class _TreasuryTransactionsScreenState
                           separatorBuilder: (_, __) => 10.height,
                           itemBuilder: (_, i) => TreasuryTransactionTile(
                             transaction: transactions[i],
+                            onChangePaymentMethod: (method) {
+                              context
+                                  .read<TreasuryCubit>()
+                                  .updatePaymentMethod(transactions[i], method);
+                              AppOverlay.showSuccess(LocaleKeys
+                                  .treasury_paymentMethodUpdated
+                                  .tr());
+                            },
                           ),
                         ),
                 ),

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:app_base/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:photo_view/photo_view.dart';
 
 import '../../utils/app_images.dart';
@@ -16,7 +17,8 @@ class CustomImage extends StatelessWidget {
       this.height});
 
   /// A network URL, or a local file path (e.g. images saved by
-  /// `LocalImagePicker`) — detected automatically.
+  /// `LocalImagePicker`, or copied in by `DefaultItemsSeeder`) — detected
+  /// automatically. Local `.svg` paths are rendered as vectors.
   final String image;
   final double? radius;
   final double? width;
@@ -26,6 +28,8 @@ class CustomImage extends StatelessWidget {
   bool get _isNetwork =>
       image.startsWith('http://') || image.startsWith('https://');
 
+  bool get _isSvg => image.toLowerCase().endsWith('.svg');
+
   @override
   Widget build(BuildContext context) {
     final holder = ClipRRect(
@@ -33,22 +37,33 @@ class CustomImage extends StatelessWidget {
       child: Image.asset(AppImages.holder, fit: BoxFit.cover),
     );
 
+    Widget child;
+    if (_isSvg) {
+      child = SvgPicture.file(
+        File(image),
+        fit: fit ?? BoxFit.cover,
+        placeholderBuilder: (context) => holder,
+      );
+    } else if (_isNetwork) {
+      child = Image.network(
+        image,
+        fit: fit ?? BoxFit.cover,
+        errorBuilder: (context, error, v) => holder,
+      );
+    } else {
+      child = Image.file(
+        File(image),
+        fit: fit ?? BoxFit.cover,
+        errorBuilder: (context, error, v) => holder,
+      );
+    }
+
     return SizedBox(
       height: height,
       width: width,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(radius ?? 0),
-        child: _isNetwork
-            ? Image.network(
-                image,
-                fit: fit ?? BoxFit.cover,
-                errorBuilder: (context, error, v) => holder,
-              )
-            : Image.file(
-                File(image),
-                fit: fit ?? BoxFit.cover,
-                errorBuilder: (context, error, v) => holder,
-              ),
+        child: child,
       ),
     );
   }

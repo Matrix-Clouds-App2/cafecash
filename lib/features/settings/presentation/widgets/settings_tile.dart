@@ -17,6 +17,7 @@ class SettingsItem {
     required this.color,
     required this.onTap,
     this.locked = false,
+    this.toggleValue,
   });
 
   final IconData icon;
@@ -25,6 +26,7 @@ class SettingsItem {
   final Color color;
   final VoidCallback onTap;
   final bool locked;
+  final bool? toggleValue;
 }
 
 class SettingsTile extends StatelessWidget {
@@ -110,13 +112,20 @@ class SettingsTile extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(
-              item.locked
-                  ? Icons.lock_outline_rounded
-                  : Icons.arrow_forward_ios_rounded,
-              size: item.locked ? 17.sp : 15.sp,
-              color: AppColors.textSecondaryColor.themeColor,
-            ),
+            if (item.toggleValue != null)
+              Switch(
+                value: item.toggleValue!,
+                activeThumbColor: item.color,
+                onChanged: (_) => item.onTap(),
+              )
+            else
+              Icon(
+                item.locked
+                    ? Icons.lock_outline_rounded
+                    : Icons.arrow_forward_ios_rounded,
+                size: item.locked ? 17.sp : 15.sp,
+                color: AppColors.textSecondaryColor.themeColor,
+              ),
           ],
         ),
       ),

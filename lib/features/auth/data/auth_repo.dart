@@ -74,9 +74,21 @@ class AuthRepo {
     try {
       final response = await _dio.get(ApiEndpoints.profile);
       final data = response.data['data'] as Map<String, dynamic>;
-      return UserModel.fromJson(data['employee'] as Map<String, dynamic>);
+      final user = UserModel.fromJson(data['employee'] as Map<String, dynamic>);
+      await _storage.setUser(user.toJson());
+      return user;
     } on DioException catch (e) {
       throw NetworkException.fromDioException(e);
+    }
+  }
+
+  UserModel? getCachedProfile() {
+    final json = _storage.getUser();
+    if (json == null) return null;
+    try {
+      return UserModel.fromJson(json);
+    } catch (_) {
+      return null;
     }
   }
 

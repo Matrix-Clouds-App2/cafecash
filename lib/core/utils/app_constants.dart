@@ -21,6 +21,10 @@ class AppConstants {
   static const double defaultPadding = 16.0;
   static const double smallPadding = 8.0;
   static const double largePadding = 24.0;
+
+  // ─── Links ────────────────────────────────────────────────────────────────
+  static const String facebookUrl =
+      'https://www.facebook.com/CafeCash?rdid=JTeUnABpxEwFqbxX&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1cXaPAS2Np%2F%3Fref%3D1#';
 }
 
 class AppFonts {
@@ -33,3 +37,5 @@ UserModel? kUserModel;
 /// Returns `true` when the user is NOT logged in (guest mode).
 /// Use this everywhere in the app to guard authenticated-only actions.
 bool get kIsGuest => kUserModel == null;
+
+bool kWalletPaymentEnabled = true;

@@ -32,7 +32,7 @@ class PaymentsTabBar extends StatelessWidget {
         children: [
           Expanded(
             child: _Segment(
-              label: LocaleKeys.payments_tablesTab.tr(),
+              label: LocaleKeys.nav_hall.tr(),
               icon: Icons.table_bar_rounded,
               color: AppColors.secondaryColor.themeColor,
               isSelected: selected == OrderLocationKind.table,
@@ -42,7 +42,7 @@ class PaymentsTabBar extends StatelessWidget {
           8.width,
           Expanded(
             child: _Segment(
-              label: LocaleKeys.payments_seatsTab.tr(),
+              label: LocaleKeys.nav_matches.tr(),
               icon: Icons.event_seat_rounded,
               color: AppColors.accentGold.themeColor,
               isSelected: selected == OrderLocationKind.seat,

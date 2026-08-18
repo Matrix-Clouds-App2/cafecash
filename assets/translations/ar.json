@@ -74,9 +74,9 @@
     "receive_cash": "استلام نقدية",
     "recent_transactions": "آخر العمليات",
     "no_transactions": "لا توجد حركات في الخزينة بعد",
-    "order_payment_subtitle": "{location} - فاتورة #{order} - {method}",
-    "partial_payment_subtitle": "تحصيل جزئي - {location} - طلب #{order} - {method}",
-    "deferred_collection_subtitle": "تحصيل آجل - {customer} - طلب #{order} - {method}",
+    "order_payment_subtitle": "{location} - فاتورة #{order}",
+    "partial_payment_subtitle": "تحصيل جزئي - {location} - طلب #{order}",
+    "deferred_collection_subtitle": "تحصيل آجل - {customer} - طلب #{order}",
     "includes_opening_balance": "شاملة عهدة الوردية {amount} {currency}",
     "receive_info_title": "هذا الوصل يُستخدم لتسجيل الواردات الخارجية.",
     "receive_info_example": "زي قيمة لعب بلايستيشن، أو فرق حساب مع عميل.",
@@ -96,7 +96,11 @@
     "sort_newest": "الأحدث أولاً",
     "sort_oldest": "الأقدم أولاً",
     "sort_amount_high": "الأعلى قيمة",
-    "sort_amount_low": "الأقل قيمة"
+    "sort_amount_low": "الأقل قيمة",
+    "total_cash": "إجمالي الكاش",
+    "total_wallet": "إجمالي المحفظة",
+    "payment_method_updated": "تم تحديث طريقة الدفع",
+    "payment_method_updated_no_link": "اتحدثت طريقة دفع الطلب، لكن قيد الخزينة القديم بتاعه ماكانش مرتبط فمتحدثش"
   },
   "shift": {
     "title": "استلام الوردية",
@@ -240,12 +244,14 @@
     "privacy_section5_body": "تقدر تطلب من إدارة الفرع مراجعة أو حذف بياناتك الشخصية في أي وقت، ولو حذفت حسابك من صفحة الإعدادات هيتم مسح جلستك المحلية فورًا.",
     "subscription_plans": "الباقات",
     "subscription_plans_subtitle": "اشترك في الباقة المناسبة لفرعك",
-    "coming_soon_badge": "قريبًا"
+    "coming_soon_badge": "قريبًا",
+    "wallet_payment_title": "تفعيل الدفع بالمحفظة",
+    "wallet_payment_description": "عند التفعيل، هيظهرلك اختيار الدفع (كاش / محفظة) عند إتمام أي عملية دفع. عند الإيقاف، هيتم الدفع كاش مباشرة مع ظهور رسالة تأكيد قبل إتمامه."
   },
   "drawer": {
     "my_account": "حسابي",
     "close_shift": "اغلاق الوردية",
-    "shifts": "الورديات",
+    "shifts": "الورديات السابقة",
     "customers_management": "إدارة العملاء",
     "matches_screen_settings": "ضبط شاشة المباريات",
     "items_management": "إدارة الأصناف",
@@ -255,7 +261,9 @@
     "receive_shift": "استلام شيفت",
     "handover_shift": "تسليم شيفت",
     "usage_policy": "سياسة الاستخدام",
-    "coming_soon": "هذه الميزة قريبًا"
+    "coming_soon": "هذه الميزة قريبًا",
+    "contact_us": "تواصل معنا",
+    "contact_us_error": "تعذر فتح فيسبوك، تأكد من اتصالك بالإنترنت"
   },
   "items": {
     "choose_image": "اختر صورة",
@@ -306,7 +314,11 @@
     "partial_pay_result_title": "باقي الأصناف",
     "partial_pay_result_message": "لسه في أصناف في الطلب — عايز تعمل إيه فيها؟",
     "keep_open_option": "إبقاء الترابيزة مفتوحة",
-    "defer_remainder_option": "ترحيل الباقي للأجل"
+    "defer_remainder_option": "ترحيل الباقي للأجل",
+    "confirm_payment_title": "تأكيد الدفع",
+    "confirm_payment_message": "هل أنت متأكد من إتمام دفع الطلب بالكامل؟",
+    "confirm_partial_payment_message": "هل أنت متأكد من تحصيل المبلغ المحدد من الطلب؟",
+    "change_payment_method": "تغيير طريقة الدفع"
   },
   "customers": {
     "add_customer": "إضافة عميل",
@@ -332,6 +344,13 @@
     "delete_title": "حذف العميل؟",
     "delete_message": "لن تتمكن من التراجع عن هذا الإجراء.",
     "phone_exists": "رقم التليفون ده مسجل بالفعل لعميل تاني"
+  },
+  "guest": {
+    "lock_title": "تسجيل الدخول مطلوب",
+    "lock_message": "الصفحة دي متاحة بس للمستخدمين المسجلين، سجّل دخولك عشان تكمل وتستفيد من كل المميزات",
+    "dialog_title": "تسجيل الدخول مطلوب",
+    "dialog_message": "الميزة دي متاحة بس للمستخدمين المسجلين، يرجى تسجيل الدخول عشان تكمل",
+    "dialog_confirm": "تسجيل الدخول"
   },
   "error": {
     "unauthorized": "انتهت الجلسة، يرجى تسجيل الدخول مجدداً",

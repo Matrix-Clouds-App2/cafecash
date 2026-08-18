@@ -178,6 +178,7 @@ class ShiftSummaryScreen extends StatelessWidget {
                               // isOutlined: true,
                               color: Colors.white,
                               borderColor: Colors.white,
+                              textColor: AppColors.textPrimaryColor.themeColor,
                               onTap: () => context.pushNamed(
                                 Routes.shiftOrdersScreen,
                                 arguments: {'shift': shift},
@@ -186,13 +187,13 @@ class ShiftSummaryScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.receipt_long_rounded,
-                                      color: primary, size: 18.sp),
+                                      color: AppColors.textPrimaryColor.themeColor, size: 18.sp),
                                   8.width,
                                   AppText(
                                     LocaleKeys.shift_myOrders.tr(),
                                     fontSize: 15,
                                     fontWeight: FontWeight.w700,
-                                    color: primary,
+                                    color: AppColors.textPrimaryColor.themeColor,
                                   ),
                                 ],
                               ),

@@ -4,12 +4,15 @@ import 'package:get_storage/get_storage.dart';
 
 import 'app/app.dart';
 import 'core/di/injection.dart';
+import 'core/storage/local_storage.dart';
+import 'core/utils/app_constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   await tr.EasyLocalization.ensureInitialized();
   await setupDi();
+  kWalletPaymentEnabled = getIt<LocalStorage>().getWalletPaymentEnabled();
 
   runApp(
     tr.EasyLocalization(
