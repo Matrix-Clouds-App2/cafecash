@@ -9,7 +9,6 @@ class LocalStorage {
   final GetStorage _box;
   final FlutterSecureStorage _secureBox;
 
-  // ─── Generic typed methods ────────────────────────────────────────────────
   T? read<T>(String key) => _box.read<T>(key);
   Future<void> write<T>(String key, T value) => _box.write(key, value);
   Future<void> remove(String key) => _box.remove(key);
@@ -20,13 +19,6 @@ class LocalStorage {
     await _box.erase();
   }
 
-  // ─── Auth ─────────────────────────────────────────────────────────────────
-  // The token is the one secret worth protecting from a rooted/jailbroken
-  // device or a plain file-system backup, so it lives in the platform
-  // keystore (Keychain on iOS, EncryptedSharedPreferences/Keystore on
-  // Android) instead of GetStorage's plaintext JSON file. `_hasTokenKey`
-  // mirrors "is a token set" in GetStorage so `isLoggedIn` can stay a cheap
-  // synchronous getter for widgets/router that need it at build time.
   static const _tokenKey = 'token';
   static const _hasTokenKey = 'has_token';
   static const _userKey = 'user';
@@ -48,15 +40,24 @@ class LocalStorage {
 
   bool get isLoggedIn => read<bool>(_hasTokenKey) ?? false;
 
-  // ─── Onboarding ───────────────────────────────────────────────────────────
   static const _onboardingSeenKey = 'onboarding_seen';
 
   bool get isOnboardingSeen => read<bool>(_onboardingSeenKey) ?? false;
   Future<void> setOnboardingSeen() => write(_onboardingSeenKey, true);
 
-  // ─── Settings ─────────────────────────────────────────────────────────────
   static const _langKey = 'lang';
 
   String getLang() => read<String>(_langKey) ?? 'ar';
   Future<void> setLang(String lang) => write(_langKey, lang);
+
+  static const _hallColumnsKey = 'hall_columns_per_row';
+
+  int getHallColumns() => read<int>(_hallColumnsKey) ?? 3;
+  Future<void> setHallColumns(int columns) => write(_hallColumnsKey, columns);
+
+  static const _matchesColumnsKey = 'matches_columns_per_row';
+
+  int getMatchesColumns() => read<int>(_matchesColumnsKey) ?? 3;
+  Future<void> setMatchesColumns(int columns) =>
+      write(_matchesColumnsKey, columns);
 }

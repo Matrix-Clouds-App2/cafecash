@@ -83,12 +83,12 @@ class CustomButton extends StatelessWidget {
               ? RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(radius),
                   side: BorderSide(
-                      color: _borderColor ?? Theme.of(context).primaryColor,
+                      color: _borderColor ?? AppColors.primaryColor.themeColor,
                       width: 1.5.w))
               : RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(radius),
                   side: BorderSide(
-                      color: _borderColor ?? Theme.of(context).primaryColor,
+                      color: _borderColor ?? AppColors.primaryColor.themeColor,
                       width: 1.5.w)),
           child: _loading
               ? CustomLoadingWidget(
@@ -104,7 +104,7 @@ class CustomButton extends StatelessWidget {
                         color: _textColor ??
                             (_isOutlined
                                 ? AppColors.primaryColor.themeColor
-                                : Colors.white),
+                                : AppColors.textPrimaryColor.themeColor),
                       ))
                   : _child ?? const SizedBox(),
         ),

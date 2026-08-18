@@ -25,34 +25,52 @@ extension ColorTheme on ColorModel {
 class AppColors {
   AppColors._();
 
+  // ─── Brand palette (لوحة ألوان كافيه كاش) ────────────────────────────────
   static const ColorModel primaryColor = ColorModel(
-    lightColor: Color(0xff0a3320),
-    darkColor: Color(0xff0a3320),
+    lightColor: Color(0xffFACB82),
+    darkColor: Color(0xffFACB82),
   );
 
   static const ColorModel secondaryColor = ColorModel(
-    lightColor: Color(0xff1B5583),
-    darkColor: Color(0xff1B5583),
+    lightColor: Color(0xFF7A4B24),
+    darkColor: Color(0xFF7A4B24),
+  );
+
+  /// Accent — كراميل/ذهبي، لأي CTA أو تفصيلة مميزة.
+  static const ColorModel accentGold = ColorModel(
+    lightColor: Color(0xFFC58A32),
+    darkColor: Color(0xFFC58A32),
+  );
+
+  /// Light Accent — ذهبي فاتح، لتظليل خفيف حوالين الـ accent.
+  static const ColorModel lightAccentColor = ColorModel(
+    lightColor: Color(0xFFE0B66A),
+    darkColor: Color(0xFFE0B66A),
   );
 
   static const ColorModel backgroundColor = ColorModel(
-    lightColor: Color(0xffFFFFFF),
-    darkColor: Color(0xff121212),
+    lightColor: Color(0xFFFFF7E8),
+    darkColor: Color(0xFF1E1712),
   );
 
   static const ColorModel surfaceColor = ColorModel(
-    lightColor: Color(0xffF5F5F5),
-    darkColor: Color(0xff1E1E1E),
+    lightColor: Color(0xFFF5E7CF),
+    darkColor: Color(0xFF2A2119),
+  );
+
+  static const ColorModel cardColor = ColorModel(
+    lightColor: Color(0xFFFFFFFF),
+    darkColor: Color(0xFF2C2C2C),
   );
 
   static const ColorModel textPrimaryColor = ColorModel(
-    lightColor: Color(0xff1A1A1A),
-    darkColor: Color(0xffFFFFFF),
+    lightColor: Color(0xff773702),
+    darkColor: Color(0xffE09741),
   );
 
   static const ColorModel textSecondaryColor = ColorModel(
-    lightColor: Color(0xff757575),
-    darkColor: Color(0xffB0B0B0),
+    lightColor: Color(0xFF765F50),
+    darkColor: Color(0xFFB0A18F),
   );
 
   static const ColorModel errorColor = ColorModel(
@@ -75,14 +93,21 @@ class AppColors {
     darkColor: Color(0xff616161),
   );
 
-  static const ColorModel cardColor = ColorModel(
-    lightColor: Color(0xffFFFFFF),
-    darkColor: Color(0xff2C2C2C),
+  /// Neutral gray — للحالات المعطّلة (زي ترابيزة/كرسي متوقف).
+  static const ColorModel disabledColor = ColorModel(
+    lightColor: Color(0xFF9E9E9E),
+    darkColor: Color(0xFF6E6E6E),
   );
 
-  /// Golden accent — used for the final onboarding CTA button.
-  static const ColorModel accentGold = ColorModel(
-    lightColor: Color(0xFFD4A843),
-    darkColor: Color(0xFFD4A843),
+  /// كهرماني — لأزرار زي "دفع جزئي".
+  static const ColorModel warningColor = ColorModel(
+    lightColor: Color(0xFFF5A623),
+    darkColor: Color(0xFFF5A623),
+  );
+
+  /// أزرق — لأزرار إعلامية زي "ترحيل للأجل".
+  static const ColorModel infoColor = ColorModel(
+    lightColor: Color(0xFF2F80ED),
+    darkColor: Color(0xFF2F80ED),
   );
 }

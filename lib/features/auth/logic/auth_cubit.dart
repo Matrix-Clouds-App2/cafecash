@@ -13,61 +13,61 @@ class AuthCubit extends Cubit<AuthState> {
 
   final AuthRepo _repo;
 
-  Future<void> login({
-    String? email,
-    String? phone,
-    String? countryCode,
-    required String password,
-  }) async {
+  /// Returns whether it succeeded — screens navigate to the OTP screen only
+  /// on `true`, so a validation/server error just surfaces via
+  /// [AppOverlay] and keeps them on the same screen.
+  Future<bool> register({required String name, required String phone}) async {
     emit(const AuthLoading());
     try {
-      final user = await _repo.login(
-        email: email,
-        phone: phone,
-        countryCode: countryCode,
-        password: password,
-      );
-      emit(AuthSuccess(user));
+      final res = await _repo.register(name: name, phone: phone);
+
+      requestOtp(phone);
+      emit(const AuthInitial());
+      return true;
     } catch (e) {
-      final msg = e is NetworkException ? e.message : e.toString();
-      AppOverlay.showError(msg);
-      emit(AuthError(msg));
+      _showError(e);
+      return false;
     }
   }
 
-  Future<void> register({
-    required String name,
-    required String email,
-    required String phone,
-    required String password,
-    required String countryCode,
-  }) async {
+  /// Requests an OTP for [phone] — this is both "login" (no password-based
+  /// login endpoint exists) and the OTP screen's "resend code" action.
+  Future<bool> requestOtp(String phone) async {
     emit(const AuthLoading());
     try {
-      final user = await _repo.register(
-        name: name,
-        email: email,
-        phone: phone,
-        password: password,
-        countryCode: countryCode,
-      );
-      emit(AuthSuccess(user));
+      await _repo.resendOtp(phone: phone);
+      emit(const AuthInitial());
+      return true;
     } catch (e) {
-      final msg = e is NetworkException ? e.message : e.toString();
-      AppOverlay.showError(msg);
-      emit(AuthError(msg));
+      _showError(e);
+      return false;
+    }
+  }
+
+  Future<bool> verifyOtp({required String phone, required String otp}) async {
+    emit(const AuthLoading());
+    try {
+      final user = await _repo.verifyOtp(phone: phone, otp: otp);
+      emit(AuthSuccess(user));
+      return true;
+    } catch (e) {
+      _showError(e);
+      return false;
     }
   }
 
   Future<void> logout() async {
-    // emit(const AuthLoading());
     try {
       await _repo.logout();
       emit(const AuthInitial());
     } catch (e) {
-      final msg = e is NetworkException ? e.message : e.toString();
-      AppOverlay.showError(msg);
-      emit(AuthError(msg));
+      _showError(e);
     }
+  }
+
+  void _showError(Object e) {
+    final msg = e is NetworkException ? e.message : e.toString();
+    AppOverlay.showError(msg);
+    emit(AuthError(msg));
   }
 }

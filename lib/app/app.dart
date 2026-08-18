@@ -8,6 +8,7 @@ import '../core/storage/local_storage.dart';
 import '../core/utils/app_constants.dart';
 import '../features/auth/logic/auth_cubit.dart';
 import '../features/profile/logic/profile_cubit.dart';
+import '../features/shift/logic/shift_cubit.dart';
 import 'router/app_router.dart';
 import 'router/routes.dart';
 import 'theme/app_theme.dart';
@@ -23,12 +24,14 @@ class MyApp extends StatelessWidget {
         BlocProvider<ProfileCubit>(
           create: (_) {
             final cubit = getIt<ProfileCubit>();
-            // Avoid unauthenticated profile request when app is in guest mode.
             if (getIt<LocalStorage>().isLoggedIn) {
               cubit.getProfile();
             }
             return cubit;
           },
+        ),
+        BlocProvider<ShiftCubit>(
+          create: (_) => getIt<ShiftCubit>()..watchActive(),
         ),
       ],
       child: ScreenUtilInit(

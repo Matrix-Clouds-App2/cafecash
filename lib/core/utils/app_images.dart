@@ -31,9 +31,11 @@ class AppImages {
 
   // ─── Images ──────────────────────────────────────────────────────────────
   static const String logo = '${_base}logo2.png';
-  static const String logo2 = '${_base}logo.jpeg';
-  static const String logo3 = '${_base}logo3.png';
-  static const String logo4 = '${_base}logo4.png';
+  static const String login = '${_base}login.png';
+  static const String register = '${_base}register.png';
+  static const String otp = '${_base}otp.png';
+  static const String person = '${_base}person.png';
+
   static const String onboarding1 = '${_base}on1.png';
   static const String onboarding2 = '${_base}on1.png';
   static const String onboarding3 = '${_base}on1.png';

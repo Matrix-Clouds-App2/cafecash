@@ -1,0 +1,444 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:2467054432086639830",
+      "lastPropertyId": "3:8770416089712112328",
+      "name": "CacheMetaEntity",
+      "properties": [
+        {
+          "id": "1:3196065590893594798",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1208131827266110009",
+          "name": "boxName",
+          "indexId": "1:8459688867663420372",
+          "type": 9,
+          "flags": 2080
+        },
+        {
+          "id": "3:8770416089712112328",
+          "name": "lastSyncedAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:51273886986131299",
+      "lastPropertyId": "6:7080585986145436980",
+      "name": "HallTableEntity",
+      "properties": [
+        {
+          "id": "1:5557624914455773702",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:47306918210029795",
+          "name": "number",
+          "indexId": "2:206817518550526951",
+          "type": 6,
+          "flags": 8
+        },
+        {
+          "id": "3:5506005613733163974",
+          "name": "status",
+          "type": 6
+        },
+        {
+          "id": "4:4339077099392110079",
+          "name": "drinkCount",
+          "type": 6
+        },
+        {
+          "id": "5:1319850769834674425",
+          "name": "price",
+          "type": 8
+        },
+        {
+          "id": "6:7080585986145436980",
+          "name": "customerName",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:8036933164883014874",
+      "lastPropertyId": "5:161565100004498711",
+      "name": "CategoryEntity",
+      "properties": [
+        {
+          "id": "1:3634287128197974807",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8491153181103086832",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:6406057487100934303",
+          "name": "imagePath",
+          "type": 9
+        },
+        {
+          "id": "4:2312335376388466502",
+          "name": "createdAt",
+          "type": 10
+        },
+        {
+          "id": "5:161565100004498711",
+          "name": "sortOrder",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:2701804075511469332",
+      "lastPropertyId": "7:3383690351681681596",
+      "name": "MenuItemEntity",
+      "properties": [
+        {
+          "id": "1:6857476281256963624",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5329367549672800137",
+          "name": "categoryId",
+          "indexId": "3:8687952214078898367",
+          "type": 6,
+          "flags": 8
+        },
+        {
+          "id": "3:4927379530960737911",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "4:1830875701468274540",
+          "name": "price",
+          "type": 8
+        },
+        {
+          "id": "5:3007560099142598648",
+          "name": "imagePath",
+          "type": 9
+        },
+        {
+          "id": "6:151867521566825830",
+          "name": "createdAt",
+          "type": 10
+        },
+        {
+          "id": "7:3383690351681681596",
+          "name": "sortOrder",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:2990089501523730516",
+      "lastPropertyId": "13:1058970356262540544",
+      "name": "OrderEntity",
+      "properties": [
+        {
+          "id": "1:8156234745498481643",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2434245085690448131",
+          "name": "tableId",
+          "indexId": "4:7635035613488405237",
+          "type": 6,
+          "flags": 8
+        },
+        {
+          "id": "3:8851101427295631820",
+          "name": "status",
+          "type": 6
+        },
+        {
+          "id": "4:1558446685199350172",
+          "name": "customerName",
+          "type": 9
+        },
+        {
+          "id": "5:6748057192669223055",
+          "name": "paidAmount",
+          "type": 8
+        },
+        {
+          "id": "6:7452196766272538600",
+          "name": "createdAt",
+          "type": 10
+        },
+        {
+          "id": "7:7935215328929589493",
+          "name": "closedAt",
+          "type": 10
+        },
+        {
+          "id": "8:4725190843476145498",
+          "name": "tableNumber",
+          "type": 6
+        },
+        {
+          "id": "9:5921008167290425336",
+          "name": "paymentMethod",
+          "type": 6
+        },
+        {
+          "id": "10:4091214350343491123",
+          "name": "locationKind",
+          "type": 6
+        },
+        {
+          "id": "11:3308185234701142933",
+          "name": "customerId",
+          "indexId": "8:4871079183238634545",
+          "type": 6,
+          "flags": 8
+        },
+        {
+          "id": "12:4007205306913929702",
+          "name": "createdBy",
+          "type": 9
+        },
+        {
+          "id": "13:1058970356262540544",
+          "name": "cancelReason",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:3149235358257446838",
+      "lastPropertyId": "7:8707967398864778225",
+      "name": "OrderItemEntity",
+      "properties": [
+        {
+          "id": "1:1675749361689448928",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5020321657931603538",
+          "name": "orderId",
+          "indexId": "5:4803726187613504726",
+          "type": 6,
+          "flags": 8
+        },
+        {
+          "id": "3:6683874571974052516",
+          "name": "menuItemId",
+          "type": 6
+        },
+        {
+          "id": "4:4878921968476865844",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "5:3213722079322121316",
+          "name": "price",
+          "type": 8
+        },
+        {
+          "id": "6:8621883346423112349",
+          "name": "imagePath",
+          "type": 9
+        },
+        {
+          "id": "7:8707967398864778225",
+          "name": "quantity",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "7:3988311451431123324",
+      "lastPropertyId": "7:4436389341659763149",
+      "name": "TreasuryTransactionEntity",
+      "properties": [
+        {
+          "id": "1:6879485194504331333",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:339070952991510511",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:3854021847752417293",
+          "name": "subtitle",
+          "type": 9
+        },
+        {
+          "id": "4:4593289326532305552",
+          "name": "amount",
+          "type": 8
+        },
+        {
+          "id": "5:8392446758265605459",
+          "name": "isIncome",
+          "type": 1
+        },
+        {
+          "id": "6:1630832693283340658",
+          "name": "createdAt",
+          "type": 10
+        },
+        {
+          "id": "7:4436389341659763149",
+          "name": "createdBy",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "8:3403350787146521806",
+      "lastPropertyId": "6:7031739963323584036",
+      "name": "MatchSeatEntity",
+      "properties": [
+        {
+          "id": "1:7469679110255030775",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:8122243797672262903",
+          "name": "number",
+          "indexId": "6:5775462523835108978",
+          "type": 6,
+          "flags": 8
+        },
+        {
+          "id": "3:262289914496983445",
+          "name": "status",
+          "type": 6
+        },
+        {
+          "id": "4:6759726727552970288",
+          "name": "drinkCount",
+          "type": 6
+        },
+        {
+          "id": "5:676189158726593439",
+          "name": "price",
+          "type": 8
+        },
+        {
+          "id": "6:7031739963323584036",
+          "name": "customerName",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "9:547910549712133773",
+      "lastPropertyId": "6:356420926410283648",
+      "name": "ShiftEntity",
+      "properties": [
+        {
+          "id": "1:2124840139712219659",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1773579763143811994",
+          "name": "openingBalance",
+          "type": 8
+        },
+        {
+          "id": "3:1532222920729459846",
+          "name": "status",
+          "type": 6
+        },
+        {
+          "id": "4:339181198545975529",
+          "name": "startedAt",
+          "type": 10
+        },
+        {
+          "id": "5:8772059232905414869",
+          "name": "closedAt",
+          "type": 10
+        },
+        {
+          "id": "6:356420926410283648",
+          "name": "closingBalance",
+          "type": 8
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "10:3730376913734074424",
+      "lastPropertyId": "4:7107090943000637117",
+      "name": "CustomerEntity",
+      "properties": [
+        {
+          "id": "1:6242382197468646170",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:431151796138793526",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:888799696282343107",
+          "name": "phone",
+          "indexId": "7:6004828314717751632",
+          "type": 9,
+          "flags": 2048
+        },
+        {
+          "id": "4:7107090943000637117",
+          "name": "createdAt",
+          "type": 10
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "10:3730376913734074424",
+  "lastIndexId": "8:4871079183238634545",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

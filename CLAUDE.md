@@ -1,4 +1,4 @@
-# Vivacare White Label — دليل المشروع
+# Coffee Cash — دليل المشروع
 
 Flutter base template (White Label) بيستخدم **Cubit (flutter_bloc)** لإدارة الحالة، **GetIt** لل-DI، **Dio** للنتورك، **easy_localization** للترجمة، و**flutter_screenutil** للمقاسات. الهدف إن أي فيتشر جديدة تتبني بنفس الباترن ده بالظبط.
 
@@ -191,3 +191,4 @@ UI (Screen)
 - الألوان/النصوص/الصور/المسافات كلها من الملفات المركزية (`AppColors`, `LocaleKeys`, `AppImages`, `AppConstants`) — مفيش hardcoded values في نص الشاشة إلا لو تفصيلة فريدة جدًا مش هتتكرر.
 - الـ Models: `Equatable` + `fromJson`/`toJson` صريحين (من غير code generation حاليًا في المشروع).
 - الـ Cubit بيرمي/يمسك الأخطاء بنفسه ويعرض `AppOverlay.showError` — الـ UI مش المفروض تعمل try/catch بتاعها.
+- **من غير كومنتات توضيحية في الكود خالص** — لا `///` doc comments فوق الكلاسات/الميثودز، ولا كومنتات inline بتشرح السطر أو تبرر قرار. الكود نفسه يبقى واضح بأسماء كويسة، وخلاص.
