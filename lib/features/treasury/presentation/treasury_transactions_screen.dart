@@ -14,6 +14,7 @@ import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/custom_loading_widget.dart';
 import '../../../core/widgets/search_field.dart';
 import '../../orders/data/models/order_entity.dart';
+import '../../shift/data/models/shift_entity.dart';
 import '../data/models/treasury_transaction_entity.dart';
 import '../logic/treasury_cubit.dart';
 import 'widgets/treasury_transaction_tile.dart';
@@ -21,11 +22,12 @@ import 'widgets/treasury_transactions_filter_sheet.dart';
 
 class TreasuryTransactionsScreen extends StatefulWidget {
   const TreasuryTransactionsScreen(
-      {super.key, this.isIncome, this.paymentMethod})
+      {super.key, this.isIncome, this.paymentMethod, this.shift})
       : assert(isIncome != null || paymentMethod != null);
 
   final bool? isIncome;
   final PaymentMethod? paymentMethod;
+  final ShiftEntity? shift;
 
   @override
   State<TreasuryTransactionsScreen> createState() =>
@@ -108,7 +110,16 @@ class _TreasuryTransactionsScreenState
             : LocaleKeys.treasury_totalExpense.tr());
 
     return BlocProvider(
-      create: (_) => getIt<TreasuryCubit>()..fetch(),
+      create: (_) {
+        final cubit = getIt<TreasuryCubit>();
+        final shift = widget.shift;
+        if (shift != null) {
+          cubit.fetchForShift(shift);
+        } else {
+          cubit.fetch();
+        }
+        return cubit;
+      },
       child: Scaffold(
         backgroundColor: AppColors.surfaceColor.themeColor,
         appBar: AppBar(
@@ -151,14 +162,10 @@ class _TreasuryTransactionsScreenState
 
             final s = state as TreasurySuccess;
             final transactions = _filtered(s.transactions);
-            final transactionsTotal = widget.paymentMethod != null
+            final total = widget.paymentMethod != null
                 ? transactions.fold<double>(
                     0, (sum, t) => sum + (t.isIncome ? t.amount : -t.amount))
                 : transactions.fold<double>(0, (sum, t) => sum + t.amount);
-            final openingBalance = widget.paymentMethod == PaymentMethod.cash
-                ? s.openingBalance
-                : 0.0;
-            final total = openingBalance + transactionsTotal;
 
             return Column(
               children: [

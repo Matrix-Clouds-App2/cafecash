@@ -40,7 +40,7 @@ class TreasuryCubit extends Cubit<TreasuryState> {
           totalIncome: _repo.totalIncome(scoped),
           totalExpense: _repo.totalExpense(scoped),
           openingBalance: openingBalance,
-          totalCash: openingBalance + _repo.totalCash(scoped),
+          totalCash: _repo.totalCash(scoped),
           totalWallet: _repo.totalWallet(scoped),
         ));
       },
@@ -54,6 +54,39 @@ class TreasuryCubit extends Cubit<TreasuryState> {
     if (start == null) return transactions;
     return transactions
         .where((t) => t.createdAt != null && !t.createdAt!.isBefore(start))
+        .toList();
+  }
+
+  void fetchForShift(ShiftEntity shift) {
+    emit(const TreasuryLoading());
+    _subscription?.cancel();
+
+    _subscription = _repo.watchAll().listen(
+      (transactions) {
+        final scoped = _scopedToWindow(transactions, shift);
+        emit(TreasurySuccess(
+          transactions: scoped,
+          totalIncome: _repo.totalIncome(scoped),
+          totalExpense: _repo.totalExpense(scoped),
+          openingBalance: shift.openingBalance,
+          totalCash: _repo.totalCash(scoped),
+          totalWallet: _repo.totalWallet(scoped),
+        ));
+      },
+      onError: (Object e) => emit(TreasuryError(e.toString())),
+    );
+  }
+
+  List<TreasuryTransactionEntity> _scopedToWindow(
+      List<TreasuryTransactionEntity> transactions, ShiftEntity shift) {
+    final start = shift.startedAt;
+    if (start == null) return transactions;
+    final end = shift.closedAt ?? DateTime.now();
+    return transactions
+        .where((t) =>
+            t.createdAt != null &&
+            !t.createdAt!.isBefore(start) &&
+            !t.createdAt!.isAfter(end))
         .toList();
   }
 

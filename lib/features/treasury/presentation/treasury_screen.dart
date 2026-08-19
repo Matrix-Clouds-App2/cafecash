@@ -95,8 +95,7 @@ class TreasuryScreen extends StatelessWidget {
                                               AppColors.primaryColor.themeColor,
                                           label: LocaleKeys.treasury_totalCash
                                               .tr(),
-                                          value:
-                                              '${s.totalCash.toStringAsFixed(0)} ${LocaleKeys.common_currency.tr()}',
+                                          value: '${s.totalCash.toStringAsFixed(0)} ${LocaleKeys.common_currency.tr()}',
                                           onTap: () => context.pushNamed(
                                             Routes.treasuryTransactionsScreen,
                                             arguments: {

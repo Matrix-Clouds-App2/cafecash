@@ -108,6 +108,7 @@ class RouteGenerator {
         return _pageRoute(TreasuryTransactionsScreen(
           isIncome: arguments?['isIncome'] as bool?,
           paymentMethod: arguments?['paymentMethod'] as PaymentMethod?,
+          shift: arguments?['shift'] as ShiftEntity?,
         ));
 
       case Routes.customersScreen:

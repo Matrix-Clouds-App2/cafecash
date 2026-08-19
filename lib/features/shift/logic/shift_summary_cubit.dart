@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../orders/data/models/order_entity.dart';
 import '../../orders/data/orders_repo.dart';
 import '../../treasury/data/treasury_repo.dart';
 import '../data/models/shift_entity.dart';
@@ -40,17 +39,11 @@ class ShiftSummaryCubit extends Cubit<ShiftSummaryState> {
           .toList();
 
       var itemsCount = 0;
-      var cashTotal = 0.0;
-      var walletTotal = 0.0;
       for (final order in paidOrders) {
         itemsCount += _ordersRepo.orderItemsCount(order.id);
-        final total = _ordersRepo.orderTotal(order.id);
-        if (order.paymentMethodEnum == PaymentMethod.wallet) {
-          walletTotal += total;
-        } else {
-          cashTotal += total;
-        }
       }
+      final cashTotal = _treasuryRepo.totalCash(transactions);
+      final walletTotal = _treasuryRepo.totalWallet(transactions);
 
       emit(ShiftSummarySuccess(ShiftSummary(
         shift: shift,

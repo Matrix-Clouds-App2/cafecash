@@ -129,6 +129,7 @@ abstract class LocaleKeys {
   static const String shift_summaryTitle = 'shift.summary_title';
   static const String shift_openingBalance = 'shift.opening_balance';
   static const String shift_closingBalance = 'shift.closing_balance';
+  static const String shift_closingBalanceNote = 'shift.closing_balance_note';
   static const String shift_ordersSummary = 'shift.orders_summary';
   static const String shift_ordersCount = 'shift.orders_count';
   static const String shift_itemsSold = 'shift.items_sold';

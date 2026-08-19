@@ -16,6 +16,7 @@ import '../../hall/data/hall_repo.dart';
 import '../../hall/data/models/hall_table_entity.dart';
 import '../../matches/data/matches_repo.dart';
 import '../../matches/data/models/match_seat_entity.dart';
+import '../../orders/data/models/order_entity.dart';
 import '../../treasury/presentation/widgets/treasury_stat_card.dart';
 import '../data/models/shift_entity.dart';
 import '../data/models/shift_summary.dart';
@@ -90,6 +91,13 @@ class ShiftSummaryScreen extends StatelessWidget {
                                     label: LocaleKeys.treasury_totalIncome.tr(),
                                     value:
                                         '${summary.totalIncome.toStringAsFixed(0)} ${LocaleKeys.common_currency.tr()}',
+                                    onTap: () => context.pushNamed(
+                                      Routes.treasuryTransactionsScreen,
+                                      arguments: {
+                                        'isIncome': true,
+                                        'shift': shift,
+                                      },
+                                    ),
                                   ),
                                 ),
                               ],
@@ -105,6 +113,13 @@ class ShiftSummaryScreen extends StatelessWidget {
                                         LocaleKeys.treasury_totalExpense.tr(),
                                     value:
                                         '${summary.totalExpense.toStringAsFixed(0)} ${LocaleKeys.common_currency.tr()}',
+                                    onTap: () => context.pushNamed(
+                                      Routes.treasuryTransactionsScreen,
+                                      arguments: {
+                                        'isIncome': false,
+                                        'shift': shift,
+                                      },
+                                    ),
                                   ),
                                 ),
                                 12.width,
@@ -118,6 +133,38 @@ class ShiftSummaryScreen extends StatelessWidget {
                                   ),
                                 ),
                               ],
+                            ),
+                            10.height,
+                            Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 14.w, vertical: 10.h),
+                              decoration: BoxDecoration(
+                                color: AppColors.infoColor.themeColor
+                                    .withValues(alpha: 0.08),
+                                borderRadius: BorderRadius.circular(12.r),
+                                border: Border.all(
+                                  color: AppColors.infoColor.themeColor
+                                      .withValues(alpha: 0.25),
+                                ),
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.info_outline_rounded,
+                                      size: 16.sp,
+                                      color: AppColors.infoColor.themeColor),
+                                  8.width,
+                                  Expanded(
+                                    child: AppText(
+                                      LocaleKeys.shift_closingBalanceNote.tr(),
+                                      fontSize: 11.5,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.infoColor.themeColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             24.height,
                             AppText(
@@ -159,6 +206,13 @@ class ShiftSummaryScreen extends StatelessWidget {
                                     label: LocaleKeys.orders_cash.tr(),
                                     value:
                                         '${summary.cashTotal.toStringAsFixed(0)} ${LocaleKeys.common_currency.tr()}',
+                                    onTap: () => context.pushNamed(
+                                      Routes.treasuryTransactionsScreen,
+                                      arguments: {
+                                        'paymentMethod': PaymentMethod.cash,
+                                        'shift': shift,
+                                      },
+                                    ),
                                   ),
                                 ),
                                 12.width,
@@ -169,6 +223,13 @@ class ShiftSummaryScreen extends StatelessWidget {
                                     label: LocaleKeys.orders_wallet.tr(),
                                     value:
                                         '${summary.walletTotal.toStringAsFixed(0)} ${LocaleKeys.common_currency.tr()}',
+                                    onTap: () => context.pushNamed(
+                                      Routes.treasuryTransactionsScreen,
+                                      arguments: {
+                                        'paymentMethod': PaymentMethod.wallet,
+                                        'shift': shift,
+                                      },
+                                    ),
                                   ),
                                 ),
                               ],
@@ -187,13 +248,16 @@ class ShiftSummaryScreen extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.receipt_long_rounded,
-                                      color: AppColors.textPrimaryColor.themeColor, size: 18.sp),
+                                      color:
+                                          AppColors.textPrimaryColor.themeColor,
+                                      size: 18.sp),
                                   8.width,
                                   AppText(
                                     LocaleKeys.shift_myOrders.tr(),
                                     fontSize: 15,
                                     fontWeight: FontWeight.w700,
-                                    color: AppColors.textPrimaryColor.themeColor,
+                                    color:
+                                        AppColors.textPrimaryColor.themeColor,
                                   ),
                                 ],
                               ),

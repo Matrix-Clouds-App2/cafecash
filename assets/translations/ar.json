@@ -111,6 +111,7 @@
     "summary_title": "ملخص الوردية",
     "opening_balance": "العهدة",
     "closing_balance": "الرصيد الختامي",
+    "closing_balance_note": "الرصيد الختامي = العهدة الافتتاحية + إجمالي الكاش + إجمالي المحفظة",
     "orders_summary": "ملخص الطلبات",
     "orders_count": "عدد الطلبات",
     "items_sold": "الأصناف المباعة",

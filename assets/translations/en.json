@@ -111,6 +111,7 @@
     "summary_title": "Shift Summary",
     "opening_balance": "Opening Balance",
     "closing_balance": "Closing Balance",
+    "closing_balance_note": "Closing balance = opening float + total cash + total wallet",
     "orders_summary": "Orders Summary",
     "orders_count": "Orders Count",
     "items_sold": "Items Sold",
