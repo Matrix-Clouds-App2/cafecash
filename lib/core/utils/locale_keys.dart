@@ -215,6 +215,13 @@ abstract class LocaleKeys {
   // ─── Profile ──────────────────────────────────────────────────────────────
   static const String profile_title = 'profile.title';
   static const String profile_loginNow = 'profile.login_now';
+  static const String profile_updateTitle = 'profile.update_title';
+  static const String profile_updateSubtitle = 'profile.update_subtitle';
+  static const String profile_nameLabel = 'profile.name_label';
+  static const String profile_nameHint = 'profile.name_hint';
+  static const String profile_nameRequired = 'profile.name_required';
+  static const String profile_updateButton = 'profile.update_button';
+  static const String profile_updateSuccess = 'profile.update_success';
 
   // ─── Settings ─────────────────────────────────────────────────────────────
   static const String settings_changeLanguage = 'settings.change_language';

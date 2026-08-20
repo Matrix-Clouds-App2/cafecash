@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/network/network_exceptions.dart';
 import '../../../core/utils/app_constants.dart';
+import '../../../core/utils/app_overlay.dart';
 import '../../../features/auth/data/auth_repo.dart';
 import '../../../features/auth/data/models/user_model.dart';
 
@@ -32,6 +33,30 @@ class ProfileCubit extends Cubit<ProfileState> {
         final msg = e is NetworkException ? e.message : e.toString();
         emit(ProfileError(msg));
       }
+    }
+  }
+
+  Future<bool> updateName(String name) async {
+    try {
+      final user = await _repo.updateAccount(name: name);
+      kUserModel = user;
+      emit(ProfileSuccess(user));
+      return true;
+    } catch (e) {
+      final msg = e is NetworkException ? e.message : e.toString();
+      AppOverlay.showError(msg);
+      return false;
+    }
+  }
+
+  Future<bool> deleteAccount() async {
+    try {
+      await _repo.deleteAccount();
+      return true;
+    } catch (e) {
+      final msg = e is NetworkException ? e.message : e.toString();
+      AppOverlay.showError(msg);
+      return false;
     }
   }
 

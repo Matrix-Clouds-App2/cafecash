@@ -192,7 +192,14 @@
   },
   "profile": {
     "title": "ملفي الشخصي",
-    "login_now": "تسجيل الدخول الآن"
+    "login_now": "تسجيل الدخول الآن",
+    "update_title": "تحديث الملف الشخصي",
+    "update_subtitle": "عدّل اسمك وحدّث بياناتك",
+    "name_label": "الاسم",
+    "name_hint": "اكتب اسمك",
+    "name_required": "من فضلك أدخل الاسم",
+    "update_button": "تحديث",
+    "update_success": "تم تحديث البيانات بنجاح"
   },
   "settings": {
     "change_language": "تغيير اللغة",

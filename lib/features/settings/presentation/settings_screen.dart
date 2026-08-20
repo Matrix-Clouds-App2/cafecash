@@ -125,8 +125,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       message: LocaleKeys.settings_deleteAccountDialogMessage.tr(),
       confirmLabel: LocaleKeys.settings_deleteAccountConfirm.tr(),
       confirmColor: AppColors.errorColor.themeColor,
-      onConfirm: () {
+      onConfirm: () async {
         NavigationService.goBack();
+        final success = await context.read<ProfileCubit>().deleteAccount();
+        if (!success) return;
+
         NavigationService.pushNamedAndRemoveUntil(Routes.loginScreen);
         WidgetsBinding.instance.addPostFrameCallback((_) {
           final rootContext = NavigationService.navigationKey.currentContext!;

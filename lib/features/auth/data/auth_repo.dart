@@ -92,6 +92,23 @@ class AuthRepo {
     }
   }
 
+  Future<UserModel> updateAccount({required String name}) async {
+    try {
+      await _dio.patch(ApiEndpoints.account, data: {'name': name});
+    } on DioException catch (e) {
+      throw NetworkException.fromDioException(e);
+    }
+    return getProfile();
+  }
+
+  Future<void> deleteAccount() async {
+    try {
+      await _dio.delete(ApiEndpoints.account);
+    } on DioException catch (e) {
+      throw NetworkException.fromDioException(e);
+    }
+  }
+
   /// No dedicated logout endpoint — just drop the local session.
   Future<void> logout() async {
     await _storage.clearAll();

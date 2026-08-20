@@ -192,7 +192,14 @@
   },
   "profile": {
     "title": "My Profile",
-    "login_now": "Sign In Now"
+    "login_now": "Sign In Now",
+    "update_title": "Update Profile",
+    "update_subtitle": "Edit your name and update your info",
+    "name_label": "Name",
+    "name_hint": "Enter your name",
+    "name_required": "Please enter your name",
+    "update_button": "Update",
+    "update_success": "Profile updated successfully"
   },
   "settings": {
     "change_language": "Change Language",

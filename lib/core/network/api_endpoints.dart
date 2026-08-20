@@ -12,4 +12,5 @@ class ApiEndpoints {
   static const String resendOtp = 'auth/resend-otp';
   static const String verifyOtp = 'auth/verify-otp';
   static const String profile = 'auth/me';
+  static const String account = 'auth/account';
 }
