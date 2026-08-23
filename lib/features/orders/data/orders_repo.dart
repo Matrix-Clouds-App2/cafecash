@@ -82,6 +82,7 @@ class OrdersRepo {
         orderId: order.id,
         menuItemId: menuItem.id,
         name: menuItem.name,
+        nameEn: menuItem.nameEn,
         price: menuItem.price,
         imagePath: menuItem.imagePath,
         quantity: quantity,

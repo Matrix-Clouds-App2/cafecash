@@ -33,7 +33,7 @@ class CategoryCard extends StatelessWidget {
   void _showOptions(BuildContext context) {
     ManageOptionsSheet.show(
       context,
-      title: category.name,
+      title: category.displayName,
       onEdit: onEdit,
       onDelete: () => _confirmDelete(context),
     );
@@ -99,7 +99,7 @@ class CategoryCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AppText(
-                        category.name,
+                        category.displayName,
                         fontSize: 13.5,
                         fontWeight: FontWeight.w700,
                         maxLines: 1,

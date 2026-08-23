@@ -60,7 +60,7 @@ class OrderCategorySection extends StatelessWidget {
                   ),
                   Expanded(
                     child: AppText(
-                      category.name,
+                      category.displayName,
                       fontSize: 14.5,
                       fontWeight: FontWeight.w700,
                       textAlign: TextAlign.center,

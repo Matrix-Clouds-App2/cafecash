@@ -72,7 +72,7 @@
     },
     {
       "id": "3:8036933164883014874",
-      "lastPropertyId": "5:161565100004498711",
+      "lastPropertyId": "6:4637738635194900913",
       "name": "CategoryEntity",
       "properties": [
         {
@@ -100,13 +100,18 @@
           "id": "5:161565100004498711",
           "name": "sortOrder",
           "type": 6
+        },
+        {
+          "id": "6:4637738635194900913",
+          "name": "nameEn",
+          "type": 9
         }
       ],
       "relations": []
     },
     {
       "id": "4:2701804075511469332",
-      "lastPropertyId": "7:3383690351681681596",
+      "lastPropertyId": "8:5868918809248688406",
       "name": "MenuItemEntity",
       "properties": [
         {
@@ -146,6 +151,11 @@
           "id": "7:3383690351681681596",
           "name": "sortOrder",
           "type": 6
+        },
+        {
+          "id": "8:5868918809248688406",
+          "name": "nameEn",
+          "type": 9
         }
       ],
       "relations": []
@@ -230,7 +240,7 @@
     },
     {
       "id": "6:3149235358257446838",
-      "lastPropertyId": "7:8707967398864778225",
+      "lastPropertyId": "8:362146733810633552",
       "name": "OrderItemEntity",
       "properties": [
         {
@@ -270,6 +280,11 @@
           "id": "7:8707967398864778225",
           "name": "quantity",
           "type": 6
+        },
+        {
+          "id": "8:362146733810633552",
+          "name": "nameEn",
+          "type": 9
         }
       ],
       "relations": []

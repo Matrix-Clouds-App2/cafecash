@@ -1,4 +1,6 @@
+import 'package:app_base/app/router/navigation_services.dart';
 import 'package:app_base/features/auth/data/models/user_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AppConstants {
   AppConstants._();
@@ -37,5 +39,6 @@ UserModel? kUserModel;
 /// Returns `true` when the user is NOT logged in (guest mode).
 /// Use this everywhere in the app to guard authenticated-only actions.
 bool get kIsGuest => kUserModel == null;
+bool get kIsArabic => NavigationService.navigationKey.currentContext?.locale.languageCode == 'ar';
 
 bool kWalletPaymentEnabled = true;

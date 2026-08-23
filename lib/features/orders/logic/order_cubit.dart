@@ -235,7 +235,9 @@ class OrderCubit extends Cubit<OrderState> {
     final filteredItems = query.isEmpty
         ? null
         : _allItems
-            .where((item) => item.name.toLowerCase().contains(query))
+            .where((item) =>
+                item.name.toLowerCase().contains(query) ||
+                (item.nameEn ?? '').toLowerCase().contains(query))
             .toList();
 
     emit(OrderSuccess(

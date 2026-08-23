@@ -34,7 +34,7 @@ class MenuItemsScreen extends StatelessWidget {
           return Scaffold(
             backgroundColor: AppColors.surfaceColor.themeColor,
             appBar: AppBar(
-              title: Text(category.name),
+              title: Text(category.displayName),
               backgroundColor: primary,
               foregroundColor: AppColors.textPrimaryColor.themeColor,
             ),

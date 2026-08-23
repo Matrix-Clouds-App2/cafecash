@@ -107,7 +107,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(3, 8036933164883014874),
     name: 'CategoryEntity',
-    lastPropertyId: const obx_int.IdUid(5, 161565100004498711),
+    lastPropertyId: const obx_int.IdUid(6, 4637738635194900913),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -140,6 +140,12 @@ final _entities = <obx_int.ModelEntity>[
         type: 6,
         flags: 0,
       ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 4637738635194900913),
+        name: 'nameEn',
+        type: 9,
+        flags: 0,
+      ),
     ],
     relations: <obx_int.ModelRelation>[],
     backlinks: <obx_int.ModelBacklink>[],
@@ -147,7 +153,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(4, 2701804075511469332),
     name: 'MenuItemEntity',
-    lastPropertyId: const obx_int.IdUid(7, 3383690351681681596),
+    lastPropertyId: const obx_int.IdUid(8, 5868918809248688406),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -191,6 +197,12 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(7, 3383690351681681596),
         name: 'sortOrder',
         type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 5868918809248688406),
+        name: 'nameEn',
+        type: 9,
         flags: 0,
       ),
     ],
@@ -290,7 +302,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(6, 3149235358257446838),
     name: 'OrderItemEntity',
-    lastPropertyId: const obx_int.IdUid(7, 8707967398864778225),
+    lastPropertyId: const obx_int.IdUid(8, 362146733810633552),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -334,6 +346,12 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(7, 8707967398864778225),
         name: 'quantity',
         type: 6,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(8, 362146733810633552),
+        name: 'nameEn',
+        type: 9,
         flags: 0,
       ),
     ],
@@ -716,12 +734,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final imagePathOffset = object.imagePath == null
             ? null
             : fbb.writeString(object.imagePath!);
-        fbb.startTable(6);
+        final nameEnOffset = object.nameEn == null
+            ? null
+            : fbb.writeString(object.nameEn!);
+        fbb.startTable(7);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, nameOffset);
         fbb.addOffset(2, imagePathOffset);
         fbb.addInt64(3, object.createdAt?.millisecondsSinceEpoch);
         fbb.addInt64(4, object.sortOrder);
+        fbb.addOffset(5, nameEnOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -742,6 +764,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final nameParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 6, '');
+        final nameEnParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 14);
         final imagePathParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGetNullable(buffer, rootOffset, 8);
@@ -757,6 +782,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final object = CategoryEntity(
           id: idParam,
           name: nameParam,
+          nameEn: nameEnParam,
           imagePath: imagePathParam,
           createdAt: createdAtParam,
           sortOrder: sortOrderParam,
@@ -778,7 +804,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final imagePathOffset = object.imagePath == null
             ? null
             : fbb.writeString(object.imagePath!);
-        fbb.startTable(8);
+        final nameEnOffset = object.nameEn == null
+            ? null
+            : fbb.writeString(object.nameEn!);
+        fbb.startTable(9);
         fbb.addInt64(0, object.id);
         fbb.addInt64(1, object.categoryId);
         fbb.addOffset(2, nameOffset);
@@ -786,6 +815,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addOffset(4, imagePathOffset);
         fbb.addInt64(5, object.createdAt?.millisecondsSinceEpoch);
         fbb.addInt64(6, object.sortOrder);
+        fbb.addOffset(7, nameEnOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -812,6 +842,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final nameParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 8, '');
+        final nameEnParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 18);
         final priceParam = const fb.Float64Reader().vTableGet(
           buffer,
           rootOffset,
@@ -834,6 +867,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           id: idParam,
           categoryId: categoryIdParam,
           name: nameParam,
+          nameEn: nameEnParam,
           price: priceParam,
           imagePath: imagePathParam,
           createdAt: createdAtParam,
@@ -984,7 +1018,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final imagePathOffset = object.imagePath == null
             ? null
             : fbb.writeString(object.imagePath!);
-        fbb.startTable(8);
+        final nameEnOffset = object.nameEn == null
+            ? null
+            : fbb.writeString(object.nameEn!);
+        fbb.startTable(9);
         fbb.addInt64(0, object.id);
         fbb.addInt64(1, object.orderId);
         fbb.addInt64(2, object.menuItemId);
@@ -992,6 +1029,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         fbb.addFloat64(4, object.price);
         fbb.addOffset(5, imagePathOffset);
         fbb.addInt64(6, object.quantity);
+        fbb.addOffset(7, nameEnOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -1019,6 +1057,9 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final nameParam = const fb.StringReader(
           asciiOptimization: true,
         ).vTableGet(buffer, rootOffset, 10, '');
+        final nameEnParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGetNullable(buffer, rootOffset, 18);
         final priceParam = const fb.Float64Reader().vTableGet(
           buffer,
           rootOffset,
@@ -1039,6 +1080,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           orderId: orderIdParam,
           menuItemId: menuItemIdParam,
           name: nameParam,
+          nameEn: nameEnParam,
           price: priceParam,
           imagePath: imagePathParam,
           quantity: quantityParam,
@@ -1415,6 +1457,11 @@ class CategoryEntity_ {
   static final sortOrder = obx.QueryIntegerProperty<CategoryEntity>(
     _entities[2].properties[4],
   );
+
+  /// See [CategoryEntity.nameEn].
+  static final nameEn = obx.QueryStringProperty<CategoryEntity>(
+    _entities[2].properties[5],
+  );
 }
 
 /// [MenuItemEntity] entity fields to define ObjectBox queries.
@@ -1452,6 +1499,11 @@ class MenuItemEntity_ {
   /// See [MenuItemEntity.sortOrder].
   static final sortOrder = obx.QueryIntegerProperty<MenuItemEntity>(
     _entities[3].properties[6],
+  );
+
+  /// See [MenuItemEntity.nameEn].
+  static final nameEn = obx.QueryStringProperty<MenuItemEntity>(
+    _entities[3].properties[7],
   );
 }
 
@@ -1558,6 +1610,11 @@ class OrderItemEntity_ {
   /// See [OrderItemEntity.quantity].
   static final quantity = obx.QueryIntegerProperty<OrderItemEntity>(
     _entities[5].properties[6],
+  );
+
+  /// See [OrderItemEntity.nameEn].
+  static final nameEn = obx.QueryStringProperty<OrderItemEntity>(
+    _entities[5].properties[7],
   );
 }
 

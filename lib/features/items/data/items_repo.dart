@@ -24,13 +24,18 @@ class ItemsRepo {
     return (a.createdAt ?? DateTime(0)).compareTo(b.createdAt ?? DateTime(0));
   }
 
-  CategoryEntity addCategory({required String name, String? imagePath}) {
+  CategoryEntity addCategory({
+    required String name,
+    String? nameEn,
+    String? imagePath,
+  }) {
     final existing = _categoryBox.getAll();
     final nextOrder = existing.isEmpty
         ? 0
         : existing.map((c) => c.sortOrder).reduce((a, b) => a > b ? a : b) + 1;
     final category = CategoryEntity(
       name: name,
+      nameEn: nameEn,
       imagePath: imagePath,
       createdAt: DateTime.now(),
       sortOrder: nextOrder,
@@ -78,6 +83,7 @@ class ItemsRepo {
   MenuItemEntity addItem({
     required int categoryId,
     required String name,
+    String? nameEn,
     required double price,
     String? imagePath,
   }) {
@@ -88,6 +94,7 @@ class ItemsRepo {
     final item = MenuItemEntity(
       categoryId: categoryId,
       name: name,
+      nameEn: nameEn,
       price: price,
       imagePath: imagePath,
       createdAt: DateTime.now(),

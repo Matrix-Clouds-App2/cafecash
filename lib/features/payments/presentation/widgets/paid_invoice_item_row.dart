@@ -60,7 +60,7 @@ class PaidInvoiceItemRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppText(
-                  item.name,
+                  item.displayName,
                   fontSize: 14.5,
                   fontWeight: FontWeight.w700,
                   maxLines: 1,

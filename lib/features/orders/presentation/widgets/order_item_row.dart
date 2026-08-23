@@ -61,7 +61,7 @@ class OrderItemRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppText(
-                  item.name,
+                  item.displayName,
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
                   maxLines: 1,
