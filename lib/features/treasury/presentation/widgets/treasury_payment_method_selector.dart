@@ -60,8 +60,8 @@ class _MethodOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primary = AppColors.primaryColor.themeColor;
-    final color = selected ? primary : AppColors.textSecondaryColor.themeColor;
+    final primary = AppColors.textPrimaryColor.themeColor;
+    final color = selected ? Colors.white : AppColors.textSecondaryColor.themeColor;
 
     return CustomTapEffect(
       onTap: onTap,
@@ -69,7 +69,7 @@ class _MethodOption extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 12.h),
         decoration: BoxDecoration(
           color: selected
-              ? primary.withValues(alpha: 0.1)
+              ? primary
               : AppColors.cardColor.themeColor,
           borderRadius: BorderRadius.circular(14.r),
           border: Border.all(

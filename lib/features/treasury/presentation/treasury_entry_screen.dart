@@ -67,7 +67,7 @@ class _TreasuryEntryScreenState extends State<TreasuryEntryScreen> {
             ? LocaleKeys.treasury_receiveCash.tr()
             : LocaleKeys.treasury_withdrawCash.tr()),
         backgroundColor: AppColors.primaryColor.themeColor,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.textPrimaryColor.themeColor,
       ),
       body: SafeArea(
         child: Column(
@@ -100,11 +100,24 @@ class _TreasuryEntryScreenState extends State<TreasuryEntryScreen> {
                     ),
                     if (kWalletPaymentEnabled) ...[
                       20.height,
-                      AppText(
-                        LocaleKeys.orders_paymentMethodTitle.tr(),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimaryColor.themeColor,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AppText(
+                            LocaleKeys.orders_paymentMethodTitle.tr(),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textPrimaryColor.themeColor,
+                          ),
+                          AppText(
+                            _method == PaymentMethod.cash
+                                ? LocaleKeys.orders_cash.tr()
+                                : LocaleKeys.orders_wallet.tr(),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textPrimaryColor.themeColor,
+                          ),
+                        ],
                       ),
                       10.height,
                       TreasuryPaymentMethodSelector(

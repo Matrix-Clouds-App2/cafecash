@@ -17,7 +17,9 @@ import '../../orders/data/models/order_entity.dart';
 import '../../orders/data/orders_repo.dart';
 import '../../shift/data/shift_repo.dart';
 import '../../treasury/data/treasury_repo.dart';
+import '../data/customers_repo.dart';
 import '../data/models/customer_entity.dart';
+import 'widgets/customer_form_sheet.dart';
 import 'widgets/deferred_order_card.dart';
 
 class CustomerDeferredOrdersScreen extends StatefulWidget {
@@ -111,6 +113,42 @@ class _CustomerDeferredOrdersScreenState
     _refresh();
   }
 
+  void _openEditCustomer() {
+    CustomerFormSheet.show(
+      context,
+      customer: widget.customer,
+      onSubmit: _confirmEditCustomer,
+    );
+  }
+
+  void _confirmEditCustomer(String name, String phone) {
+    AppConfirmDialog.show(
+      context,
+      icon: Icons.edit_outlined,
+      iconColor: AppColors.primaryColor.themeColor,
+      title: LocaleKeys.customers_confirmEditTitle.tr(),
+      message: LocaleKeys.customers_confirmEditMessage.tr(),
+      confirmLabel: LocaleKeys.common_save.tr(),
+      onConfirm: () {
+        Navigator.pop(context);
+        _applyEditCustomer(name, phone);
+      },
+    );
+  }
+
+  void _applyEditCustomer(String name, String phone) {
+    final repo = getIt<CustomersRepo>();
+    if (repo.phoneExists(phone, excludingId: widget.customer.id)) {
+      AppOverlay.showError(LocaleKeys.customers_phoneExists.tr());
+      return;
+    }
+    widget.customer
+      ..name = name
+      ..phone = phone;
+    repo.update(widget.customer);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final primary = AppColors.primaryColor.themeColor;
@@ -121,9 +159,16 @@ class _CustomerDeferredOrdersScreenState
     return Scaffold(
       backgroundColor: AppColors.surfaceColor.themeColor,
       appBar: AppBar(
-          title: Text(widget.customer.name),
-          backgroundColor: primary,
-          foregroundColor: AppColors.textPrimaryColor.themeColor),
+        title: Text(widget.customer.name),
+        backgroundColor: primary,
+        foregroundColor: AppColors.textPrimaryColor.themeColor,
+        actions: [
+          IconButton(
+            onPressed: _openEditCustomer,
+            icon: const Icon(Icons.edit_outlined),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Padding(
@@ -158,13 +203,27 @@ class _CustomerDeferredOrdersScreenState
                   ),
                   12.width,
                   Expanded(
-                    child: AppText(
-                      widget.customer.phone,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimaryColor.themeColor,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AppText(
+                          widget.customer.name,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textPrimaryColor.themeColor,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        2.height,
+                        AppText(
+                          widget.customer.phone,
+                          fontSize: 12,
+                          color: AppColors.textSecondaryColor.themeColor,
+                        ),
+                      ],
                     ),
                   ),
+                  12.width,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [

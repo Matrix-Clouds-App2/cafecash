@@ -431,6 +431,10 @@ abstract class LocaleKeys {
       'customers.deferred_orders_count';
   static const String customers_viewDeferredOrders =
       'customers.view_deferred_orders';
+  static const String customers_confirmEditTitle =
+      'customers.confirm_edit_title';
+  static const String customers_confirmEditMessage =
+      'customers.confirm_edit_message';
 
   // ─── Guest ────────────────────────────────────────────────────────────────
   static const String guest_lockTitle = 'guest.lock_title';
