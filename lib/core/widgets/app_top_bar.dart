@@ -54,8 +54,8 @@ class AppTopBar extends StatelessWidget {
               ),
               if (actions != null)
                 Row(mainAxisSize: MainAxisSize.min, children: actions!)
-              else
-                NotificationBellIcon(onTap: onNotificationTap),
+              // else
+              //   NotificationBellIcon(onTap: onNotificationTap),
             ],
           ),
         ),

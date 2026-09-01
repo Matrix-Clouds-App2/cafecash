@@ -11,6 +11,7 @@
     "continue_as_guest": "تخطي كزائر",
     "phone": "رقم الهاتف",
     "name": "الاسم الكامل",
+    "cafe_name": "اسم الكافيه",
     "register_subtitle": "أنشئ حسابك للبدء",
     "sign_in": "تسجيل الدخول"
   },
@@ -50,6 +51,7 @@
   },
   "common": {
     "cancel": "إلغاء",
+    "ok": "حسناً",
     "search": "بحث",
     "retry": "إعادة المحاولة",
     "confirm": "تأكيد",
@@ -128,7 +130,9 @@
     "history_title": "الورديات",
     "history_empty": "لا توجد ورديات سابقة بعد",
     "no_active_shift": "ابدأ الوردية الأول",
-    "cancelled_orders_empty": "لا توجد طلبات ملغاة في هذه الوردية"
+    "cancelled_orders_empty": "لا توجد طلبات ملغاة في هذه الوردية",
+    "remote_details_unavailable_title": "تعذّر تحميل التفاصيل",
+    "remote_details_unavailable_message": "هذه الوردية تم رفعها من جهاز آخر ولم نتمكن من جلب تفاصيلها. تأكد من اتصالك بالإنترنت وحاول مرة أخرى."
   },
   "hall": {
     "ready_badge": "جاهزة",
@@ -261,6 +265,7 @@
     "close_shift": "اغلاق الوردية",
     "shifts": "الورديات السابقة",
     "customers_management": "إدارة العملاء",
+    "employees_management": "إدارة الموظفين",
     "matches_screen_settings": "ضبط شاشة المباريات",
     "items_management": "إدارة الأصناف",
     "deferred_accounts": "الحسابات الآجلة",
@@ -355,6 +360,15 @@
     "delete_message": "لن تتمكن من التراجع عن هذا الإجراء.",
     "phone_exists": "رقم التليفون ده مسجل بالفعل لعميل تاني"
   },
+  "employees": {
+    "add_employee": "إضافة موظف",
+    "edit_employee": "تعديل بيانات الموظف",
+    "empty": "لا يوجد موظفين، أضف أول موظف",
+    "delete_title": "حذف الموظف؟",
+    "delete_message": "لا يمكن التراجع عن هذا الإجراء.",
+    "status_active": "نشط",
+    "status_inactive": "غير نشط"
+  },
   "guest": {
     "lock_title": "تسجيل الدخول مطلوب",
     "lock_message": "الصفحة دي متاحة بس للمستخدمين المسجلين، سجّل دخولك عشان تكمل وتستفيد من كل المميزات",
@@ -365,5 +379,57 @@
   "error": {
     "unauthorized": "انتهت الجلسة، يرجى تسجيل الدخول مجدداً",
     "not_found": "المورد غير موجود"
+  },
+  "sync": {
+    "download_prompt_title": "تحديث البيانات؟",
+    "download_prompt_message": "احصل على آخر تحديثات القائمة والأسعار والعملاء من السيرفر قبل بدء الوردية.",
+    "download_now": "تحميل",
+    "skip": "تخطي",
+    "upload_prompt_title": "نسخة احتياطية للوردية؟",
+    "upload_prompt_message": "يتم حفظ نسخة من طلبات الوردية ومعاملاتها على حسابك في السيرفر، تحسبًا لأي مشكلة قد تحدث للجهاز.",
+    "upload_now": "رفع",
+    "upload_success": "تم رفع الوردية بنجاح",
+    "upload_failed": "فشل الرفع، يمكنك إعادة المحاولة من سجل الورديات.",
+    "no_internet_title": "لا يوجد اتصال بالإنترنت",
+    "no_internet_for_upload_message": "لرفع بيانات إغلاق الوردية أونلاين، تحتاج إلى اتصال بالإنترنت. تم إغلاق الوردية وحفظها محليًا ويمكنك رفعها لاحقًا.",
+    "retry_upload": "إعادة محاولة الرفع",
+    "preparing": "جارٍ تجهيز البيانات...",
+    "compressing": "جارٍ الضغط...",
+    "zipping_images": "جارٍ تجهيز الصور...",
+    "uploading": "جارٍ الرفع...",
+    "downloading": "جارٍ التحميل...",
+    "merging": "جارٍ دمج البيانات...",
+    "of_bytes": "{current} من {total}",
+    "eta_label": "الوقت المتبقي: {time}",
+    "synced_badge": "تم الرفع",
+    "not_synced_badge": "لم يتم الرفع",
+    "download_success": "تم تحديث البيانات",
+    "download_failed": "فشل تحديث البيانات، يمكنك المحاولة لاحقًا.",
+    "conflict_title": "فيه اختلافات في البيانات",
+    "conflict_subtitle": "دي عناصر عدّلتها محليًا واختلفت عن السيرفر. اختر النسخة اللي تحب تكمّل بيها لكل عنصر.",
+    "conflict_local": "عندك",
+    "conflict_server": "السيرفر",
+    "conflict_take_server": "نسخة السيرفر",
+    "conflict_keep_local": "تعديلاتي",
+    "conflict_all_server": "الكل من السيرفر",
+    "conflict_all_local": "الكل محلي",
+    "conflict_apply": "تطبيق",
+    "conflict_deleted_remotely": "اتحذف من السيرفر",
+    "conflict_delete": "احذفه",
+    "conflict_keep": "احتفظ بيه",
+    "conflict_type_category": "قسم",
+    "conflict_type_item": "صنف",
+    "conflict_type_customer": "عميل",
+    "conflict_field_name": "الاسم",
+    "conflict_field_price": "السعر",
+    "conflict_field_order": "الترتيب",
+    "conflict_field_phone": "التليفون",
+    "login_needs_internet_title": "محتاج اتصال بالإنترنت",
+    "login_needs_internet_message": "لازم يكون فيه إنترنت عشان نحدّث بياناتك من حسابك قبل ما تدخل.",
+    "login_sync_failed_title": "فشل تحديث البيانات",
+    "login_sync_failed_message": "حصلت مشكلة وإحنا بنجيب بياناتك من السيرفر. جرّب تاني.",
+    "retry": "إعادة المحاولة",
+    "cancel_login": "إلغاء تسجيل الدخول",
+    "shift_closed_offline_pending_upload": "تم إقفال الشيفت، هيترفع لما يبقى فيه إنترنت."
   }
 }

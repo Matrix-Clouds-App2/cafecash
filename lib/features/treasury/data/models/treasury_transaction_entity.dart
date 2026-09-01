@@ -14,6 +14,8 @@ class TreasuryTransactionEntity {
     this.orderId,
     this.createdAt,
     this.createdBy,
+    this.createdById,
+    this.uuid = '',
   });
 
   int id;
@@ -35,6 +37,11 @@ class TreasuryTransactionEntity {
   DateTime? createdAt;
 
   String? createdBy;
+
+  int? createdById;
+
+  @Index()
+  String uuid;
 
   @Transient()
   PaymentMethod? get paymentMethodEnum =>

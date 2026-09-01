@@ -1,3 +1,5 @@
+import 'package:uuid/uuid.dart';
+
 import '../../../core/storage/object_box/local_box.dart';
 import '../../../core/storage/object_box/object_box_storage.dart';
 import 'models/hall_table_entity.dart';
@@ -28,7 +30,7 @@ class HallRepo {
     final nextNumber = tables.isEmpty
         ? 1
         : tables.map((t) => t.number).reduce((a, b) => a > b ? a : b) + 1;
-    final table = HallTableEntity(number: nextNumber);
+    final table = HallTableEntity(number: nextNumber, uuid: const Uuid().v4());
     table.id = _box.put(table);
     return table;
   }

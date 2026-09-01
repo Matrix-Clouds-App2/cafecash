@@ -18,6 +18,7 @@ class Routes {
   static const String treasuryEntryScreen = '/treasury-entry';
   static const String treasuryTransactionsScreen = '/treasury-transactions';
   static const String customersScreen = '/customers';
+  static const String employeesScreen = '/employees';
   static const String partialPayScreen = '/partial-pay';
   static const String customerDeferredOrdersScreen =
       '/customer-deferred-orders';

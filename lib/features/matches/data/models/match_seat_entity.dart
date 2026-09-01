@@ -11,6 +11,7 @@ class MatchSeatEntity {
     this.drinkCount = 0,
     this.price = 0,
     this.customerName,
+    this.uuid = '',
   });
 
   int id;
@@ -25,6 +26,9 @@ class MatchSeatEntity {
   double price;
 
   String? customerName;
+
+  @Index()
+  String uuid;
 
   @Transient()
   MatchSeatStatus get statusEnum => MatchSeatStatus.values[status];

@@ -1,11 +1,5 @@
-import 'dart:io';
-
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:path_provider/path_provider.dart';
-
 import '../../features/items/data/items_repo.dart';
 import '../di/injection.dart';
-import '../storage/local_storage.dart';
 
 class _SeedItem {
   const _SeedItem({
@@ -37,8 +31,6 @@ class _SeedCategory {
 
 class DefaultItemsSeeder {
   DefaultItemsSeeder._();
-
-  static const _seedFolder = 'default_items';
 
   static const _categories = [
     _SeedCategory(
@@ -397,53 +389,28 @@ class DefaultItemsSeeder {
     ),
   ];
 
-  static Future<void> seedIfNeeded() async {
-    final storage = getIt<LocalStorage>();
-    if (storage.isDefaultItemsSeeded) return;
-
+  static void seedIfCatalogEmpty() {
     final itemsRepo = getIt<ItemsRepo>();
+    if (itemsRepo.getCategories().isNotEmpty) return;
 
     for (final seedCategory in _categories) {
-      try {
-        final categoryImagePath = await _copyAsset(seedCategory.asset);
-        final category = itemsRepo.addCategory(
-          name: seedCategory.name,
-          nameEn: seedCategory.nameEn,
-          imagePath: categoryImagePath,
+      final category = itemsRepo.addCategory(
+        name: seedCategory.name,
+        nameEn: seedCategory.nameEn,
+        imagePath: seedCategory.asset,
+        isDefault: true,
+      );
+
+      for (final seedItem in seedCategory.items) {
+        itemsRepo.addItem(
+          categoryId: category.id,
+          name: seedItem.name,
+          nameEn: seedItem.nameEn,
+          price: seedItem.price,
+          imagePath: seedItem.asset,
+          isDefault: true,
         );
-
-        for (final seedItem in seedCategory.items) {
-          try {
-            final itemImagePath = await _copyAsset(seedItem.asset);
-            itemsRepo.addItem(
-              categoryId: category.id,
-              name: seedItem.name,
-              nameEn: seedItem.nameEn,
-              price: seedItem.price,
-              imagePath: itemImagePath,
-            );
-          } catch (_) {}
-        }
-      } catch (_) {}
+      }
     }
-
-    await storage.setDefaultItemsSeeded();
-  }
-
-  static Future<String> _copyAsset(String assetPath) async {
-    final data = await rootBundle.load(assetPath);
-    final docsDir = await getApplicationDocumentsDirectory();
-    final targetDir = Directory('${docsDir.path}/$_seedFolder');
-    if (!await targetDir.exists()) {
-      await targetDir.create(recursive: true);
-    }
-
-    final fileName =
-        '${DateTime.now().microsecondsSinceEpoch}_${assetPath.split('/').last}';
-    final file = File('${targetDir.path}/$fileName');
-    await file.writeAsBytes(
-      data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes),
-    );
-    return file.path;
   }
 }

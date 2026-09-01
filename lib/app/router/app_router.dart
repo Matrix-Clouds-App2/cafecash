@@ -7,6 +7,7 @@ import '../../features/customers/data/models/customer_entity.dart';
 import '../../features/customers/presentation/customer_deferred_orders_screen.dart';
 import '../../features/customers/presentation/customers_screen.dart';
 import '../../features/customers/presentation/deferred_accounts_screen.dart';
+import '../../features/employees/presentation/employees_screen.dart';
 import '../../features/items/data/models/category_entity.dart';
 import '../../features/items/presentation/categories_screen.dart';
 import '../../features/items/presentation/menu_items_screen.dart';
@@ -113,6 +114,9 @@ class RouteGenerator {
 
       case Routes.customersScreen:
         return _pageRoute(const CustomersScreen());
+
+      case Routes.employeesScreen:
+        return _pageRoute(const EmployeesScreen());
 
       case Routes.partialPayScreen:
         return _pageRoute(PartialPayScreen(

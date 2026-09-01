@@ -48,7 +48,8 @@ class OrderCategorySection extends StatelessWidget {
         children: [
           CustomTapEffect(
             onTap: onToggle,
-            child: Padding(
+            child: Container(
+              color: Colors.transparent,
               padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
               child: Row(
                 children: [

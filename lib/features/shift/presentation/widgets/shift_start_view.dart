@@ -9,6 +9,7 @@ import '../../../../core/utils/app_overlay.dart';
 import '../../../../core/utils/locale_keys.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_text.dart';
+// import '../../../sync/presentation/download_bootstrap_flow.dart';
 import '../../logic/shift_cubit.dart';
 import 'shift_amount_card.dart';
 
@@ -34,6 +35,10 @@ class _ShiftStartViewState extends State<ShiftStartView> {
       AppOverlay.showError(LocaleKeys.shift_amountInvalid.tr());
       return;
     }
+
+    // مزامنة اختيارية عند فتح الوردية (متوقفة — المزامنة الإجبارية بعد تسجيل الدخول):
+    // await offerBootstrapDownload(context);
+    // if (!context.mounted) return;
     context.read<ShiftCubit>().startShift(amount);
   }
 

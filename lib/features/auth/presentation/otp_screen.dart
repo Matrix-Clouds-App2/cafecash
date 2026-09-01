@@ -10,6 +10,7 @@ import '../../../core/utils/locale_keys.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_text.dart';
 import '../../profile/logic/profile_cubit.dart';
+import '../../sync/presentation/login_sync_flow.dart';
 import '../logic/auth_cubit.dart';
 import 'widgets/otp_code_row.dart';
 import 'widgets/otp_header.dart';
@@ -39,20 +40,35 @@ class _OtpScreenState extends State<OtpScreen> {
         .read<AuthCubit>()
         .verifyOtp(phone: widget.phone, otp: _code);
     if (!mounted) return;
-    setState(() => _loading = false);
+    if (!ok) {
+      setState(() => _loading = false);
+      return;
+    }
 
-    if (ok) {
-      // Populates `kUserModel`/`ProfileCubit` right away (same call `app.dart`
-      // makes on a cold start for an already-logged-in session) so the
-      // drawer/account screen show real data immediately, not just after a
-      // future app restart.
-      context.read<ProfileCubit>().getProfile();
+    // Populates `kUserModel`/`ProfileCubit` right away (same call `app.dart`
+    // makes on a cold start for an already-logged-in session) so the
+    // drawer/account screen show real data immediately.
+    await context.read<ProfileCubit>().getProfile();
+    if (!mounted) return;
+
+    final synced = await runMandatoryLoginSync(context);
+    if (!mounted) return;
+    if (!synced) {
+      context.read<ProfileCubit>().reset();
+      context.read<AuthCubit>().logout();
       Navigator.pushNamedAndRemoveUntil(
         context,
-        Routes.layoutScreen,
+        Routes.loginScreen,
         (_) => false,
       );
+      return;
     }
+
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      Routes.layoutScreen,
+      (_) => false,
+    );
   }
 
   void _resend() => context.read<AuthCubit>().requestOtp(widget.phone);

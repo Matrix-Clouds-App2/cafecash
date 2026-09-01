@@ -7,6 +7,7 @@ import '../../../app/router/routes.dart';
 import '../../../core/di/injection.dart';
 import '../../../core/extensions/extensions.dart';
 import '../../../core/utils/app_colors.dart';
+import '../../../core/utils/app_constants.dart';
 import '../../../core/utils/locale_keys.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_confirm_dialog.dart';
@@ -17,6 +18,7 @@ import '../../hall/data/models/hall_table_entity.dart';
 import '../../matches/data/matches_repo.dart';
 import '../../matches/data/models/match_seat_entity.dart';
 import '../../orders/data/models/order_entity.dart';
+import '../../sync/presentation/upload_shift_flow.dart';
 import '../../treasury/presentation/widgets/treasury_stat_card.dart';
 import '../data/models/shift_entity.dart';
 import '../data/models/shift_summary.dart';
@@ -367,9 +369,12 @@ class ShiftSummaryScreen extends StatelessWidget {
       message: LocaleKeys.shift_closeConfirmMessage.tr(),
       confirmLabel: LocaleKeys.shift_closeButton.tr(),
       confirmColor: AppColors.errorColor.themeColor,
-      onConfirm: () {
+      onConfirm: () async {
         Navigator.pop(context);
         shiftCubit.closeShift(summary.shift, summary.closingBalance);
+        if (!kIsGuest) {
+          await offerShiftUpload(context, summary.shift);
+        }
       },
     );
   }

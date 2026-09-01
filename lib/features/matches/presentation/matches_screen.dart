@@ -205,8 +205,8 @@ class _MatchesScreenState extends State<MatchesScreen>
                           color: AppColors.textPrimaryColor.themeColor,
                         ),
                       ),
-                      12.width,
-                      const NotificationBellIcon(),
+                      // 12.width,
+                      // const NotificationBellIcon(),
                     ],
                   ),
                   Expanded(

@@ -16,9 +16,10 @@ class CustomImage extends StatelessWidget {
       this.width,
       this.height});
 
-  /// A network URL, or a local file path (e.g. images saved by
-  /// `LocalImagePicker`, or copied in by `DefaultItemsSeeder`) — detected
-  /// automatically. Local `.svg` paths are rendered as vectors.
+  /// A network URL, a bundled asset path (default seed catalog images, e.g.
+  /// `assets/images/seed_items/tea.png`), or a local file path (e.g. images
+  /// saved by `LocalImagePicker`) — detected automatically. `.svg` paths are
+  /// rendered as vectors.
   final String image;
   final double? radius;
   final double? width;
@@ -27,6 +28,8 @@ class CustomImage extends StatelessWidget {
 
   bool get _isNetwork =>
       image.startsWith('http://') || image.startsWith('https://');
+
+  bool get _isAsset => image.startsWith('assets/');
 
   bool get _isSvg => image.toLowerCase().endsWith('.svg');
 
@@ -38,7 +41,13 @@ class CustomImage extends StatelessWidget {
     );
 
     Widget child;
-    if (_isSvg) {
+    if (_isSvg && _isAsset) {
+      child = SvgPicture.asset(
+        image,
+        fit: fit ?? BoxFit.cover,
+        placeholderBuilder: (context) => holder,
+      );
+    } else if (_isSvg) {
       child = SvgPicture.file(
         File(image),
         fit: fit ?? BoxFit.cover,
@@ -46,6 +55,12 @@ class CustomImage extends StatelessWidget {
       );
     } else if (_isNetwork) {
       child = Image.network(
+        image,
+        fit: fit ?? BoxFit.cover,
+        errorBuilder: (context, error, v) => holder,
+      );
+    } else if (_isAsset) {
+      child = Image.asset(
         image,
         fit: fit ?? BoxFit.cover,
         errorBuilder: (context, error, v) => holder,

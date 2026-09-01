@@ -204,8 +204,8 @@ class _HallScreenState extends State<HallScreen>
                           color: AppColors.textPrimaryColor.themeColor,
                         ),
                       ),
-                      12.width,
-                      const NotificationBellIcon(),
+                      // 12.width,
+                      // const NotificationBellIcon(),
                     ],
                   ),
                   Expanded(

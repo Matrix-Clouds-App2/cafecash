@@ -11,9 +11,17 @@ class ShiftEntity {
     this.startedAt,
     this.closedAt,
     this.closingBalance,
+    this.uuid = '',
+    this.synced = false,
+    this.syncedAt,
+    this.pendingSyncUuid,
+    this.remoteOnly = false,
+    this.remoteId,
   });
 
   int id;
+
+  int? remoteId;
 
   double openingBalance;
 
@@ -26,6 +34,18 @@ class ShiftEntity {
   DateTime? closedAt;
 
   double? closingBalance;
+
+  @Index()
+  String uuid;
+
+  bool synced;
+
+  @Property(type: PropertyType.date)
+  DateTime? syncedAt;
+
+  String? pendingSyncUuid;
+
+  bool remoteOnly;
 
   @Transient()
   ShiftStatus get statusEnum => ShiftStatus.values[status];

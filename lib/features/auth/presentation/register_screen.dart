@@ -26,6 +26,8 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameCtrl = TextEditingController();
+  final _cafeNameCtrl = TextEditingController();
+  final _emailCtrl = TextEditingController();
   final _phoneCtrl = TextEditingController();
   PhoneNumber? _phoneNumber;
   bool _loading = false;
@@ -33,6 +35,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void dispose() {
     _nameCtrl.dispose();
+    _cafeNameCtrl.dispose();
+    _emailCtrl.dispose();
     _phoneCtrl.dispose();
     super.dispose();
   }
@@ -41,11 +45,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     final name = _nameCtrl.text.trim();
+    final cafeName = _cafeNameCtrl.text.trim();
+    final email = _emailCtrl.text.trim();
     final phone = _phoneNumber?.number ?? _phoneCtrl.text.trim();
 
     setState(() => _loading = true);
-    final ok =
-        await context.read<AuthCubit>().register(name: name, phone: phone);
+    final ok = await context.read<AuthCubit>().register(
+          name: name,
+          cafeName: cafeName,
+          phone: phone,
+          email: email,
+        );
     if (!mounted) return;
     setState(() => _loading = false);
 
@@ -111,6 +121,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                     ),
                     14.height,
+                    AuthFieldLabel(text: LocaleKeys.auth_cafeName.tr()),
+                    8.height,
+                    CustomTextField(
+                      hint: LocaleKeys.auth_cafeName.tr(),
+                      controller: _cafeNameCtrl,
+                      keyboardType: TextInputType.text,
+                      validator: (v) {
+                        if (v == null || v.trim().isEmpty) {
+                          return LocaleKeys.validation_required.tr();
+                        }
+                        return null;
+                      },
+                    ),
+                    14.height,
+                    // AuthFieldLabel(text: LocaleKeys.auth_email.tr()),
+                    // 8.height,
+                    // CustomTextField(
+                    //   hint: LocaleKeys.auth_email.tr(),
+                    //   controller: _emailCtrl,
+                    //   keyboardType: TextInputType.emailAddress,
+                    //   validator: (v) {
+                    //     final value = v?.trim() ?? '';
+                    //     if (value.isEmpty) {
+                    //       return LocaleKeys.validation_required.tr();
+                    //     }
+                    //     if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+                    //         .hasMatch(value)) {
+                    //       return LocaleKeys.validation_invalidEmail.tr();
+                    //     }
+                    //     return null;
+                    //   },
+                    // ),
+                    // 14.height,
                     AuthFieldLabel(text: LocaleKeys.auth_phone.tr()),
                     8.height,
                     EgyptPhoneField(

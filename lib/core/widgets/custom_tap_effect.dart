@@ -18,106 +18,83 @@ class CustomTapEffect extends StatefulWidget {
   final Widget child;
 
   @override
-  _TapEffectState createState() => _TapEffectState();
+  State<CustomTapEffect> createState() => _TapEffectState();
 }
 
 class _TapEffectState extends State<CustomTapEffect>
     with SingleTickerProviderStateMixin {
-  AnimationController? animationController;
-  DateTime tapTime = DateTime.now();
-  bool isProgress = false;
+  static const _pressedScale = 0.95;
+  static const _downDuration = Duration(milliseconds: 70);
+  static const _upDuration = Duration(milliseconds: 110);
+  static const _debounce = Duration(milliseconds: 400);
+
+  late final AnimationController _controller;
+  DateTime _lastTap = DateTime.fromMillisecondsSinceEpoch(0);
 
   @override
   void initState() {
     super.initState();
-    animationController = AnimationController(
+    _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 800),
+      duration: _downDuration,
+      reverseDuration: _upDuration,
+      lowerBound: _pressedScale,
+      upperBound: 1.0,
+      value: 1.0,
     );
-
-    animationController!.value = 1.0;
   }
 
   @override
   void didUpdateWidget(covariant CustomTapEffect oldWidget) {
     super.didUpdateWidget(oldWidget);
-
     if (!widget.enableAnimation) {
-      animationController!.value = 1.0;
+      _controller.value = 1.0;
     }
   }
 
   @override
   void dispose() {
-    animationController?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
-  Future<void> _onDelayed() async {
-    if (widget.isClickable) {
-      final int tapDuration = DateTime.now().millisecondsSinceEpoch -
-          tapTime.millisecondsSinceEpoch;
-
-      if (tapDuration < 120) {
-        await Future.delayed(
-          Duration(milliseconds: 120 - tapDuration),
-        );
-      }
+  void _pressDown() {
+    if (widget.isClickable && widget.enableAnimation) {
+      _controller.animateTo(_pressedScale, curve: Curves.easeOut);
     }
   }
 
-  Future<void> onTapCancel() async {
-    if (widget.isClickable && widget.enableAnimation) {
-      await _onDelayed();
-      animationController!.animateTo(
-        1.0,
-        duration: const Duration(milliseconds: 240),
-        curve: Curves.fastOutSlowIn,
-      );
+  void _pressUp() {
+    if (widget.enableAnimation) {
+      _controller.animateTo(1.0, curve: Curves.easeOut);
     }
-    isProgress = false;
+  }
+
+  void _handleTap() {
+    if (!widget.isClickable) return;
+    final now = DateTime.now();
+    if (now.difference(_lastTap) < _debounce) return;
+    _lastTap = now;
+    widget.onTap?.call();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {
-        if (widget.isClickable) {
-          await Future.delayed(const Duration(milliseconds: 280));
-          try {
-            if (!isProgress) {
-              widget.onTap?.call();
-              isProgress = true;
-            }
-          } catch (_) {}
-        }
-      },
-      onTapDown: (details) {
-        if (widget.isClickable && widget.enableAnimation) {
-          tapTime = DateTime.now();
-          animationController!.animateTo(
-            0.9,
-            duration: const Duration(milliseconds: 120),
-            curve: Curves.fastOutSlowIn,
-          );
-        }
-        isProgress = true;
-      },
-      onTapUp: (details) {
-        onTapCancel();
-      },
-      onTapCancel: () {
-        onTapCancel();
-      },
+      onTap: _handleTap,
+      onTapDown: (_) => _pressDown(),
+      onTapUp: (_) => _pressUp(),
+      onTapCancel: _pressUp,
       onLongPress: widget.onLongPress,
       child: AnimatedBuilder(
-        animation: animationController!,
+        animation: _controller,
         builder: (context, child) {
           return Transform.scale(
-            scale: widget.enableAnimation ? animationController!.value : 1.0,
-            child: widget.child,
+            scale: widget.enableAnimation ? _controller.value : 1.0,
+            child: child,
           );
         },
+        child: widget.child,
       ),
     );
   }

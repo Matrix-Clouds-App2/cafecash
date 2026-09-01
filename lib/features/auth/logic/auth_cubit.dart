@@ -16,10 +16,20 @@ class AuthCubit extends Cubit<AuthState> {
   /// Returns whether it succeeded — screens navigate to the OTP screen only
   /// on `true`, so a validation/server error just surfaces via
   /// [AppOverlay] and keeps them on the same screen.
-  Future<bool> register({required String name, required String phone}) async {
+  Future<bool> register({
+    required String name,
+    required String cafeName,
+    required String phone,
+    required String email,
+  }) async {
     emit(const AuthLoading());
     try {
-      final res = await _repo.register(name: name, phone: phone);
+      await _repo.register(
+        name: name,
+        cafeName: cafeName,
+        phone: phone,
+        email: email,
+      );
 
       requestOtp(phone);
       emit(const AuthInitial());

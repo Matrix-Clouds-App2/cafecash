@@ -41,6 +41,22 @@ class ConvertHelper {
     return parts.join(' - ');
   }
 
+  static String formatBytes(int bytes) {
+    if (bytes < 1024) return '$bytes B';
+    final kb = bytes / 1024;
+    if (kb < 1024) return '${kb.toStringAsFixed(kb < 10 ? 1 : 0)} KB';
+    final mb = kb / 1024;
+    return '${mb.toStringAsFixed(mb < 10 ? 1 : 0)} MB';
+  }
+
+  static String formatEta(Duration duration) {
+    final totalSeconds = duration.inSeconds;
+    if (totalSeconds < 60) return '${totalSeconds}s';
+    final minutes = totalSeconds ~/ 60;
+    final seconds = totalSeconds % 60;
+    return '${minutes}m ${seconds}s';
+  }
+
   static String formatDuration(String duration) {
     final minutes = int.tryParse(duration.trim());
     if (minutes == null || minutes <= 0) return duration;

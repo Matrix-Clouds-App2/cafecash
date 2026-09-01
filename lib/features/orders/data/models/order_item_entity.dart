@@ -17,6 +17,7 @@ class OrderItemEntity {
     required this.price,
     this.imagePath,
     this.quantity = 1,
+    this.uuid = '',
   });
 
   int id;
@@ -35,6 +36,9 @@ class OrderItemEntity {
   String? imagePath;
 
   int quantity;
+
+  @Index()
+  String uuid;
 }
 
 extension OrderItemLocalizedName on OrderItemEntity {

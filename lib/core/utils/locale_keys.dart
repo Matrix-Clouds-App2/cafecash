@@ -18,6 +18,7 @@ abstract class LocaleKeys {
   static const String auth_registerSubtitle = 'auth.register_subtitle';
   static const String auth_phone = 'auth.phone';
   static const String auth_name = 'auth.name';
+  static const String auth_cafeName = 'auth.cafe_name';
   static const String auth_signIn = 'auth.sign_in';
 
   // ─── OTP ──────────────────────────────────────────────────────────────────
@@ -31,6 +32,7 @@ abstract class LocaleKeys {
 
   // ─── Common ───────────────────────────────────────────────────────────────
   static const String common_cancel = 'common.cancel';
+  static const String common_ok = 'common.ok';
   static const String common_search = 'common.search';
   static const String common_retry = 'common.retry';
   static const String common_confirm = 'common.confirm';
@@ -150,6 +152,10 @@ abstract class LocaleKeys {
   static const String shift_noActiveShift = 'shift.no_active_shift';
   static const String shift_cancelledOrdersEmpty =
       'shift.cancelled_orders_empty';
+  static const String shift_remoteDetailsUnavailableTitle =
+      'shift.remote_details_unavailable_title';
+  static const String shift_remoteDetailsUnavailableMessage =
+      'shift.remote_details_unavailable_message';
 
   // ─── Hall ─────────────────────────────────────────────────────────────────
   static const String hall_readyBadge = 'hall.ready_badge';
@@ -325,6 +331,8 @@ abstract class LocaleKeys {
   static const String drawer_shifts = 'drawer.shifts';
   static const String drawer_customersManagement =
       'drawer.customers_management';
+  static const String drawer_employeesManagement =
+      'drawer.employees_management';
   static const String drawer_matchesScreenSettings =
       'drawer.matches_screen_settings';
   static const String drawer_itemsManagement = 'drawer.items_management';
@@ -436,6 +444,15 @@ abstract class LocaleKeys {
   static const String customers_confirmEditMessage =
       'customers.confirm_edit_message';
 
+  // ─── Employees ────────────────────────────────────────────────────────────
+  static const String employees_addEmployee = 'employees.add_employee';
+  static const String employees_editEmployee = 'employees.edit_employee';
+  static const String employees_empty = 'employees.empty';
+  static const String employees_deleteTitle = 'employees.delete_title';
+  static const String employees_deleteMessage = 'employees.delete_message';
+  static const String employees_statusActive = 'employees.status_active';
+  static const String employees_statusInactive = 'employees.status_inactive';
+
   // ─── Guest ────────────────────────────────────────────────────────────────
   static const String guest_lockTitle = 'guest.lock_title';
   static const String guest_lockMessage = 'guest.lock_message';
@@ -446,4 +463,64 @@ abstract class LocaleKeys {
   // ─── Errors ───────────────────────────────────────────────────────────────
   static const String error_unauthorized = 'error.unauthorized';
   static const String error_notFound = 'error.not_found';
+
+  // ─── Sync ─────────────────────────────────────────────────────────────────
+  static const String sync_downloadPromptTitle = 'sync.download_prompt_title';
+  static const String sync_downloadPromptMessage =
+      'sync.download_prompt_message';
+  static const String sync_downloadNow = 'sync.download_now';
+  static const String sync_skip = 'sync.skip';
+  static const String sync_uploadPromptTitle = 'sync.upload_prompt_title';
+  static const String sync_uploadPromptMessage = 'sync.upload_prompt_message';
+  static const String sync_uploadNow = 'sync.upload_now';
+  static const String sync_uploadSuccess = 'sync.upload_success';
+  static const String sync_uploadFailed = 'sync.upload_failed';
+  static const String sync_noInternetTitle = 'sync.no_internet_title';
+  static const String sync_noInternetForUploadMessage =
+      'sync.no_internet_for_upload_message';
+  static const String sync_retryUpload = 'sync.retry_upload';
+  static const String sync_preparing = 'sync.preparing';
+  static const String sync_compressing = 'sync.compressing';
+  static const String sync_zippingImages = 'sync.zipping_images';
+  static const String sync_uploading = 'sync.uploading';
+  static const String sync_downloading = 'sync.downloading';
+  static const String sync_merging = 'sync.merging';
+  static const String sync_ofBytes = 'sync.of_bytes';
+  static const String sync_etaLabel = 'sync.eta_label';
+  static const String sync_syncedBadge = 'sync.synced_badge';
+  static const String sync_notSyncedBadge = 'sync.not_synced_badge';
+  static const String sync_downloadSuccess = 'sync.download_success';
+  static const String sync_downloadFailed = 'sync.download_failed';
+  static const String sync_conflictTitle = 'sync.conflict_title';
+  static const String sync_conflictSubtitle = 'sync.conflict_subtitle';
+  static const String sync_conflictLocal = 'sync.conflict_local';
+  static const String sync_conflictServer = 'sync.conflict_server';
+  static const String sync_conflictTakeServer = 'sync.conflict_take_server';
+  static const String sync_conflictKeepLocal = 'sync.conflict_keep_local';
+  static const String sync_conflictAllServer = 'sync.conflict_all_server';
+  static const String sync_conflictAllLocal = 'sync.conflict_all_local';
+  static const String sync_conflictApply = 'sync.conflict_apply';
+  static const String sync_conflictDeletedRemotely =
+      'sync.conflict_deleted_remotely';
+  static const String sync_conflictDelete = 'sync.conflict_delete';
+  static const String sync_conflictKeep = 'sync.conflict_keep';
+  static const String sync_conflictTypeCategory = 'sync.conflict_type_category';
+  static const String sync_conflictTypeItem = 'sync.conflict_type_item';
+  static const String sync_conflictTypeCustomer = 'sync.conflict_type_customer';
+  static const String sync_conflictFieldName = 'sync.conflict_field_name';
+  static const String sync_conflictFieldPrice = 'sync.conflict_field_price';
+  static const String sync_conflictFieldOrder = 'sync.conflict_field_order';
+  static const String sync_conflictFieldPhone = 'sync.conflict_field_phone';
+  static const String sync_loginNeedsInternetTitle =
+      'sync.login_needs_internet_title';
+  static const String sync_loginNeedsInternetMessage =
+      'sync.login_needs_internet_message';
+  static const String sync_loginSyncFailedTitle =
+      'sync.login_sync_failed_title';
+  static const String sync_loginSyncFailedMessage =
+      'sync.login_sync_failed_message';
+  static const String sync_retry = 'sync.retry';
+  static const String sync_cancelLogin = 'sync.cancel_login';
+  static const String sync_shiftClosedOfflinePendingUpload =
+      'sync.shift_closed_offline_pending_upload';
 }

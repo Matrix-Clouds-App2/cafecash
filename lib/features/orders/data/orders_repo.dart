@@ -1,3 +1,5 @@
+import 'package:uuid/uuid.dart';
+
 import '../../../core/storage/object_box/local_box.dart';
 import '../../../core/storage/object_box/object_box_storage.dart';
 import '../../customers/data/models/customer_entity.dart';
@@ -64,6 +66,7 @@ class OrdersRepo {
       locationKind: kind.index,
       createdAt: DateTime.now(),
       createdBy: createdBy,
+      uuid: const Uuid().v4(),
     );
     if (order.id == 0) {
       order.id = _orderBox.put(order);
@@ -86,6 +89,7 @@ class OrdersRepo {
         price: menuItem.price,
         imagePath: menuItem.imagePath,
         quantity: quantity,
+        uuid: const Uuid().v4(),
       ));
     }
 
@@ -184,5 +188,13 @@ class OrdersRepo {
     cancelled.sort((a, b) =>
         (b.closedAt ?? DateTime(0)).compareTo(a.closedAt ?? DateTime(0)));
     return cancelled;
+  }
+
+  void markSynced(List<OrderEntity> orders) {
+    if (orders.isEmpty) return;
+    for (final order in orders) {
+      order.synced = true;
+    }
+    _orderBox.putMany(orders);
   }
 }

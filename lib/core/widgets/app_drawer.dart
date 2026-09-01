@@ -6,9 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../app/router/navigation_services.dart';
 import '../../app/router/routes.dart';
-import '../../features/auth/logic/auth_cubit.dart';
 import '../../features/profile/logic/profile_cubit.dart';
 import '../../features/shift/logic/shift_cubit.dart';
+import '../../features/sync/presentation/logout_flow.dart';
 import '../extensions/extensions.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_constants.dart';
@@ -60,6 +60,21 @@ class AppDrawer extends StatelessWidget {
                     onTap: () => _guardedNavigate(Routes.shiftHistoryScreen),
                   ),
                   const _DrawerDivider(),
+                  // BlocBuilder<ProfileCubit, ProfileState>(
+                  //   buildWhen: (previous, current) =>
+                  //       (previous is ProfileSuccess) !=
+                  //       (current is ProfileSuccess),
+                  //   builder: (context, state) {
+                  //     final isOwner = state is ProfileSuccess &&
+                  //         state.user.isOwner;
+                  //     if (!isOwner) return const SizedBox.shrink();
+                  //     return _DrawerTile(
+                  //       icon: Icons.badge_outlined,
+                  //       label: LocaleKeys.drawer_employeesManagement.tr(),
+                  //       onTap: () => _guardedNavigate(Routes.employeesScreen),
+                  //     );
+                  //   },
+                  // ),
                   _DrawerTile(
                     icon: Icons.people_alt_outlined,
                     label: LocaleKeys.drawer_customersManagement.tr(),
@@ -86,19 +101,19 @@ class AppDrawer extends StatelessWidget {
                     label: LocaleKeys.drawer_settings.tr(),
                     onTap: () => _navigate(Routes.settingsScreen),
                   ),
-                  const _DrawerDivider(),
-                  _DrawerTile(
-                    icon: Icons.swap_horiz_rounded,
-                    label: LocaleKeys.drawer_receiveShift.tr(),
-                    onTap: _comingSoon
-                        // _guardedNavigate(Routes.shiftStartScreen),
-                  ),
-                  _DrawerTile(
-                    icon: Icons.output_rounded,
-                    label: LocaleKeys.drawer_handoverShift.tr(),
-                    onTap: _comingSoon,
-                  ),
-                  const _DrawerDivider(),
+                  // const _DrawerDivider(),
+                  // _DrawerTile(
+                  //   icon: Icons.swap_horiz_rounded,
+                  //   label: LocaleKeys.drawer_receiveShift.tr(),
+                  //   onTap: _comingSoon
+                  //       // _guardedNavigate(Routes.shiftStartScreen),
+                  // ),
+                  // _DrawerTile(
+                  //   icon: Icons.output_rounded,
+                  //   label: LocaleKeys.drawer_handoverShift.tr(),
+                  //   onTap: _comingSoon,
+                  // ),
+                  // const _DrawerDivider(),
                   _DrawerTile(
                     icon: Icons.facebook_rounded,
                     label: LocaleKeys.drawer_contactUs.tr(),
@@ -213,12 +228,7 @@ class AppDrawer extends StatelessWidget {
       confirmColor: AppColors.errorColor.themeColor,
       onConfirm: () {
         NavigationService.goBack();
-        NavigationService.pushNamedAndRemoveUntil(Routes.loginScreen);
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          final context = NavigationService.navigationKey.currentContext!;
-          context.read<ProfileCubit>().reset();
-          context.read<AuthCubit>().logout();
-        });
+        performLogout();
       },
     );
   }
@@ -234,6 +244,10 @@ class _DrawerHeader extends StatelessWidget {
         final isGuest = state is! ProfileSuccess;
         final name = isGuest ? LocaleKeys.profile_title.tr() : state.user.name;
         final avatarUrl = isGuest ? null : state.user.avatar;
+        final cafeName = isGuest ? null : state.user.cafeName;
+        final headerTitle = (cafeName != null && cafeName.trim().isNotEmpty)
+            ? cafeName
+            : AppConstants.appName;
 
         return Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -249,7 +263,7 @@ class _DrawerHeader extends StatelessWidget {
               children: [
                 20.height,
                 AppText(
-                  'كافية كاش',
+                  headerTitle,
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
                   color: Colors.white,

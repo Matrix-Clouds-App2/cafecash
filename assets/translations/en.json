@@ -11,6 +11,7 @@
     "continue_as_guest": "Continue as Guest",
     "phone": "Phone Number",
     "name": "Full Name",
+    "cafe_name": "Cafe Name",
     "register_subtitle": "Create your account to get started",
     "sign_in": "Sign In"
   },
@@ -50,6 +51,7 @@
   },
   "common": {
     "cancel": "Cancel",
+    "ok": "OK",
     "search": "Search",
     "retry": "Retry",
     "confirm": "Confirm",
@@ -128,7 +130,9 @@
     "history_title": "Shifts",
     "history_empty": "No past shifts yet",
     "no_active_shift": "Start a shift first",
-    "cancelled_orders_empty": "No cancelled orders in this shift"
+    "cancelled_orders_empty": "No cancelled orders in this shift",
+    "remote_details_unavailable_title": "Couldn't load details",
+    "remote_details_unavailable_message": "This shift was uploaded from another device and its details couldn't be fetched. Check your connection and try again."
   },
   "hall": {
     "ready_badge": "Ready",
@@ -261,6 +265,7 @@
     "close_shift": "Close Shift",
     "shifts": "Previous Shifts",
     "customers_management": "Customers Management",
+    "employees_management": "Employees Management",
     "matches_screen_settings": "Matches Screen Settings",
     "items_management": "Items Management",
     "deferred_accounts": "Deferred Accounts",
@@ -355,6 +360,15 @@
     "delete_message": "This action cannot be undone.",
     "phone_exists": "This phone number already belongs to another customer"
   },
+  "employees": {
+    "add_employee": "Add Employee",
+    "edit_employee": "Edit Employee",
+    "empty": "No employees yet, add your first one",
+    "delete_title": "Delete employee?",
+    "delete_message": "This action cannot be undone.",
+    "status_active": "Active",
+    "status_inactive": "Inactive"
+  },
   "guest": {
     "lock_title": "Login Required",
     "lock_message": "This page is only available to registered users. Please sign in to continue and unlock all features.",
@@ -365,5 +379,57 @@
   "error": {
     "unauthorized": "Session expired, please login again",
     "not_found": "Resource not found"
+  },
+  "sync": {
+    "download_prompt_title": "Download latest updates?",
+    "download_prompt_message": "Get the latest menu, prices and customers from the server before starting your shift.",
+    "download_now": "Download",
+    "skip": "Skip",
+    "upload_prompt_title": "Back up this shift?",
+    "upload_prompt_message": "A copy of this shift's orders and transactions is saved to your account, in case anything happens to this device.",
+    "upload_now": "Upload",
+    "upload_success": "Shift uploaded successfully",
+    "upload_failed": "Upload failed. You can retry from Shift History.",
+    "no_internet_title": "No internet connection",
+    "no_internet_for_upload_message": "To upload this closing shift online, you need an internet connection. The shift is closed and saved locally, and you can upload it later.",
+    "retry_upload": "Retry upload",
+    "preparing": "Preparing data...",
+    "compressing": "Compressing...",
+    "zipping_images": "Packing images...",
+    "uploading": "Uploading...",
+    "downloading": "Downloading...",
+    "merging": "Merging data...",
+    "of_bytes": "{current} of {total}",
+    "eta_label": "Time remaining: {time}",
+    "synced_badge": "Synced",
+    "not_synced_badge": "Not uploaded",
+    "download_success": "Data updated",
+    "download_failed": "Couldn't update data. You can try again later.",
+    "conflict_title": "Some data differs",
+    "conflict_subtitle": "These items were edited locally and differ from the server. Pick which version to keep for each.",
+    "conflict_local": "Yours",
+    "conflict_server": "Server",
+    "conflict_take_server": "Server version",
+    "conflict_keep_local": "My edits",
+    "conflict_all_server": "All from server",
+    "conflict_all_local": "All local",
+    "conflict_apply": "Apply",
+    "conflict_deleted_remotely": "Deleted on the server",
+    "conflict_delete": "Delete it",
+    "conflict_keep": "Keep it",
+    "conflict_type_category": "Category",
+    "conflict_type_item": "Item",
+    "conflict_type_customer": "Customer",
+    "conflict_field_name": "Name",
+    "conflict_field_price": "Price",
+    "conflict_field_order": "Order",
+    "conflict_field_phone": "Phone",
+    "login_needs_internet_title": "Internet connection required",
+    "login_needs_internet_message": "You need to be online so we can update your data from your account before you continue.",
+    "login_sync_failed_title": "Data update failed",
+    "login_sync_failed_message": "Something went wrong while fetching your data from the server. Please try again.",
+    "retry": "Retry",
+    "cancel_login": "Cancel sign in",
+    "shift_closed_offline_pending_upload": "Shift closed. It will be uploaded once you're back online."
   }
 }

@@ -11,6 +11,7 @@ class HallTableEntity {
     this.drinkCount = 0,
     this.price = 0,
     this.customerName,
+    this.uuid = '',
   });
 
   int id;
@@ -25,6 +26,9 @@ class HallTableEntity {
   double price;
 
   String? customerName;
+
+  @Index()
+  String uuid;
 
   @Transient()
   HallTableStatus get statusEnum => HallTableStatus.values[status];

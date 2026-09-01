@@ -40,7 +40,7 @@ class CustomerCard extends StatelessWidget {
       context,
       title: customer.name,
       onEdit: onEdit,
-      onDelete: () => _confirmDelete(context),
+      onDelete: hasDeferred ? null : () => _confirmDelete(context),
       extraLabel:
           hasDeferred ? LocaleKeys.customers_viewDeferredOrders.tr() : null,
       extraIcon: hasDeferred ? Icons.receipt_long_outlined : null,

@@ -1,3 +1,5 @@
+import 'package:uuid/uuid.dart';
+
 import '../../../core/storage/object_box/local_box.dart';
 import '../../../core/storage/object_box/object_box_storage.dart';
 import '../../orders/data/models/order_entity.dart';
@@ -29,6 +31,7 @@ class TreasuryRepo {
     PaymentMethod? paymentMethod,
     int? orderId,
     String? createdBy,
+    int? createdById,
   }) {
     final transaction = TreasuryTransactionEntity(
       title: title,
@@ -39,6 +42,8 @@ class TreasuryRepo {
       orderId: orderId,
       createdAt: DateTime.now(),
       createdBy: createdBy,
+      createdById: createdById,
+      uuid: const Uuid().v4(),
     );
     transaction.id = _box.put(transaction);
     return transaction;

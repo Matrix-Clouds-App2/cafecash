@@ -13,6 +13,9 @@ class MenuItemEntity {
     this.imagePath,
     this.createdAt,
     this.sortOrder = 0,
+    this.uuid = '',
+    this.synced = false,
+    this.isDefault = false,
   });
 
   int id;
@@ -32,6 +35,19 @@ class MenuItemEntity {
   DateTime? createdAt;
 
   int sortOrder;
+
+  @Index()
+  String uuid;
+
+  bool synced;
+
+  bool isDefault;
+
+  @override
+  String toString() =>
+      'MenuItemEntity(id: $id, uuid: $uuid, categoryId: $categoryId, '
+      'name: $name, nameEn: $nameEn, price: $price, sortOrder: $sortOrder, '
+      'isDefault: $isDefault, synced: $synced, imagePath: $imagePath)';
 }
 
 extension MenuItemLocalizedName on MenuItemEntity {

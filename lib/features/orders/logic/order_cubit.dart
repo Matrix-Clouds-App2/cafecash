@@ -133,6 +133,7 @@ class OrderCubit extends Cubit<OrderState> {
         paymentMethod: method,
         orderId: order.id,
         createdBy: kUserModel?.name,
+        createdById: kUserModel?.id,
       );
       emit(const OrderClosed());
     } catch (e) {
@@ -162,6 +163,7 @@ class OrderCubit extends Cubit<OrderState> {
         paymentMethod: method,
         orderId: order.id,
         createdBy: kUserModel?.name,
+        createdById: kUserModel?.id,
       );
 
       final stillOpen = _ordersRepo.getActiveOrder(_locationId, _kind) != null;

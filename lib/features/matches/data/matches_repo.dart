@@ -1,3 +1,5 @@
+import 'package:uuid/uuid.dart';
+
 import '../../../core/storage/object_box/local_box.dart';
 import '../../../core/storage/object_box/object_box_storage.dart';
 import 'models/match_seat_entity.dart';
@@ -23,7 +25,7 @@ class MatchesRepo {
     final nextNumber = seats.isEmpty
         ? 1
         : seats.map((s) => s.number).reduce((a, b) => a > b ? a : b) + 1;
-    final seat = MatchSeatEntity(number: nextNumber);
+    final seat = MatchSeatEntity(number: nextNumber, uuid: const Uuid().v4());
     seat.id = _box.put(seat);
     return seat;
   }

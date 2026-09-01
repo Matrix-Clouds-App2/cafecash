@@ -13,4 +13,18 @@ class ApiEndpoints {
   static const String verifyOtp = 'auth/verify-otp';
   static const String profile = 'auth/me';
   static const String account = 'auth/account';
+
+  // ─── Employees ────────────────────────────────────────────────────────────
+  static const String employees = 'employees';
+  static String employee(int id) => 'employees/$id';
+
+  // ─── Sync ─────────────────────────────────────────────────────────────────
+  static const String syncUpload = 'sync/upload';
+  static const String syncBootstrap = 'sync/bootstrap';
+  static const String catalogImageBase =
+      'https://cafe.matrixclouds.net/storage/';
+
+  // ─── Shifts ───────────────────────────────────────────────────────────────
+  static const String shifts = 'shifts';
+  static String shiftDetails(Object idOrUuid) => 'shifts/$idOrUuid';
 }

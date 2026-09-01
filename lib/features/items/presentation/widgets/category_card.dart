@@ -57,6 +57,7 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('CategoryCard on screen → $category');
     final primary = AppColors.primaryColor.themeColor;
     final hasImage = (category.imagePath ?? '').isNotEmpty;
 

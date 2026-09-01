@@ -12,8 +12,8 @@ import '../../../core/utils/app_constants.dart';
 import '../../../core/utils/locale_keys.dart';
 import '../../../core/utils/app_overlay.dart';
 import '../../../core/widgets/app_confirm_dialog.dart';
-import '../../auth/logic/auth_cubit.dart';
 import '../../profile/logic/profile_cubit.dart';
+import '../../sync/presentation/logout_flow.dart';
 import 'widgets/language_sheet.dart';
 import 'widgets/settings_tile.dart';
 
@@ -106,12 +106,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       confirmColor: AppColors.warningColor.themeColor,
       onConfirm: () {
         NavigationService.goBack();
-        NavigationService.pushNamedAndRemoveUntil(Routes.loginScreen);
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          final rootContext = NavigationService.navigationKey.currentContext!;
-          rootContext.read<ProfileCubit>().reset();
-          rootContext.read<AuthCubit>().logout();
-        });
+        performLogout();
       },
     );
   }
@@ -130,12 +125,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         final success = await context.read<ProfileCubit>().deleteAccount();
         if (!success) return;
 
-        NavigationService.pushNamedAndRemoveUntil(Routes.loginScreen);
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          final rootContext = NavigationService.navigationKey.currentContext!;
-          rootContext.read<ProfileCubit>().reset();
-          rootContext.read<AuthCubit>().logout();
-        });
+        await performLogout(isDeleteAccount: true);
       },
     );
   }

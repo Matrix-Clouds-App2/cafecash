@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/extensions/extensions.dart';
+import '../../../../core/logic/connectivity_cubit.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_constants.dart';
 import '../../../../core/utils/convert_helper.dart';
@@ -12,16 +14,24 @@ import '../../../../core/widgets/custom_tap_effect.dart';
 import '../../data/models/shift_entity.dart';
 
 class ShiftHistoryCard extends StatelessWidget {
-  const ShiftHistoryCard({super.key, required this.shift, required this.onTap});
+  const ShiftHistoryCard({
+    super.key,
+    required this.shift,
+    required this.onTap,
+    this.onRetryUpload,
+  });
 
   final ShiftEntity shift;
   final VoidCallback onTap;
+  final VoidCallback? onRetryUpload;
 
   @override
   Widget build(BuildContext context) {
     final primary = AppColors.primaryColor.themeColor;
     final success = AppColors.successColor.themeColor;
+    final warning = AppColors.warningColor.themeColor;
     final closedAt = shift.closedAt;
+    final isOnline = context.watch<ConnectivityCubit>().state is ConnectivityOnline;
 
     return CustomTapEffect(
       onTap: onTap,
@@ -67,14 +77,31 @@ class ShiftHistoryCard extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                   decoration: BoxDecoration(
-                    color: AppColors.dividerColor.themeColor,
+                    color: shift.synced
+                        ? success.withValues(alpha: 0.12)
+                        : warning.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(20.r),
                   ),
-                  child: AppText(
-                    LocaleKeys.shift_closedBadge.tr(),
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textSecondaryColor.themeColor,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        shift.synced
+                            ? Icons.cloud_done_rounded
+                            : Icons.cloud_off_rounded,
+                        size: 12.sp,
+                        color: shift.synced ? success : warning,
+                      ),
+                      4.width,
+                      AppText(
+                        shift.synced
+                            ? LocaleKeys.sync_syncedBadge.tr()
+                            : LocaleKeys.sync_notSyncedBadge.tr(),
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                        color: shift.synced ? success : warning,
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -97,6 +124,35 @@ class ShiftHistoryCard extends StatelessWidget {
                 ),
               ],
             ),
+            if (!shift.synced && onRetryUpload != null && isOnline && !kIsGuest) ...[
+              10.height,
+              CustomTapEffect(
+                onTap: onRetryUpload,
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 10.h),
+                  decoration: BoxDecoration(
+                    color: primary.withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.cloud_upload_outlined,
+                          size: 15.sp, color: primary),
+                      6.width,
+                      AppText(
+                        LocaleKeys.sync_retryUpload.tr(),
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w700,
+                        color: primary,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),

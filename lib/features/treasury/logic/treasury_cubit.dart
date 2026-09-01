@@ -114,6 +114,7 @@ class TreasuryCubit extends Cubit<TreasuryState> {
         isIncome: isIncome,
         paymentMethod: paymentMethod,
         createdBy: kUserModel?.name,
+        createdById: kUserModel?.id,
       );
     } catch (e) {
       AppOverlay.showError(e.toString());

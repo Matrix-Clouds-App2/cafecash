@@ -95,6 +95,7 @@ class _CustomerDeferredOrdersScreenState
       paymentMethod: method,
       orderId: order.id,
       createdBy: kUserModel?.name,
+      createdById: kUserModel?.id,
     );
     _refresh();
   }

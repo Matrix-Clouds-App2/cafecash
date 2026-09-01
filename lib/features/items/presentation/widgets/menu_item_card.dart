@@ -44,6 +44,7 @@ class MenuItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('MenuItemCard on screen → $item');
     final primary = AppColors.primaryColor.themeColor;
     final error = AppColors.errorColor.themeColor;
     final hasImage = (item.imagePath ?? '').isNotEmpty;

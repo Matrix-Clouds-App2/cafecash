@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/network/connectivity_service.dart';
 import '../../../core/utils/app_overlay.dart';
 import '../data/models/shift_entity.dart';
 import '../data/shift_repo.dart';
@@ -10,14 +11,16 @@ import '../data/shift_repo.dart';
 part 'shift_state.dart';
 
 class ShiftCubit extends Cubit<ShiftState> {
-  ShiftCubit(this._repo) : super(const ShiftInitial());
+  ShiftCubit(this._repo, this._connectivity) : super(const ShiftInitial());
 
   final ShiftRepo _repo;
+  final ConnectivityService _connectivity;
   StreamSubscription<ShiftEntity?>? _activeSubscription;
   StreamSubscription<List<ShiftEntity>>? _historySubscription;
 
   ShiftEntity? _active;
   List<ShiftEntity> _history = [];
+  bool _isRefreshingHistory = false;
 
   void watchActive() {
     emit(const ShiftLoading());
@@ -64,4 +67,17 @@ class ShiftCubit extends Cubit<ShiftState> {
   }
 
   void _emit() => emit(ShiftReady(active: _active, history: _history));
+
+  Future<void> refreshHistoryFromServer() async {
+    if (_isRefreshingHistory) return;
+    if (!await _connectivity.isOnline()) return;
+
+    _isRefreshingHistory = true;
+    try {
+      await _repo.reconcileWithRemote();
+    } catch (_) {
+    } finally {
+      _isRefreshingHistory = false;
+    }
+  }
 }

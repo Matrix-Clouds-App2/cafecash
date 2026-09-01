@@ -7,6 +7,8 @@ class CustomerEntity {
     required this.name,
     required this.phone,
     this.createdAt,
+    this.uuid = '',
+    this.synced = false,
   });
 
   int id;
@@ -18,4 +20,9 @@ class CustomerEntity {
 
   @Property(type: PropertyType.date)
   DateTime? createdAt;
+
+  @Index()
+  String uuid;
+
+  bool synced;
 }

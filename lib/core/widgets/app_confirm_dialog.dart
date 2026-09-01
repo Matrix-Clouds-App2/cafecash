@@ -20,6 +20,7 @@ class AppConfirmDialog extends StatelessWidget {
     required this.onConfirm,
     this.cancelLabel,
     this.confirmColor,
+    this.showCancelButton = true,
   });
 
   final IconData icon;
@@ -29,6 +30,7 @@ class AppConfirmDialog extends StatelessWidget {
   final String confirmLabel;
   final String? cancelLabel;
   final Color? confirmColor;
+  final bool showCancelButton;
   final VoidCallback onConfirm;
 
   static Future<T?> show<T>(
@@ -41,6 +43,7 @@ class AppConfirmDialog extends StatelessWidget {
     required VoidCallback onConfirm,
     String? cancelLabel,
     Color? confirmColor,
+    bool showCancelButton = true,
   }) {
     return showDialog<T>(
       context: context,
@@ -53,6 +56,7 @@ class AppConfirmDialog extends StatelessWidget {
         onConfirm: onConfirm,
         cancelLabel: cancelLabel,
         confirmColor: confirmColor,
+        showCancelButton: showCancelButton,
       ),
     );
   }
@@ -88,17 +92,19 @@ class AppConfirmDialog extends StatelessWidget {
             28.height,
             Row(
               children: [
-                Expanded(
-                  child: CustomButton(
-                    onTap: () => Navigator.pop(context),
-                    title: cancelLabel ?? LocaleKeys.common_cancel.tr(),
-                    isOutlined: true,
-                    borderColor: AppColors.dividerColor.themeColor,
-                    textColor: AppColors.textSecondaryColor.themeColor,
-                    color: Colors.transparent,
+                if (showCancelButton) ...[
+                  Expanded(
+                    child: CustomButton(
+                      onTap: () => Navigator.pop(context),
+                      title: cancelLabel ?? LocaleKeys.common_cancel.tr(),
+                      isOutlined: true,
+                      borderColor: AppColors.dividerColor.themeColor,
+                      textColor: AppColors.textSecondaryColor.themeColor,
+                      color: Colors.transparent,
+                    ),
                   ),
-                ),
-                12.width,
+                  12.width,
+                ],
                 Expanded(
                   child: CustomButton(
                     onTap: onConfirm,

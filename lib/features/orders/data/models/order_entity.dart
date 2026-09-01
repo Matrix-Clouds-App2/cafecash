@@ -22,6 +22,8 @@ class OrderEntity {
     this.closedAt,
     this.createdBy,
     this.cancelReason,
+    this.uuid = '',
+    this.synced = false,
   });
 
   int id;
@@ -53,6 +55,11 @@ class OrderEntity {
   String? createdBy;
 
   String? cancelReason;
+
+  @Index()
+  String uuid;
+
+  bool synced;
 
   @Transient()
   OrderStatus get statusEnum => OrderStatus.values[status];

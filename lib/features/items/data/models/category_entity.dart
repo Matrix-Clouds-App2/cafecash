@@ -11,6 +11,9 @@ class CategoryEntity {
     this.imagePath,
     this.createdAt,
     this.sortOrder = 0,
+    this.uuid = '',
+    this.synced = false,
+    this.isDefault = false,
   });
 
   int id;
@@ -25,6 +28,19 @@ class CategoryEntity {
   DateTime? createdAt;
 
   int sortOrder;
+
+  @Index()
+  String uuid;
+
+  bool synced;
+
+  bool isDefault;
+
+  @override
+  String toString() =>
+      'CategoryEntity(id: $id, uuid: $uuid, name: $name, nameEn: $nameEn, '
+      'sortOrder: $sortOrder, isDefault: $isDefault, synced: $synced, '
+      'imagePath: $imagePath, createdAt: $createdAt)';
 }
 
 extension CategoryLocalizedName on CategoryEntity {

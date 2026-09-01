@@ -6,13 +6,50 @@ import '../../../app/router/routes.dart';
 import '../../../core/extensions/extensions.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/locale_keys.dart';
+import '../../../core/widgets/app_confirm_dialog.dart';
 import '../../../core/widgets/app_empty.dart';
 import '../../../core/widgets/custom_loading_widget.dart';
+import '../../sync/presentation/hydrate_shift_flow.dart';
+import '../../sync/presentation/upload_shift_flow.dart';
+import '../data/models/shift_entity.dart';
 import '../logic/shift_cubit.dart';
 import 'widgets/shift_history_card.dart';
 
-class ShiftHistoryScreen extends StatelessWidget {
+class ShiftHistoryScreen extends StatefulWidget {
   const ShiftHistoryScreen({super.key});
+
+  @override
+  State<ShiftHistoryScreen> createState() => _ShiftHistoryScreenState();
+}
+
+class _ShiftHistoryScreenState extends State<ShiftHistoryScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ShiftCubit>().refreshHistoryFromServer();
+  }
+
+  Future<void> _openShift(BuildContext context, ShiftEntity shift) async {
+    if (shift.remoteOnly) {
+      final hydrated = await ensureShiftDetails(context, shift);
+      if (!context.mounted) return;
+      if (!hydrated) {
+        AppConfirmDialog.show(
+          context,
+          icon: Icons.hourglass_top_rounded,
+          iconColor: AppColors.primaryColor.themeColor,
+          title: LocaleKeys.shift_remoteDetailsUnavailableTitle.tr(),
+          message: LocaleKeys.shift_remoteDetailsUnavailableMessage.tr(),
+          confirmLabel: LocaleKeys.common_ok.tr(),
+          showCancelButton: false,
+          onConfirm: () => Navigator.pop(context),
+        );
+        return;
+      }
+    }
+    if (!context.mounted) return;
+    context.pushNamed(Routes.shiftSummaryScreen, arguments: {'shift': shift});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +85,8 @@ class ShiftHistoryScreen extends StatelessWidget {
               final shift = history[i];
               return ShiftHistoryCard(
                 shift: shift,
-                onTap: () => context.pushNamed(
-                  Routes.shiftSummaryScreen,
-                  arguments: {'shift': shift},
-                ),
+                onTap: () => _openShift(context, shift),
+                onRetryUpload: () => offerShiftUpload(context, shift),
               );
             },
           );

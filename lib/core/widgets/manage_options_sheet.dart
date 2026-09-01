@@ -15,7 +15,7 @@ class ManageOptionsSheet {
     BuildContext context, {
     required String title,
     required VoidCallback onEdit,
-    required VoidCallback onDelete,
+    VoidCallback? onDelete,
     String? extraLabel,
     IconData? extraIcon,
     VoidCallback? onExtra,
@@ -37,14 +37,14 @@ class ManageOptionsSheet {
 class _ManageOptions extends StatelessWidget {
   const _ManageOptions({
     required this.onEdit,
-    required this.onDelete,
+    this.onDelete,
     this.extraLabel,
     this.extraIcon,
     this.onExtra,
   });
 
   final VoidCallback onEdit;
-  final VoidCallback onDelete;
+  final VoidCallback? onDelete;
   final String? extraLabel;
   final IconData? extraIcon;
   final VoidCallback? onExtra;
@@ -52,7 +52,6 @@ class _ManageOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primary = AppColors.primaryColor.themeColor;
-    final error = AppColors.errorColor.themeColor;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -82,19 +81,21 @@ class _ManageOptions extends StatelessWidget {
             color: primary,
           ),
         ),
-        10.height,
-        CustomTapEffect(
-          onTap: () {
-            Navigator.pop(context);
-            onDelete();
-          },
-          child: SheetOptionTile(
-            icon: Icons.delete_outline_rounded,
-            label: LocaleKeys.common_delete.tr(),
-            color: Colors.white,
-            labelColor: Colors.red,
+        if (onDelete != null) ...[
+          10.height,
+          CustomTapEffect(
+            onTap: () {
+              Navigator.pop(context);
+              onDelete!();
+            },
+            child: SheetOptionTile(
+              icon: Icons.delete_outline_rounded,
+              label: LocaleKeys.common_delete.tr(),
+              color: Colors.white,
+              labelColor: Colors.red,
+            ),
           ),
-        ),
+        ],
       ],
     );
   }

@@ -5,6 +5,7 @@ import '../../orders/data/orders_repo.dart';
 import '../../treasury/data/treasury_repo.dart';
 import '../data/models/shift_entity.dart';
 import '../data/models/shift_summary.dart';
+import 'shift_window.dart';
 
 part 'shift_summary_state.dart';
 
@@ -18,10 +19,7 @@ class ShiftSummaryCubit extends Cubit<ShiftSummaryState> {
   void load(ShiftEntity shift) {
     emit(const ShiftSummaryLoading());
     try {
-      final end = shift.closedAt ?? DateTime.now();
-      final start = shift.startedAt ?? end;
-      bool inWindow(DateTime? at) =>
-          at != null && !at.isBefore(start) && !at.isAfter(end);
+      bool inWindow(DateTime? at) => ShiftWindow.contains(shift, at);
 
       final transactions =
           _treasuryRepo.getAll().where((t) => inWindow(t.createdAt)).toList();

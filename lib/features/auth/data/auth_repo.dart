@@ -19,12 +19,19 @@ class AuthRepo {
   /// OTP as part of registering).
   Future<void> register({
     required String name,
+    required String cafeName,
     required String phone,
+    required String email,
   }) async {
     try {
       await _dio.post(
         ApiEndpoints.register,
-        data: {'name': name, 'phone': phone},
+        data: {
+          'name': name,
+          'cafe_name': cafeName,
+          'phone': phone,
+          'email': email,
+        },
       );
     } on DioException catch (e) {
       throw NetworkException.fromDioException(e);

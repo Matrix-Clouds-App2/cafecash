@@ -39,6 +39,7 @@ UserModel? kUserModel;
 /// Returns `true` when the user is NOT logged in (guest mode).
 /// Use this everywhere in the app to guard authenticated-only actions.
 bool get kIsGuest => kUserModel == null;
+bool get kIsOwner => kUserModel?.isOwner ?? false;
 bool get kIsArabic => NavigationService.navigationKey.currentContext?.locale.languageCode == 'ar';
 
 bool kWalletPaymentEnabled = true;

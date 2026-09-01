@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../core/di/injection.dart';
+import '../core/logic/connectivity_cubit.dart';
 import '../core/storage/local_storage.dart';
 import '../core/utils/app_constants.dart';
 import '../features/auth/logic/auth_cubit.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ShiftCubit>(
           create: (_) => getIt<ShiftCubit>()..watchActive(),
+        ),
+        BlocProvider<ConnectivityCubit>(
+          create: (_) => getIt<ConnectivityCubit>()..watch(),
         ),
       ],
       child: ScreenUtilInit(

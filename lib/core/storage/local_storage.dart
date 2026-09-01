@@ -15,8 +15,10 @@ class LocalStorage {
   bool has(String key) => _box.hasData(key);
 
   Future<void> clearAll() async {
+    final dataOwner = read<int>(_localDataAccountKey);
     await _secureBox.delete(key: _tokenKey);
     await _box.erase();
+    if (dataOwner != null) await write(_localDataAccountKey, dataOwner);
   }
 
   static const _tokenKey = 'token';
@@ -68,8 +70,15 @@ class LocalStorage {
   Future<void> setWalletPaymentEnabled(bool enabled) =>
       write(_walletPaymentEnabledKey, enabled);
 
-  static const _defaultItemsSeededKey = 'default_items_seeded';
+  static const _uuidBackfillDoneKey = 'uuid_backfill_done';
 
-  bool get isDefaultItemsSeeded => read<bool>(_defaultItemsSeededKey) ?? false;
-  Future<void> setDefaultItemsSeeded() => write(_defaultItemsSeededKey, true);
+  bool get isUuidBackfillDone => read<bool>(_uuidBackfillDoneKey) ?? false;
+  Future<void> setUuidBackfillDone() => write(_uuidBackfillDoneKey, true);
+
+  static const _localDataAccountKey = 'local_data_account_key';
+
+  int? get localDataAccountKey => read<int>(_localDataAccountKey);
+  Future<void> setLocalDataAccountKey(int key) =>
+      write(_localDataAccountKey, key);
+  Future<void> clearLocalDataAccountKey() => remove(_localDataAccountKey);
 }
