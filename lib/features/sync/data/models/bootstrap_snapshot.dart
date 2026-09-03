@@ -119,7 +119,7 @@ class BsCategory {
         name: json['name']?.toString() ?? '',
         sortOrder: (json['sort_order'] as num?)?.toInt() ?? 0,
         isDefault: json['is_default'] == true,
-        imageKey: json['image_key']?.toString(),
+        imageKey: json['image_url']?.toString() ?? json['image_key']?.toString(),
         localAssetPath: json['local_asset_path']?.toString(),
       );
 }
@@ -152,7 +152,7 @@ class BsMenuItem {
         price: _money(json['price']) ?? 0,
         sortOrder: (json['sort_order'] as num?)?.toInt() ?? 0,
         isDefault: json['is_default'] == true,
-        imageKey: json['image_key']?.toString(),
+        imageKey: json['image_url']?.toString() ?? json['image_key']?.toString(),
         localAssetPath: json['local_asset_path']?.toString(),
       );
 }

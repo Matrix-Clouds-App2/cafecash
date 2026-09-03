@@ -325,6 +325,107 @@ abstract class LocaleKeys {
   static const String settings_walletPaymentDescription =
       'settings.wallet_payment_description';
 
+  // ─── Subscription ─────────────────────────────────────────────────────────
+  static const String subscription_title = 'subscription.title';
+  static const String subscription_availablePlans =
+      'subscription.available_plans';
+  static const String subscription_currentPlanLabel =
+      'subscription.current_plan_label';
+  static const String subscription_planLabel = 'subscription.plan_label';
+  static const String subscription_remainingLabel =
+      'subscription.remaining_label';
+  static const String subscription_daysValue = 'subscription.days_value';
+  static const String subscription_startsLabel = 'subscription.starts_label';
+  static const String subscription_endsLabel = 'subscription.ends_label';
+  static const String subscription_free = 'subscription.free';
+  static const String subscription_ownerOnlyHint =
+      'subscription.owner_only_hint';
+  static const String subscription_errorLoad = 'subscription.error_load';
+  static const String subscription_lockedDialogTitle =
+      'subscription.locked_dialog_title';
+  static const String subscription_lockedDialogMessage =
+      'subscription.locked_dialog_message';
+  static const String subscription_lockedDialogConfirm =
+      'subscription.locked_dialog_confirm';
+
+  static const String subscription_statusActive = 'subscription.status_active';
+  static const String subscription_statusExpired =
+      'subscription.status_expired';
+  static const String subscription_statusPending =
+      'subscription.status_pending';
+  static const String subscription_statusNone = 'subscription.status_none';
+
+  static const String subscription_trialChip = 'subscription.trial_chip';
+  static const String subscription_paidChip = 'subscription.paid_chip';
+  static const String subscription_manualChip = 'subscription.manual_chip';
+
+  static const String subscription_activeTitle = 'subscription.active_title';
+  static const String subscription_trialTitle = 'subscription.trial_title';
+  static const String subscription_expiredTitle = 'subscription.expired_title';
+  static const String subscription_pendingTitle = 'subscription.pending_title';
+  static const String subscription_noneTitle = 'subscription.none_title';
+
+  static const String subscription_activeMessage =
+      'subscription.active_message';
+  static const String subscription_expiredMessage =
+      'subscription.expired_message';
+  static const String subscription_pendingMessage =
+      'subscription.pending_message';
+  static const String subscription_noneMessage = 'subscription.none_message';
+
+  static const String subscription_planDaily = 'subscription.plan_daily';
+  static const String subscription_planMonthly = 'subscription.plan_monthly';
+  static const String subscription_planSemiAnnual =
+      'subscription.plan_semi_annual';
+  static const String subscription_planAnnual = 'subscription.plan_annual';
+  static const String subscription_planUnknown = 'subscription.plan_unknown';
+
+  static const String subscription_durationDaily =
+      'subscription.duration_daily';
+  static const String subscription_durationMonthly =
+      'subscription.duration_monthly';
+  static const String subscription_durationSemiAnnual =
+      'subscription.duration_semi_annual';
+  static const String subscription_durationAnnual =
+      'subscription.duration_annual';
+
+  static const String subscription_actionActivate =
+      'subscription.action_activate';
+  static const String subscription_actionRenew = 'subscription.action_renew';
+  static const String subscription_actionChange = 'subscription.action_change';
+  static const String subscription_actionConfirm =
+      'subscription.action_confirm';
+
+  static const String subscription_sheetActivateTitle =
+      'subscription.sheet_activate_title';
+  static const String subscription_sheetRenewTitle =
+      'subscription.sheet_renew_title';
+  static const String subscription_sheetChangeTitle =
+      'subscription.sheet_change_title';
+  static const String subscription_selectPlanRequired =
+      'subscription.select_plan_required';
+  static const String subscription_effectiveModeLabel =
+      'subscription.effective_mode_label';
+  static const String subscription_effectiveAfterCurrent =
+      'subscription.effective_after_current';
+  static const String subscription_effectiveImmediately =
+      'subscription.effective_immediately';
+  static const String subscription_notesLabel = 'subscription.notes_label';
+
+  static const String subscription_activatedSuccess =
+      'subscription.activated_success';
+  static const String subscription_renewedSuccess =
+      'subscription.renewed_success';
+  static const String subscription_changedSuccess =
+      'subscription.changed_success';
+
+  static const String subscription_historyTitle = 'subscription.history_title';
+  static const String subscription_historyEmpty = 'subscription.history_empty';
+  static const String subscription_historyCancelledAt =
+      'subscription.history_cancelled_at';
+  static const String subscription_historyCreatedAt =
+      'subscription.history_created_at';
+
   // ─── Drawer ───────────────────────────────────────────────────────────────
   static const String drawer_myAccount = 'drawer.my_account';
   static const String drawer_closeShift = 'drawer.close_shift';

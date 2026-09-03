@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/utils/app_constants.dart';
 import '../../../core/utils/app_overlay.dart';
 import '../../../core/utils/locale_keys.dart';
+import '../../../core/widgets/subscription_guard.dart';
 import '../../customers/data/models/customer_entity.dart';
 import '../../items/data/items_repo.dart';
 import '../../items/data/models/category_entity.dart';
@@ -76,6 +77,7 @@ class OrderCubit extends Cubit<OrderState> {
   }
 
   void setQuantity(MenuItemEntity item, int quantity) {
+    if (!SubscriptionGuard.ensureActive()) return;
     try {
       _ordersRepo.setQuantity(
         locationId: _locationId,
@@ -106,6 +108,7 @@ class OrderCubit extends Cubit<OrderState> {
   void removeItem(OrderItemEntity item) => _setOrderItemQuantity(item, 0);
 
   void _setOrderItemQuantity(OrderItemEntity item, int quantity) {
+    if (!SubscriptionGuard.ensureActive()) return;
     try {
       _ordersRepo.setOrderItemQuantity(item, quantity < 0 ? 0 : quantity);
       _syncLocationAndEmit();
@@ -115,6 +118,7 @@ class OrderCubit extends Cubit<OrderState> {
   }
 
   void payFull(PaymentMethod method) {
+    if (!SubscriptionGuard.ensureActive()) return;
     final order = _ordersRepo.getActiveOrder(_locationId, _kind);
     if (order == null) return;
     try {
@@ -145,6 +149,7 @@ class OrderCubit extends Cubit<OrderState> {
     Map<OrderItemEntity, int> selections,
     PaymentMethod method,
   ) {
+    if (!SubscriptionGuard.ensureActive()) return;
     final order = _ordersRepo.getActiveOrder(_locationId, _kind);
     if (order == null || selections.isEmpty) return;
     try {
@@ -179,6 +184,7 @@ class OrderCubit extends Cubit<OrderState> {
   }
 
   void deferOrder(CustomerEntity customer) {
+    if (!SubscriptionGuard.ensureActive()) return;
     final order = _ordersRepo.getActiveOrder(_locationId, _kind);
     if (order == null) return;
     try {

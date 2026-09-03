@@ -20,6 +20,9 @@ import '../../features/profile/logic/profile_cubit.dart';
 import '../../features/shift/data/shift_repo.dart';
 import '../../features/shift/logic/shift_cubit.dart';
 import '../../features/shift/logic/shift_summary_cubit.dart';
+import '../../features/subscription/data/subscription_repo.dart';
+import '../../features/subscription/logic/subscription_cubit.dart';
+import '../../features/subscription/logic/subscription_history_cubit.dart';
 import '../../features/sync/data/bootstrap_merger.dart';
 import '../../features/sync/data/sync_payload_builder.dart';
 import '../../features/sync/data/sync_repo.dart';
@@ -47,8 +50,7 @@ Future<void> setupDi() async {
   getIt.registerLazySingleton(() => AuthRepo(dio: getIt(), storage: getIt()));
   getIt.registerLazySingleton(() => HallRepo(storage: getIt()));
   getIt.registerLazySingleton(() => MatchesRepo(storage: getIt()));
-  getIt.registerLazySingleton(
-      () => PendingDeletionRepo(storage: getIt()));
+  getIt.registerLazySingleton(() => PendingDeletionRepo(storage: getIt()));
   getIt.registerLazySingleton(
       () => ItemsRepo(storage: getIt(), pendingDeletionRepo: getIt()));
   getIt.registerLazySingleton(() => OrdersRepo(storage: getIt()));
@@ -57,6 +59,7 @@ Future<void> setupDi() async {
   getIt.registerLazySingleton(
       () => CustomersRepo(storage: getIt(), pendingDeletionRepo: getIt()));
   getIt.registerLazySingleton(() => EmployeesRepo(dio: getIt()));
+  getIt.registerLazySingleton(() => SubscriptionRepo(dio: getIt()));
 
   getIt.registerLazySingleton(() => SyncPayloadBuilder(
         ordersRepo: getIt(),
@@ -92,6 +95,8 @@ Future<void> setupDi() async {
   getIt.registerFactory(() => ShiftSummaryCubit(getIt(), getIt()));
   getIt.registerFactory(() => CustomersCubit(getIt()));
   getIt.registerFactory(() => EmployeesCubit(getIt()));
+  getIt.registerFactory(() => SubscriptionCubit(getIt()));
+  getIt.registerFactory(() => SubscriptionHistoryCubit(getIt()));
   getIt.registerFactory(() => ConnectivityCubit(getIt()));
   getIt.registerFactory(() => SyncCubit(getIt()));
 }

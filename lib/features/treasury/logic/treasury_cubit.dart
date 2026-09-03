@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/utils/app_constants.dart';
 import '../../../core/utils/app_overlay.dart';
 import '../../../core/utils/locale_keys.dart';
+import '../../../core/widgets/subscription_guard.dart';
 import '../../orders/data/models/order_entity.dart';
 import '../../orders/data/orders_repo.dart';
 import '../../shift/data/models/shift_entity.dart';
@@ -96,6 +97,7 @@ class TreasuryCubit extends Cubit<TreasuryState> {
     String? notes,
     PaymentMethod? paymentMethod,
   }) {
+    if (!SubscriptionGuard.ensureActive()) return;
     try {
       final title = isIncome
           ? LocaleKeys.treasury_receiveCash.tr()

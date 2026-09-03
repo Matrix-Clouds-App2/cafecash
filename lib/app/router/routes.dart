@@ -29,4 +29,6 @@ class Routes {
   static const String termsConditionsScreen = '/terms-conditions';
   static const String aboutUsScreen = '/about-us';
   static const String privacyPolicyScreen = '/privacy-policy';
+  static const String subscriptionScreen = '/subscription';
+  static const String subscriptionHistoryScreen = '/subscription-history';
 }

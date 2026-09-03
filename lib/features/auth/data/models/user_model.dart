@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../subscription/data/models/subscription_model.dart';
+
 class UserModel extends Equatable {
   final int id;
   final String name;
@@ -12,6 +14,7 @@ class UserModel extends Equatable {
   final String? avatar;
   final String? token;
   final String? createdAt;
+  final SubscriptionModel? subscription;
 
   const UserModel({
     required this.id,
@@ -25,6 +28,7 @@ class UserModel extends Equatable {
     this.avatar,
     this.token,
     this.createdAt,
+    this.subscription,
   });
 
   /// [json] is the API's "employee" object (also reused to decode the
@@ -45,9 +49,28 @@ class UserModel extends Equatable {
         avatar: json['avatar'] as String? ?? json['photo'] as String?,
         token: token,
         createdAt: json['created_at'] as String?,
+        subscription: json['subscription'] == null
+            ? null
+            : SubscriptionModel.fromJson(
+                json['subscription'] as Map<String, dynamic>),
       );
 
   bool get isOwner => type == 'owner';
+
+  UserModel copyWith({SubscriptionModel? subscription}) => UserModel(
+        id: id,
+        name: name,
+        phone: phone,
+        email: email,
+        cafeId: cafeId,
+        cafeName: cafeName,
+        status: status,
+        type: type,
+        avatar: avatar,
+        token: token,
+        createdAt: createdAt,
+        subscription: subscription,
+      );
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -61,6 +84,7 @@ class UserModel extends Equatable {
         'avatar': avatar,
         'token': token,
         'created_at': createdAt,
+        'subscription': subscription?.toJson(),
       };
 
   @override
@@ -75,6 +99,7 @@ class UserModel extends Equatable {
         type,
         avatar,
         token,
-        createdAt
+        createdAt,
+        subscription,
       ];
 }

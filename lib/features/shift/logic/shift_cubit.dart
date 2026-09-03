@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/network/connectivity_service.dart';
 import '../../../core/utils/app_overlay.dart';
+import '../../../core/widgets/subscription_guard.dart';
 import '../data/models/shift_entity.dart';
 import '../data/shift_repo.dart';
 
@@ -51,6 +52,7 @@ class ShiftCubit extends Cubit<ShiftState> {
   }
 
   void startShift(double openingBalance) {
+    if (!SubscriptionGuard.ensureActive()) return;
     try {
       _repo.startShift(openingBalance: openingBalance);
     } catch (e) {

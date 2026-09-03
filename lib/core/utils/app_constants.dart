@@ -40,6 +40,15 @@ UserModel? kUserModel;
 /// Use this everywhere in the app to guard authenticated-only actions.
 bool get kIsGuest => kUserModel == null;
 bool get kIsOwner => kUserModel?.isOwner ?? false;
-bool get kIsArabic => NavigationService.navigationKey.currentContext?.locale.languageCode == 'ar';
+bool get kIsArabic =>
+    NavigationService.navigationKey.currentContext?.locale.languageCode == 'ar';
+
+/// `true` for guests (not applicable) and for a logged-in user whose cafe
+/// subscription currently covers "now" — computed offline from `ends_at`, so a
+/// missing/expired/not-yet-started subscription reads as locked.
+bool get kSubscriptionActive =>
+    kUserModel == null || (kUserModel!.subscription?.hasLiveCoverage ?? false);
+
+bool get kSubscriptionLocked => !kSubscriptionActive;
 
 bool kWalletPaymentEnabled = true;

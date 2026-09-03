@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/widgets/subscription_guard.dart';
 import '../data/hall_repo.dart';
 import '../data/models/hall_table_entity.dart';
 
@@ -43,6 +44,7 @@ class HallCubit extends Cubit<HallState> {
   }
 
   void addTable() {
+    if (!SubscriptionGuard.ensureActive()) return;
     try {
       _repo.addTable();
       _all = _repo.getTables();
@@ -53,6 +55,7 @@ class HallCubit extends Cubit<HallState> {
   }
 
   void toggleStatus(HallTableEntity table) {
+    if (!SubscriptionGuard.ensureActive()) return;
     final next = table.statusEnum == HallTableStatus.disabled
         ? HallTableStatus.available
         : HallTableStatus.disabled;
@@ -76,6 +79,7 @@ class HallCubit extends Cubit<HallState> {
   /// `addTable()`. Otherwise it's soft-deleted (marked disabled) so tables
   /// after it keep their numbers — no reshuffling/holes in the numbering.
   void deleteTable(HallTableEntity table) {
+    if (!SubscriptionGuard.ensureActive()) return;
     if (isLastTable(table)) {
       _repo.deleteTable(table.id);
     } else {

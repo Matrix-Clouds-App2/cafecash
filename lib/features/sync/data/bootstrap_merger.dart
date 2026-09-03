@@ -646,6 +646,9 @@ class BootstrapMerger {
 
   String? _resolveImage(String? imageKey, String? localAssetPath) {
     if (imageKey != null && imageKey.isNotEmpty) {
+      if (imageKey.startsWith('http://') || imageKey.startsWith('https://')) {
+        return imageKey;
+      }
       return '${ApiEndpoints.catalogImageBase}$imageKey';
     }
     if (localAssetPath != null && localAssetPath.isNotEmpty) {

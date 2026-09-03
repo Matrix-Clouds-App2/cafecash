@@ -10,8 +10,8 @@ import '../../../core/storage/local_storage.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_constants.dart';
 import '../../../core/utils/locale_keys.dart';
-import '../../../core/utils/app_overlay.dart';
 import '../../../core/widgets/app_confirm_dialog.dart';
+import '../../../core/widgets/guest_guard.dart';
 import '../../profile/logic/profile_cubit.dart';
 import '../../sync/presentation/logout_flow.dart';
 import 'widgets/language_sheet.dart';
@@ -73,9 +73,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
           label: LocaleKeys.settings_subscriptionPlans.tr(),
           subLabel: LocaleKeys.settings_subscriptionPlansSubtitle.tr(),
           color: AppColors.accentGold.themeColor,
-          locked: true,
-          onTap: () =>
-              AppOverlay.showSuccess(LocaleKeys.drawer_comingSoon.tr()),
+          onTap: () {
+            if (GuestGuard.ensureLoggedIn(context)) {
+              context.pushNamed(Routes.subscriptionScreen);
+            }
+          },
         ),
         if (!isGuest) ...[
           SettingsItem(

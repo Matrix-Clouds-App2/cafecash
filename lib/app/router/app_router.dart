@@ -31,6 +31,8 @@ import '../../features/shift/presentation/shift_orders_screen.dart';
 import '../../features/shift/presentation/shift_start_screen.dart';
 import '../../features/shift/presentation/shift_summary_screen.dart';
 import '../../features/splash/presentation/splash_screen.dart';
+import '../../features/subscription/presentation/subscription_history_screen.dart';
+import '../../features/subscription/presentation/subscription_screen.dart';
 import '../../features/treasury/presentation/treasury_entry_screen.dart';
 import '../../features/treasury/presentation/treasury_transactions_screen.dart';
 import 'routes.dart';
@@ -152,6 +154,12 @@ class RouteGenerator {
 
       case Routes.privacyPolicyScreen:
         return _pageRoute(const PrivacyPolicyScreen());
+
+      case Routes.subscriptionScreen:
+        return _pageRoute(const SubscriptionScreen());
+
+      case Routes.subscriptionHistoryScreen:
+        return _pageRoute(const SubscriptionHistoryScreen());
 
       default:
         return _pageRoute(const _UndefinedScreen());

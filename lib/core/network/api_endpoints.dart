@@ -18,6 +18,16 @@ class ApiEndpoints {
   static const String employees = 'employees';
   static String employee(int id) => 'employees/$id';
 
+  // ─── Subscription ─────────────────────────────────────────────────────────
+  static const String subscription = 'subscription';
+  static const String subscriptionPlans = 'subscription-plans';
+  static String cafeSubscription(int cafeId) =>
+      'admin/cafes/$cafeId/subscription';
+  static String cafeSubscriptionRenew(int cafeId) =>
+      'admin/cafes/$cafeId/subscription/renew';
+  static String cafeSubscriptionHistory(int cafeId) =>
+      'admin/cafes/$cafeId/subscriptions';
+
   // ─── Sync ─────────────────────────────────────────────────────────────────
   static const String syncUpload = 'sync/upload';
   static const String syncBootstrap = 'sync/bootstrap';

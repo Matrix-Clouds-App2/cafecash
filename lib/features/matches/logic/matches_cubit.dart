@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../core/widgets/subscription_guard.dart';
 import '../data/matches_repo.dart';
 import '../data/models/match_seat_entity.dart';
 
@@ -39,6 +40,7 @@ class MatchesCubit extends Cubit<MatchesState> {
   }
 
   void addSeat() {
+    if (!SubscriptionGuard.ensureActive()) return;
     try {
       _repo.addSeat();
       _all = _repo.getSeats();
@@ -49,6 +51,7 @@ class MatchesCubit extends Cubit<MatchesState> {
   }
 
   void toggleStatus(MatchSeatEntity seat) {
+    if (!SubscriptionGuard.ensureActive()) return;
     final next = seat.statusEnum == MatchSeatStatus.disabled
         ? MatchSeatStatus.available
         : MatchSeatStatus.disabled;
@@ -65,6 +68,7 @@ class MatchesCubit extends Cubit<MatchesState> {
   }
 
   void deleteSeat(MatchSeatEntity seat) {
+    if (!SubscriptionGuard.ensureActive()) return;
     if (isLastSeat(seat)) {
       _repo.deleteSeat(seat.id);
     } else {
