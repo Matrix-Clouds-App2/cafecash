@@ -30,7 +30,7 @@ class _OtpScreenState extends State<OtpScreen> {
   bool _loading = false;
 
   Future<void> _verify() async {
-    if (_code.length != 4) {
+    if (_code.length != 6) {
       AppOverlay.showError(LocaleKeys.otp_invalidCode.tr());
       return;
     }
@@ -78,7 +78,7 @@ class _OtpScreenState extends State<OtpScreen> {
     // Auto-submit the moment the 4th digit lands — no need to wait for a
     // manual tap on "تأكيد". `_loading` guard stops a stray re-trigger (e.g.
     // editing a digit again) from firing a second request mid-flight.
-    if (code.length == 4 && !_loading) {
+    if (code.length == 6 && !_loading) {
       FocusScope.of(context).unfocus();
       _verify();
     }

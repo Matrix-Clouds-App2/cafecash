@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/utils/app_colors.dart';
 
 class OtpCodeRow extends StatefulWidget {
-  const OtpCodeRow({super.key, this.length = 4, required this.onChanged});
+  const OtpCodeRow({super.key, this.length = 6, required this.onChanged});
 
   final int length;
   final ValueChanged<String> onChanged;
@@ -56,7 +56,7 @@ class _OtpCodeRowState extends State<OtpCodeRow> {
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Padding(
-        padding: 20.paddingHorizontal,
+        padding: 0.paddingHorizontal,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(widget.length, (index) {
@@ -85,15 +85,15 @@ class _OtpCodeRowState extends State<OtpCodeRow> {
                   contentPadding: EdgeInsets.zero,
                   fillColor: fillColor,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.r),
+                    borderRadius: BorderRadius.circular(12.r),
                     borderSide: const BorderSide(color: borderColor),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.r),
+                    borderRadius: BorderRadius.circular(12.r),
                     borderSide: const BorderSide(color: borderColor),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.r),
+                    borderRadius: BorderRadius.circular(12.r),
                     borderSide: BorderSide(
                         color: AppColors.primaryColor.themeColor, width: 1.2),
                   ),
