@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:app_base/core/utils/locale_keys.dart';
-import 'package:app_base/core/widgets/app_text.dart';
-import 'package:app_base/core/widgets/custom_loading_widget.dart';
+import 'package:cafecash/core/utils/locale_keys.dart';
+import 'package:cafecash/core/widgets/app_text.dart';
+import 'package:cafecash/core/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';

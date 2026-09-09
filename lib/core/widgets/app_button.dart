@@ -1,7 +1,7 @@
-import 'package:app_base/core/extensions/extensions.dart';
-import 'package:app_base/core/utils/app_colors.dart';
-import 'package:app_base/core/widgets/app_text.dart';
-import 'package:app_base/core/widgets/custom_loading_widget.dart';
+import 'package:cafecash/core/extensions/extensions.dart';
+import 'package:cafecash/core/utils/app_colors.dart';
+import 'package:cafecash/core/widgets/app_text.dart';
+import 'package:cafecash/core/widgets/custom_loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

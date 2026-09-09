@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyClWS8_mGPYbU4Ka7RVNtUT3vZ6w3W6iEc',
-    appId: '1:1065629616375:android:0fdbaceaf168e5f991ebf2',
+    appId: '1:1065629616375:android:60969527478e419091ebf2',
     messagingSenderId: '1065629616375',
     projectId: 'coffee-cash',
     storageBucket: 'coffee-cash.firebasestorage.app',
@@ -59,10 +59,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC-Upgq0aTDnmk1SJEKc6tgJl1FUV1ly-Q',
-    appId: '1:1065629616375:ios:d547936aec9ec5a291ebf2',
+    appId: '1:1065629616375:ios:eb6f47f47fe66de391ebf2',
     messagingSenderId: '1065629616375',
     projectId: 'coffee-cash',
     storageBucket: 'coffee-cash.firebasestorage.app',
-    iosBundleId: 'com.example.appBase',
+    iosBundleId: 'com.cafecash.app',
   );
 }

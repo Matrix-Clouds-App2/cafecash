@@ -1,4 +1,4 @@
-name: app_base
+name: cafecash
 description: "Reusable Flutter base template."
 publish_to: 'none'
 version: 1.0.0+1

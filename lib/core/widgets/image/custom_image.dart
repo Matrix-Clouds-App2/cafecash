@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:app_base/core/utils/app_colors.dart';
+import 'package:cafecash/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:photo_view/photo_view.dart';

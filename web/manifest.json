@@ -1,6 +1,6 @@
 {
-    "name": "app_base",
-    "short_name": "app_base",
+    "name": "cafecash",
+    "short_name": "cafecash",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

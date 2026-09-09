@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1065629616375:android:0fdbaceaf168e5f991ebf2",
+        "mobilesdk_app_id": "1:1065629616375:android:60969527478e419091ebf2",
         "android_client_info": {
-          "package_name": "com.coffee_cash"
+          "package_name": "com.cafecash.app"
         }
       },
       "oauth_client": [],

@@ -1,5 +1,5 @@
-import 'package:app_base/app/router/navigation_services.dart';
-import 'package:app_base/features/auth/data/models/user_model.dart';
+import 'package:cafecash/app/router/navigation_services.dart';
+import 'package:cafecash/features/auth/data/models/user_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class AppConstants {

@@ -1,4 +1,4 @@
-package com.coffee_cash
+package com.cafecash.app
 
 import io.flutter.embedding.android.FlutterActivity
 
