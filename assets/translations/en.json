@@ -22,7 +22,7 @@
     "resend_in": "Resend code in {seconds}s",
     "resend": "Resend code",
     "change_number": "Change number?",
-    "invalid_code": "Please enter a 4-digit code"
+    "invalid_code": "Please enter a 6-digit code"
   },
   "onboarding": {
     "skip": "Skip",
@@ -224,6 +224,7 @@
     "delete_account_dialog_title": "Delete account?",
     "delete_account_dialog_message": "Your account will be permanently deleted and you'll be signed out. This action can't be undone.",
     "delete_account_confirm": "Delete permanently",
+    "delete_account_success": "Your account has been deleted",
     "terms_section1_title": "Scope of Use",
     "terms_section1_body": "This app is intended for use only by authorized staff at the branch. Your login credentials must not be shared with anyone else.",
     "terms_section2_title": "User Responsibility",

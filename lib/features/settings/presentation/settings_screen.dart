@@ -9,6 +9,7 @@ import '../../../core/extensions/extensions.dart';
 import '../../../core/storage/local_storage.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_constants.dart';
+import '../../../core/utils/app_overlay.dart';
 import '../../../core/utils/locale_keys.dart';
 import '../../../core/widgets/app_confirm_dialog.dart';
 import '../../../core/widgets/guest_guard.dart';
@@ -128,6 +129,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         if (!success) return;
 
         await performLogout(isDeleteAccount: true);
+        AppOverlay.showSuccess(LocaleKeys.settings_deleteAccountSuccess.tr());
       },
     );
   }

@@ -45,9 +45,6 @@ class _OtpScreenState extends State<OtpScreen> {
       return;
     }
 
-    // Populates `kUserModel`/`ProfileCubit` right away (same call `app.dart`
-    // makes on a cold start for an already-logged-in session) so the
-    // drawer/account screen show real data immediately.
     await context.read<ProfileCubit>().getProfile();
     if (!mounted) return;
 
@@ -75,9 +72,6 @@ class _OtpScreenState extends State<OtpScreen> {
 
   void _onCodeChanged(String code) {
     setState(() => _code = code);
-    // Auto-submit the moment the 4th digit lands — no need to wait for a
-    // manual tap on "تأكيد". `_loading` guard stops a stray re-trigger (e.g.
-    // editing a digit again) from firing a second request mid-flight.
     if (code.length == 6 && !_loading) {
       FocusScope.of(context).unfocus();
       _verify();

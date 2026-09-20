@@ -8,6 +8,8 @@ import '../../../app/router/navigation_services.dart';
 import '../../../app/router/routes.dart';
 import '../../../core/di/injection.dart';
 import '../../../core/network/connectivity_service.dart';
+import '../../../core/storage/local_storage.dart';
+import '../../../core/storage/object_box/object_box_storage.dart';
 import '../../../core/utils/app_constants.dart';
 import '../../../core/utils/app_overlay.dart';
 import '../../../core/utils/locale_keys.dart';
@@ -19,7 +21,10 @@ import '../../shift/logic/shift_summary_cubit.dart';
 import '../logic/sync_cubit.dart';
 
 Future<void> performLogout({bool isDeleteAccount = false}) async {
-  if (!isDeleteAccount && !kIsGuest) {
+  if (isDeleteAccount) {
+    getIt<ObjectBoxStorage>().wipeAllBusinessData();
+    await getIt<LocalStorage>().clearLocalDataAccountKey();
+  } else if (!kIsGuest) {
     await _closeActiveShift();
   }
 

@@ -256,6 +256,8 @@ abstract class LocaleKeys {
       'settings.delete_account_dialog_message';
   static const String settings_deleteAccountConfirm =
       'settings.delete_account_confirm';
+  static const String settings_deleteAccountSuccess =
+      'settings.delete_account_success';
   static const String settings_termsSection1Title =
       'settings.terms_section1_title';
   static const String settings_termsSection1Body =
