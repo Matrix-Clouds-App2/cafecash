@@ -9,6 +9,7 @@ import '../../../core/widgets/app_top_bar.dart';
 import '../../../core/widgets/bottom_nav_bar.dart';
 import '../../../core/widgets/custom_loading_widget.dart';
 import '../../hall/presentation/hall_screen.dart';
+import '../../labels/logic/labels_cubit.dart';
 import '../../matches/presentation/matches_screen.dart';
 import '../../payments/presentation/payments_screen.dart';
 import '../../shift/logic/shift_cubit.dart';
@@ -33,18 +34,18 @@ class _LayoutScreenState extends State<LayoutScreen> {
     PaymentsScreen(),
     TreasuryScreen(),
   ];
-
-  static const _navItems = [
-    NavBarItem(labelKey: LocaleKeys.nav_hall, icon: Icons.table_bar_rounded),
+  List<NavBarItem> _navItems(LabelsState labels) => [
     NavBarItem(
-        labelKey: LocaleKeys.nav_matches, icon: Icons.sports_soccer_rounded),
+        label: labels.hallDisplayLabel, icon: Icons.table_bar_rounded),
+    NavBarItem(
+        label: labels.matchesDisplayLabel,
+        icon: Icons.sports_soccer_rounded),
     NavBarItem(
         labelKey: LocaleKeys.nav_payments, icon: Icons.payments_outlined),
     NavBarItem(
         labelKey: LocaleKeys.nav_treasury,
         icon: Icons.account_balance_wallet_rounded),
   ];
-
   @override
   void initState() {
     super.initState();
@@ -53,6 +54,12 @@ class _LayoutScreenState extends State<LayoutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<LabelsCubit, LabelsState>(
+      builder: (context, labels) => _buildShift(context, labels),
+    );
+  }
+
+  Widget _buildShift(BuildContext context, LabelsState labels) {
     return BlocBuilder<ShiftCubit, ShiftState>(
       builder: (context, state) {
         final hasActiveShift = state is ShiftReady && state.active != null;
@@ -97,7 +104,7 @@ class _LayoutScreenState extends State<LayoutScreen> {
           ),
           bottomNavigationBar: hasActiveShift
               ? CoffeeCashNavBar(
-                  items: _navItems,
+                  items: _navItems(labels),
                   currentIndex: _currentIndex,
                   onTap: (i) => setState(() => _currentIndex = i),
                 )

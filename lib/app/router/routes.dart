@@ -14,6 +14,7 @@ class Routes {
   static const String paidOrderDetailsScreen = '/paid-order-details';
   static const String shiftHistoryScreen = '/shift-history';
   static const String shiftSummaryScreen = '/shift-summary';
+  static const String shiftCloseSuccessScreen = '/shift-close-success';
   static const String shiftOrdersScreen = '/shift-orders';
   static const String treasuryEntryScreen = '/treasury-entry';
   static const String treasuryTransactionsScreen = '/treasury-transactions';
@@ -31,4 +32,5 @@ class Routes {
   static const String privacyPolicyScreen = '/privacy-policy';
   static const String subscriptionScreen = '/subscription';
   static const String subscriptionHistoryScreen = '/subscription-history';
+  static const String labelsSettingsScreen = '/labels-settings';
 }

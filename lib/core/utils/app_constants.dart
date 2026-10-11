@@ -27,6 +27,8 @@ class AppConstants {
   // ─── Links ────────────────────────────────────────────────────────────────
   static const String facebookUrl =
       'https://www.facebook.com/CafeCash?rdid=JTeUnABpxEwFqbxX&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1cXaPAS2Np%2F%3Fref%3D1#';
+  static const String storeUrl =
+      'https://play.google.com/apps/testing/com.cafecash.app';
 }
 
 class AppFonts {

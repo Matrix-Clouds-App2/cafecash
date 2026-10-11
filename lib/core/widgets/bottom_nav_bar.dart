@@ -7,10 +7,14 @@ import '../utils/app_colors.dart';
 import 'app_text.dart';
 
 class NavBarItem {
-  const NavBarItem({required this.labelKey, required this.icon});
+  const NavBarItem({this.labelKey, this.label, required this.icon})
+      : assert(labelKey != null || label != null);
 
-  final String labelKey;
+  final String? labelKey;
+  final String? label;
   final IconData icon;
+
+  String resolveLabel() => label ?? labelKey!.tr();
 }
 
 class CoffeeCashNavBar extends StatelessWidget {
@@ -75,7 +79,7 @@ class CoffeeCashNavBar extends StatelessWidget {
                   ),
                   3.height,
                   AppText(
-                    item.labelKey.tr(),
+                    item.resolveLabel(),
                     fontSize: 10.sp,
                     fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
                     color: isActive ? textPrimary : inactive,

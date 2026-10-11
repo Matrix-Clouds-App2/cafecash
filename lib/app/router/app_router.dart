@@ -11,6 +11,7 @@ import '../../features/employees/presentation/employees_screen.dart';
 import '../../features/items/data/models/category_entity.dart';
 import '../../features/items/presentation/categories_screen.dart';
 import '../../features/items/presentation/menu_items_screen.dart';
+import '../../features/labels/presentation/labels_settings_screen.dart';
 import '../../features/layout/presentation/layout_screen.dart';
 import '../../features/more/presentation/more_screen.dart';
 import '../../features/orders/data/models/order_entity.dart';
@@ -24,11 +25,14 @@ import '../../features/settings/presentation/privacy_policy_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/settings/presentation/terms_conditions_screen.dart';
 import '../../features/shift/data/models/shift_entity.dart';
+import '../../features/shift/data/models/shift_reconciliation.dart';
+import '../../features/shift/data/models/shift_summary.dart';
 import '../../features/shift/presentation/cancelled_order_details_screen.dart';
 import '../../features/shift/presentation/shift_cancelled_orders_screen.dart';
 import '../../features/shift/presentation/shift_history_screen.dart';
 import '../../features/shift/presentation/shift_orders_screen.dart';
 import '../../features/shift/presentation/shift_start_screen.dart';
+import '../../features/shift/presentation/shift_success_screen.dart';
 import '../../features/shift/presentation/shift_summary_screen.dart';
 import '../../features/splash/presentation/splash_screen.dart';
 import '../../features/subscription/presentation/subscription_history_screen.dart';
@@ -102,6 +106,12 @@ class RouteGenerator {
           shift: arguments!['shift'] as ShiftEntity,
         ));
 
+      case Routes.shiftCloseSuccessScreen:
+        return _pageRoute(ShiftSuccessScreen(
+          summary: arguments!['summary'] as ShiftSummary,
+          reconciliation: arguments['reconciliation'] as ShiftReconciliation,
+        ));
+
       case Routes.treasuryEntryScreen:
         return _pageRoute(TreasuryEntryScreen(
           isIncome: arguments!['isIncome'] as bool,
@@ -160,6 +170,9 @@ class RouteGenerator {
 
       case Routes.subscriptionHistoryScreen:
         return _pageRoute(const SubscriptionHistoryScreen());
+
+      case Routes.labelsSettingsScreen:
+        return _pageRoute(const LabelsSettingsScreen());
 
       default:
         return _pageRoute(const _UndefinedScreen());

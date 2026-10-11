@@ -63,6 +63,18 @@ class LocalStorage {
   Future<void> setMatchesColumns(int columns) =>
       write(_matchesColumnsKey, columns);
 
+  static const _hallLabelKey = 'hall_label';
+
+  String? getHallLabel() => read<String>(_hallLabelKey);
+  Future<void> setHallLabel(String? label) =>
+      label == null ? remove(_hallLabelKey) : write(_hallLabelKey, label);
+
+  static const _matchesLabelKey = 'matches_label';
+
+  String? getMatchesLabel() => read<String>(_matchesLabelKey);
+  Future<void> setMatchesLabel(String? label) =>
+      label == null ? remove(_matchesLabelKey) : write(_matchesLabelKey, label);
+
   static const _walletPaymentEnabledKey = 'wallet_payment_enabled';
 
   bool getWalletPaymentEnabled() =>

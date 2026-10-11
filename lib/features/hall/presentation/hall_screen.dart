@@ -16,6 +16,7 @@ import '../../../core/widgets/custom_loading_widget.dart';
 import '../../../core/widgets/notification_bell_icon.dart';
 import '../../../core/widgets/search_field.dart';
 import '../../../core/widgets/watermark_background.dart';
+import '../../labels/logic/labels_cubit.dart';
 import '../../orders/data/models/order_location_kind.dart';
 import '../../orders/data/orders_repo.dart';
 import '../../orders/presentation/widgets/order_builder_sheet.dart';
@@ -124,6 +125,12 @@ class _HallScreenState extends State<HallScreen>
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<LabelsCubit, LabelsState>(
+      builder: (context, labels) => _buildScaffold(context, labels),
+    );
+  }
+
+  Widget _buildScaffold(BuildContext context, LabelsState labels) {
     return BlocProvider(
       create: (_) => getIt<HallCubit>()..fetchTables(),
       child: Builder(
@@ -136,7 +143,7 @@ class _HallScreenState extends State<HallScreen>
               child: Column(
                 children: [
                   AppTopBar(
-                    title: LocaleKeys.nav_hall.tr(),
+                    title: labels.hallDisplayLabel,
                     onMenuTap: () => Scaffold.of(context).openDrawer(),
                     titleWidget: _isSearching
                         ? CustomSearchField(

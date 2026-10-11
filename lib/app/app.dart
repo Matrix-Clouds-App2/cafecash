@@ -8,6 +8,7 @@ import '../core/logic/connectivity_cubit.dart';
 import '../core/storage/local_storage.dart';
 import '../core/utils/app_constants.dart';
 import '../features/auth/logic/auth_cubit.dart';
+import '../features/labels/logic/labels_cubit.dart';
 import '../features/profile/logic/profile_cubit.dart';
 import '../features/shift/logic/shift_cubit.dart';
 import 'router/app_router.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<ConnectivityCubit>(
           create: (_) => getIt<ConnectivityCubit>()..watch(),
         ),
+        BlocProvider<LabelsCubit>(create: (_) => getIt<LabelsCubit>()),
       ],
       child: ScreenUtilInit(
           designSize: const Size(375, 812),

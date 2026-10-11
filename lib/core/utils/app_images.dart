@@ -30,7 +30,7 @@ class AppImages {
   static const String iconsUser = '${_icons}ic-user.svg';
 
   // ─── Images ──────────────────────────────────────────────────────────────
-  static const String logo = '${_base}logo2.png';
+  static const String logo = '${_base}logo.png';
   static const String login = '${_base}login.png';
   static const String register = '${_base}register.png';
   static const String otp = '${_base}otp.png';

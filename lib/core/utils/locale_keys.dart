@@ -138,8 +138,6 @@ abstract class LocaleKeys {
   static const String shift_myOrders = 'shift.my_orders';
   static const String shift_closeButton = 'shift.close_button';
   static const String shift_closedBadge = 'shift.closed_badge';
-  static const String shift_closeConfirmTitle = 'shift.close_confirm_title';
-  static const String shift_closeConfirmMessage = 'shift.close_confirm_message';
   static const String shift_occupiedBlockingTitle =
       'shift.occupied_blocking_title';
   static const String shift_occupiedBlockingMessage =
@@ -156,6 +154,36 @@ abstract class LocaleKeys {
       'shift.remote_details_unavailable_title';
   static const String shift_remoteDetailsUnavailableMessage =
       'shift.remote_details_unavailable_message';
+  static const String shift_success_title = 'shift.success_title';
+  static const String shift_success_subtitle = 'shift.success_subtitle';
+  static const String shift_success_shareMessage =
+      'shift.success_share_message';
+  static const String shift_success_shareButton = 'shift.success_share_button';
+  static const String shift_success_shareWhatsapp =
+      'shift.success_share_whatsapp';
+  static const String shift_success_shareFailed =
+      'shift.success_share_failed';
+  static const String shift_success_continueButton =
+      'shift.success_continue_button';
+  static const String shift_reconcile_title = 'shift.reconcile_title';
+  static const String shift_reconcile_message = 'shift.reconcile_message';
+  static const String shift_reconcile_cashLabel = 'shift.reconcile_cash_label';
+  static const String shift_reconcile_walletLabel =
+      'shift.reconcile_wallet_label';
+  static const String shift_reconcile_deficitTitle =
+      'shift.reconcile_deficit_title';
+  static const String shift_reconcile_surplusTitle =
+      'shift.reconcile_surplus_title';
+  static const String shift_reconcile_expectedLabel =
+      'shift.reconcile_expected_label';
+  static const String shift_reconcile_actualLabel =
+      'shift.reconcile_actual_label';
+  static const String shift_reconcile_cashChannel =
+      'shift.reconcile_cash_channel';
+  static const String shift_reconcile_walletChannel =
+      'shift.reconcile_wallet_channel';
+  static const String shift_reconcile_totalLabel =
+      'shift.reconcile_total_label';
 
   // ─── Hall ─────────────────────────────────────────────────────────────────
   static const String hall_readyBadge = 'hall.ready_badge';
@@ -326,6 +354,19 @@ abstract class LocaleKeys {
       'settings.wallet_payment_title';
   static const String settings_walletPaymentDescription =
       'settings.wallet_payment_description';
+  static const String settings_labelsManagement =
+      'settings.labels_management';
+  static const String settings_labelsManagementSubtitle =
+      'settings.labels_management_subtitle';
+
+  // ─── Labels ───────────────────────────────────────────────────────────────
+  static const String labels_title = 'labels.title';
+  static const String labels_hallNameLabel = 'labels.hall_name_label';
+  static const String labels_hallNameHint = 'labels.hall_name_hint';
+  static const String labels_matchesNameLabel = 'labels.matches_name_label';
+  static const String labels_matchesNameHint = 'labels.matches_name_hint';
+  static const String labels_maxLengthHint = 'labels.max_length_hint';
+  static const String labels_saveSuccess = 'labels.save_success';
 
   // ─── Subscription ─────────────────────────────────────────────────────────
   static const String subscription_title = 'subscription.title';

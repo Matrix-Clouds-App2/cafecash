@@ -10,7 +10,6 @@ import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_constants.dart';
 import '../../../core/utils/locale_keys.dart';
 import '../../../core/widgets/app_button.dart';
-import '../../../core/widgets/app_confirm_dialog.dart';
 import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/custom_loading_widget.dart';
 import '../../hall/data/hall_repo.dart';
@@ -24,6 +23,7 @@ import '../data/models/shift_entity.dart';
 import '../data/models/shift_summary.dart';
 import '../logic/shift_cubit.dart';
 import '../logic/shift_summary_cubit.dart';
+import 'widgets/shift_close_reconciliation_sheet.dart';
 import 'widgets/shift_occupied_locations_sheet.dart';
 import 'widgets/shift_period_card.dart';
 
@@ -341,7 +341,7 @@ class ShiftSummaryScreen extends StatelessWidget {
     );
   }
 
-  void _handleClose(BuildContext context, ShiftSummary summary) {
+  Future<void> _handleClose(BuildContext context, ShiftSummary summary) async {
     final occupiedTables = getIt<HallRepo>()
         .getTables()
         .where((table) => table.statusEnum == HallTableStatus.occupied)
@@ -361,21 +361,17 @@ class ShiftSummaryScreen extends StatelessWidget {
     }
 
     final shiftCubit = context.read<ShiftCubit>();
-    AppConfirmDialog.show(
-      context,
-      icon: Icons.task_alt_rounded,
-      iconColor: AppColors.errorColor.themeColor,
-      title: LocaleKeys.shift_closeConfirmTitle.tr(),
-      message: LocaleKeys.shift_closeConfirmMessage.tr(),
-      confirmLabel: LocaleKeys.shift_closeButton.tr(),
-      confirmColor: AppColors.errorColor.themeColor,
-      onConfirm: () async {
-        Navigator.pop(context);
-        shiftCubit.closeShift(summary.shift, summary.closingBalance);
-        if (!kIsGuest) {
-          await offerShiftUpload(context, summary.shift);
-        }
-      },
+    final reconciliation =
+        await ShiftCloseReconciliationSheet.show(context, summary: summary);
+    if (reconciliation == null || !context.mounted) return;
+
+    shiftCubit.closeShift(summary.shift, summary.closingBalance);
+    await context.pushNamed(
+      Routes.shiftCloseSuccessScreen,
+      arguments: {'summary': summary, 'reconciliation': reconciliation},
     );
+    if (!kIsGuest && context.mounted) {
+      await offerShiftUpload(context, summary.shift);
+    }
   }
 }

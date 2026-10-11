@@ -120,8 +120,6 @@
     "my_orders": "طلباتي",
     "close_button": "إغلاق الوردية",
     "closed_badge": "مغلقة",
-    "close_confirm_title": "إغلاق الوردية؟",
-    "close_confirm_message": "هيتقفل حساب الوردية دلوقتي ومش هتقدر ترجع فيه تاني. متأكد؟",
     "occupied_blocking_title": "في أماكن لسه مشغولة",
     "occupied_blocking_message": "لازم تقفل حساب كل ترابيزة أو كرسي مشغول قبل ما تقدر تقفل الوردية.",
     "started_at": "بداية الوردية",
@@ -132,7 +130,25 @@
     "no_active_shift": "ابدأ الوردية الأول",
     "cancelled_orders_empty": "لا توجد طلبات ملغاة في هذه الوردية",
     "remote_details_unavailable_title": "تعذّر تحميل التفاصيل",
-    "remote_details_unavailable_message": "هذه الوردية تم رفعها من جهاز آخر ولم نتمكن من جلب تفاصيلها. تأكد من اتصالك بالإنترنت وحاول مرة أخرى."
+    "remote_details_unavailable_message": "هذه الوردية تم رفعها من جهاز آخر ولم نتمكن من جلب تفاصيلها. تأكد من اتصالك بالإنترنت وحاول مرة أخرى.",
+    "success_title": "وردية ناجحة 100%!",
+    "success_subtitle": "قفلت الوردية من غير أي عجز في الخزنة، استمر كده!",
+    "success_share_message": "🎉 قفلت وردية من غير أي عجز في الخزنة بفضل تطبيق كافيه كاش!",
+    "success_share_button": "شارك إنجازك",
+    "success_share_whatsapp": "واتساب",
+    "success_share_failed": "تعذّرت المشاركة، حاول مرة أخرى",
+    "success_continue_button": "متابعة",
+    "reconcile_title": "تسوية الخزنة",
+    "reconcile_message": "قبل ما تقفل الوردية، اكتب المبلغ النقدي اللي معاك فعليًا ورصيد المحفظة، وهنحسبلك تقرير فيه لو في عجز أو زيادة.",
+    "reconcile_cash_label": "النقدي الفعلي في الدرج",
+    "reconcile_wallet_label": "رصيد المحفظة الفعلي",
+    "reconcile_deficit_title": "في عجز في الخزنة",
+    "reconcile_surplus_title": "في زيادة في الخزنة",
+    "reconcile_expected_label": "المتوقع",
+    "reconcile_actual_label": "الفعلي",
+    "reconcile_cash_channel": "الكاش",
+    "reconcile_wallet_channel": "المحفظة",
+    "reconcile_total_label": "الإجمالي"
   },
   "hall": {
     "ready_badge": "جاهزة",
@@ -259,7 +275,18 @@
     "subscription_plans_subtitle": "اشترك في الباقة المناسبة لفرعك",
     "coming_soon_badge": "قريبًا",
     "wallet_payment_title": "تفعيل الدفع بالمحفظة",
-    "wallet_payment_description": "عند التفعيل، هيظهرلك اختيار الدفع (كاش / محفظة) عند إتمام أي عملية دفع. عند الإيقاف، هيتم الدفع كاش مباشرة مع ظهور رسالة تأكيد قبل إتمامه."
+    "wallet_payment_description": "عند التفعيل، هيظهرلك اختيار الدفع (كاش / محفظة) عند إتمام أي عملية دفع. عند الإيقاف، هيتم الدفع كاش مباشرة مع ظهور رسالة تأكيد قبل إتمامه.",
+    "labels_management": "إدارة المسميات",
+    "labels_management_subtitle": "غيّر اسم الصالة والمباريات زي ما يناسب فرعك"
+  },
+  "labels": {
+    "title": "إدارة المسميات",
+    "hall_name_label": "اسم الصالة",
+    "hall_name_hint": "مثال: الصالة",
+    "matches_name_label": "اسم المباريات",
+    "matches_name_hint": "مثال: المباريات",
+    "max_length_hint": "بحد أقصى 15 حرف، واسيبه فاضي عشان ترجع للاسم الافتراضي",
+    "save_success": "تم حفظ المسميات بنجاح"
   },
   "subscription": {
     "title": "الباقات",

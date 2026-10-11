@@ -120,8 +120,6 @@
     "my_orders": "My Orders",
     "close_button": "Close Shift",
     "closed_badge": "Closed",
-    "close_confirm_title": "Close shift?",
-    "close_confirm_message": "The shift's account will be closed now and can't be reopened. Are you sure?",
     "occupied_blocking_title": "Some spots are still occupied",
     "occupied_blocking_message": "You need to close every occupied table's/seat's account before you can close the shift.",
     "started_at": "Shift Started",
@@ -132,7 +130,25 @@
     "no_active_shift": "Start a shift first",
     "cancelled_orders_empty": "No cancelled orders in this shift",
     "remote_details_unavailable_title": "Couldn't load details",
-    "remote_details_unavailable_message": "This shift was uploaded from another device and its details couldn't be fetched. Check your connection and try again."
+    "remote_details_unavailable_message": "This shift was uploaded from another device and its details couldn't be fetched. Check your connection and try again.",
+    "success_title": "100% Successful Shift!",
+    "success_subtitle": "You closed the shift with zero deficit in the cash register. Keep it up!",
+    "success_share_message": "🎉 I closed a shift with zero deficit in the cash register, powered by CafeCash!",
+    "success_share_button": "Share Your Achievement",
+    "success_share_whatsapp": "WhatsApp",
+    "success_share_failed": "Couldn't share, please try again",
+    "success_continue_button": "Continue",
+    "reconcile_title": "Cash Reconciliation",
+    "reconcile_message": "Before closing the shift, enter the actual cash you have on hand and the wallet balance, and we'll show you a report of any deficit or surplus.",
+    "reconcile_cash_label": "Actual cash in the drawer",
+    "reconcile_wallet_label": "Actual wallet balance",
+    "reconcile_deficit_title": "There's a deficit in the register",
+    "reconcile_surplus_title": "There's a surplus in the register",
+    "reconcile_expected_label": "Expected",
+    "reconcile_actual_label": "Actual",
+    "reconcile_cash_channel": "Cash",
+    "reconcile_wallet_channel": "Wallet",
+    "reconcile_total_label": "Total"
   },
   "hall": {
     "ready_badge": "Ready",
@@ -259,7 +275,18 @@
     "subscription_plans_subtitle": "Subscribe to the plan that fits your branch",
     "coming_soon_badge": "Coming soon",
     "wallet_payment_title": "Enable Wallet Payment",
-    "wallet_payment_description": "When enabled, you'll choose between cash and wallet whenever a payment is completed. When disabled, payments are cash-only and a confirmation message appears before completing them."
+    "wallet_payment_description": "When enabled, you'll choose between cash and wallet whenever a payment is completed. When disabled, payments are cash-only and a confirmation message appears before completing them.",
+    "labels_management": "Labels Management",
+    "labels_management_subtitle": "Rename the Hall and Matches sections to fit your branch"
+  },
+  "labels": {
+    "title": "Labels Management",
+    "hall_name_label": "Hall name",
+    "hall_name_hint": "e.g. Hall",
+    "matches_name_label": "Matches name",
+    "matches_name_hint": "e.g. Matches",
+    "max_length_hint": "Up to 15 characters. Leave empty to use the default name.",
+    "save_success": "Labels saved successfully"
   },
   "subscription": {
     "title": "Subscription",

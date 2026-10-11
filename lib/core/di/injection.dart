@@ -11,6 +11,7 @@ import '../../features/hall/logic/hall_cubit.dart';
 import '../../features/items/data/items_repo.dart';
 import '../../features/items/logic/categories_cubit.dart';
 import '../../features/items/logic/menu_items_cubit.dart';
+import '../../features/labels/logic/labels_cubit.dart';
 import '../../features/matches/data/matches_repo.dart';
 import '../../features/matches/logic/matches_cubit.dart';
 import '../../features/orders/data/orders_repo.dart';
@@ -99,4 +100,5 @@ Future<void> setupDi() async {
   getIt.registerFactory(() => SubscriptionHistoryCubit(getIt()));
   getIt.registerFactory(() => ConnectivityCubit(getIt()));
   getIt.registerFactory(() => SyncCubit(getIt()));
+  getIt.registerFactory(() => LabelsCubit(getIt()));
 }

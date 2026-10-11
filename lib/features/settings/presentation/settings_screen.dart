@@ -42,6 +42,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           onTap: _toggleWalletPayment,
         ),
         SettingsItem(
+          icon: Icons.edit_note_rounded,
+          label: LocaleKeys.settings_labelsManagement.tr(),
+          subLabel: LocaleKeys.settings_labelsManagementSubtitle.tr(),
+          color: AppColors.secondaryColor.themeColor,
+          onTap: () => context.pushNamed(Routes.labelsSettingsScreen),
+        ),
+        SettingsItem(
           icon: Icons.language_rounded,
           label: LocaleKeys.settings_changeLanguage.tr(),
           subLabel: LocaleKeys.settings_changeLanguageSubtitle.tr(),

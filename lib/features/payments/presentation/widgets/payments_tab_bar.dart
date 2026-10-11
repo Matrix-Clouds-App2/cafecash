@@ -1,12 +1,12 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/extensions/extensions.dart';
 import '../../../../core/utils/app_colors.dart';
-import '../../../../core/utils/locale_keys.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/custom_tap_effect.dart';
+import '../../../labels/logic/labels_cubit.dart';
 import '../../../orders/data/models/order_location_kind.dart';
 
 class PaymentsTabBar extends StatelessWidget {
@@ -21,6 +21,8 @@ class PaymentsTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final labels = context.watch<LabelsCubit>().state;
+
     return Container(
       padding: 4.paddingAll,
       decoration: BoxDecoration(
@@ -32,7 +34,7 @@ class PaymentsTabBar extends StatelessWidget {
         children: [
           Expanded(
             child: _Segment(
-              label: LocaleKeys.nav_hall.tr(),
+              label: labels.hallDisplayLabel,
               icon: Icons.table_bar_rounded,
               color: AppColors.secondaryColor.themeColor,
               isSelected: selected == OrderLocationKind.table,
@@ -42,7 +44,7 @@ class PaymentsTabBar extends StatelessWidget {
           8.width,
           Expanded(
             child: _Segment(
-              label: LocaleKeys.nav_matches.tr(),
+              label: labels.matchesDisplayLabel,
               icon: Icons.event_seat_rounded,
               color: AppColors.accentGold.themeColor,
               isSelected: selected == OrderLocationKind.seat,
